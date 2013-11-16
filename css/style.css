@@ -3,40 +3,16 @@
     Created on : 29.10.2013, 16:16:37
     Author     : tscheurer
     Description:
-        Purpose of the stylesheet follows.
 */
-
 root { 
     display: block;
 }
-
-body {
+html{
+    height: 100%;   
+}
+body {    
     font-family: "Segoe UI", sans-serif;
     font-size: 14px;
-    background-color: #060e14;
-}
-
-div {
-    /*border: 1px solid black;*/
-}
-
-h1 {
-    padding: 0px;
-    margin: 0px;
-}
-
-h2 {
-    padding: 0px;
-    margin: 0px;
-}
-
-h3 {
-    padding: 0px;
-    margin: 0px;
-}
-
-#bg {
-    padding-bottom: 10px;
     background: #28608a; /* Old browsers */
     background: -moz-linear-gradient(top,  #28608a 0%, #060e14 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#28608a), color-stop(100%,#060e14)); /* Chrome,Safari4+ */
@@ -46,64 +22,114 @@ h3 {
     background: linear-gradient(to bottom,  #28608a 0%,#060e14 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#28608a', endColorstr='#060e14',GradientType=0 ); /* IE6-9 */
 }
-
-#header {
-    background-color: lightgray;
-    /*border-bottom: 1px solid grey;*/
-    padding: 2px 5px;
-    font-size: 14px;
-
-    color: white;
-    background-color: darkslategray;
+h1 {
+    padding: 0px;
+    margin: 0px;
 }
-
-#date {
-    display: inline;
+h2 {
+    padding: 0px;
+    margin: 0px;
 }
-
-#user {
-    float: right;
-    display: inline;
-}
-
-#logo {
-    padding: 15px 5px;
-    background-color: #DF0029;
-    color: white;
-}
-
-#notifications {
-    background-color: #F2DEDE;
-    border-color: #EED3D7;
-    color: #B94A48;
-    padding: 5px;
-    font-size: 12px;
-}
-
-#breadcrumbs {
-    padding: 5px;
-    color: white;
-}
-
-#content {
-    background-color: white;
-    margin-bottom: 10px;
-    min-height: 350px;
-    box-shadow: 0px 0px 100px rgba(255,255,255,0.5);
+h3 {
+    padding: 0px;
+    margin: 0px;
 }
 a{
     text-decoration: none;
 }
-.buttoncreate{
+#header{
+    padding: 2px 5px;
+    font-size: 14px;
+    color: white;
+    background-color: #17374f;
+    width: 100%;
+}
+#header a{
+    color: white;
+}
+#header a:hover{
+    text-decoration: underline;
+}
+#date {
+    display: inline;
+}
+#user{
+    float: right;
+    display: inline; 
+}
+#logo {
+    padding: 15px 5px;
+    color: #17374f;
+    background-color: white;
+    opacity:0.6;
+    width: 100%
+}
+#logo a{
+    color: #17374f;
+}
+.notification {
+    padding: 5px;
+    font-size: 12px;
+    display: inline-block;
+    width: 100%;
+    border-bottom: 1px solid;
+}
+.alert{
+    color: #c09853;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+.error{
+    color: #b94a48;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+.successful{
+    color: #468847;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+#breadcrumbs {
+    padding: 5px;
+    color: white;
+}
+#breadcrumbs a{
+    color: white;
+    font-weight: bold;
+}
+#content {
+    background-color: white;
+    margin: auto;
+    margin-bottom: 10px;
+    min-height: 350px;
+    box-shadow: 0px 0px 100px rgba(255,255,255,0.5);
+    width: 80%;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* -------- Buttons -------- */
+.button{
     display: inline-block;
     background-color: #dff0d8;
     max-width: 100px;
     text-align: center;
     padding: 2px 3px 2px 3px;
     margin: 2px 3px 2px 3px;
-    color: #468847;
     font-weight: bold;
-    border: 1px solid #d6e9c6;
+    border: 1px solid;
+}
+.buttoncreate{
+    color: #468847;
+    border-color: #d6e9c6;
 }
 
 a:hover.buttoncreate{
@@ -182,5 +208,5 @@ a:hover.buttonadd{
 
 .error {
     background-color: #F2DEDE;
-        color: #B94A48;
+    color: #B94A48;
 }
