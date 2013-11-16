@@ -1,7 +1,3 @@
-<?php
-$days = array(1 => "Montag", 2 => "Dienstag", 3 => "Mittwoch", 4 => "Donnerstag", 5 => "Freitag", 6 => "Samstag", 7 => "Sonntag");
-
-?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,6 +18,9 @@ $days = array(1 => "Montag", 2 => "Dienstag", 3 => "Mittwoch", 4 => "Donnerstag"
         <div id="breadcrumbs"><a href="/">Start</a> &gt; Veranstaltung</div>
         <div id="content">
             <p>Content</p>
+	    <a href="#" class="buttoncreate">ERSTELLEN</a>
+	    <a href="#" class="buttonclose">BEENDEN</a>
+	    <a href="#" class="buttonadd">HINZUFÜGEN</a>
         </div>
         </div>
     </body>
