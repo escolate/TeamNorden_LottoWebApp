@@ -25,6 +25,16 @@ h1 {
     margin: 0px;
 }
 
+h2 {
+    padding: 0px;
+    margin: 0px;
+}
+
+h3 {
+    padding: 0px;
+    margin: 0px;
+}
+
 #bg {
     padding-bottom: 10px;
     background: #28608a; /* Old browsers */
@@ -129,4 +139,48 @@ a:hover.buttonclose{
 
 a:hover.buttonadd{
     background-color: #bce8f1;
+
+    text-align: center;
+}
+
+#content .frame {
+    /*display: table;*/
+    width: 100%;
+}
+
+#content .frame div {
+    /*display: table-cell;*/
+    display: inline-block;
+    border: 5px solid lightgray;
+    margin: 10px;
+    width: 250px;
+    vertical-align: top;
+    padding: 5px;
+}
+
+#content .frame table {
+    margin: 5px 0;
+    width: 100%;
+    border: 1px solid gray;
+}
+
+#content .frame th {
+    background-color: gray;
+}
+
+#zahl_ziehung {
+    width: 20px;
+}
+
+#content .frame .action {
+    float: left;
+}
+
+#content .frame .action select {
+    width: 150px;
+}
+
+.error {
+    background-color: #F2DEDE;
+        color: #B94A48;
 }
