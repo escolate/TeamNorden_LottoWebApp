@@ -60,14 +60,6 @@ h1 {
     padding: 15px 5px;
     background-color: #DF0029;
     color: white;
-    background: #f9002e; /* Old browsers */
-    background: -moz-linear-gradient(top,  #f9002e 0%, #df0029 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9002e), color-stop(100%,#df0029)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #f9002e 0%,#df0029 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #f9002e 0%,#df0029 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #f9002e 0%,#df0029 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #f9002e 0%,#df0029 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9002e', endColorstr='#df0029',GradientType=0 ); /* IE6-9 */
 }
 
 #notifications {
@@ -84,12 +76,57 @@ h1 {
 }
 
 #content {
-    border: 1px solid gray;
-    margin: auto;
-    width: 80%;
-    margin-top: 40px;
     background-color: white;
     margin-bottom: 10px;
     min-height: 350px;
     box-shadow: 0px 0px 100px rgba(255,255,255,0.5);
+}
+a{
+    text-decoration: none;
+}
+.buttoncreate{
+    display: inline-block;
+    background-color: #dff0d8;
+    max-width: 100px;
+    text-align: center;
+    padding: 2px 3px 2px 3px;
+    margin: 2px 3px 2px 3px;
+    color: #468847;
+    font-weight: bold;
+    border: 1px solid #d6e9c6;
+}
+
+a:hover.buttoncreate{
+    background-color: #d6e9c6;
+    border: 1px solid #d6e9c6;
+}
+.buttonclose{
+    display: inline-block;
+    background-color: #f2dede;
+    max-width: 100px;
+    text-align: center;
+    padding: 2px 3px 2px 3px;
+    margin: 2px 3px 2px 3px;
+    color: #b94a48;
+    font-weight: bold;
+    border: 1px solid #ebccd1;
+}
+
+a:hover.buttonclose{
+    background-color: #ebccd1;
+}
+.buttonadd{
+    display: inline-block;
+    background-color: #d9edf7;
+    max-width: 100px;
+    text-align: center;
+    padding: 2px 3px 2px 3px;
+    margin: 2px 3px 2px 3px;
+    color: #3a87ad;
+    font-weight: bold;
+    border: 1px solid #bce8f1;
+}
+
+a:hover.buttonadd{
+    background-color: #bce8f1;
 }
