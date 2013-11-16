@@ -1,0 +1,82 @@
+/* 
+    Document   : style
+    Created on : 29.10.2013, 16:16:37
+    Author     : tscheurer
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: "Arial Black", Gadget, sans-serif;
+    font-size: 14px;
+}
+
+div {
+    /*border: 1px solid black;*/
+}
+
+h1 {
+    padding: 0px;
+    margin: 0px;
+}
+
+#header {
+    background-color: lightgray;
+    /*border-bottom: 1px solid grey;*/
+    padding: 2px 5px;
+    font-size: 14px;
+    
+    color: white;
+    background-color: darkslategray;
+}
+
+#date {
+    display: inline;
+}
+
+#user {
+    float: right;
+    display: inline;
+}
+
+#logo {
+    padding: 15px 5px;
+    background-color: #DF0029;
+    color: white;
+
+background: #f9002e; /* Old browsers */
+background: -moz-linear-gradient(top,  #f9002e 0%, #df0029 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9002e), color-stop(100%,#df0029)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #f9002e 0%,#df0029 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #f9002e 0%,#df0029 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #f9002e 0%,#df0029 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #f9002e 0%,#df0029 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9002e', endColorstr='#df0029',GradientType=0 ); /* IE6-9 */
+
+
+}
+
+#notifications {
+    background-color: #F2DEDE;
+    border-color: #EED3D7;
+    color: #B94A48;
+    padding: 5px;
+    font-size: 12px;
+}
+
+#breadcrumbs {
+    padding: 5px;
+}
+
+#content {
+    border: 1px solid gray;
+    margin: auto;
+    width: 80%;
+    margin-top: 40px;
+}
