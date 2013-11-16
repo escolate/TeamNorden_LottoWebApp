@@ -17,6 +17,15 @@
         <div id="notifications">"Biergarten & Lotto" wird gerade gespielt. <a href="/">Hier klicken um in das Spiel zu gelangen.</a></div>
         <div id="breadcrumbs"><a href="/">Start</a> &gt; Veranstaltung</div>
         <div id="content">
+            <?php 
+            $uri = $_SERVER['REQUEST_URI'];
+            switch ($uri) {
+                case '/events':
+                    break;
+                default :
+                    break;
+            }
+            ?>
             <p>Content</p>
 	    <a href="#" class="buttoncreate">ERSTELLEN</a>
 	    <a href="#" class="buttonclose">BEENDEN</a>
