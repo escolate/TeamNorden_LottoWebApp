@@ -1,6 +1,6 @@
-<a href="#" class="button green">ERSTELLEN</a>
-<a href="#" class="button red">BEENDEN</a>
-<a href="#" class="button blue">HINZUFÜGEN</a>
+
+
+
 <div class="frame">
     <div>
 	<h3>Serie 6</h3>
@@ -32,7 +32,7 @@
 	    </select>
 	    <input type="submit" value="Ausführen" class="button grey">
 	</form>
-
+	<a href="#" class="button green">ERSTELLEN</a>
     </div>
     <div>
 	<h3>Gespielte Serien</h3>
@@ -60,6 +60,7 @@
 	    </select>
 	    <input type="submit" value="Ausführen" class="button grey">
 	</form>
+	<a href="#" class="button red">BEENDEN</a>
     </div>
     <div>
 	<h3>Spieler</h3>
@@ -87,5 +88,6 @@
 	    </select>
 	    <input type="submit" value="Ausführen" class="button grey">
 	</form>
+	<a href="#" class="button blue">HINZUFÜGEN</a>
     </div>
 </div>

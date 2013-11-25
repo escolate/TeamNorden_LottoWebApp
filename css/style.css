@@ -1,14 +1,7 @@
-/* 
-    Document   : style
-    Created on : 29.10.2013, 16:16:37
-    Author     : tscheurer
-    Description:
-*/
 body {    
     font-family: "Segoe UI", sans-serif;
     font-size: 14px;
     background-color: #28608a;
-    /*background-color: #060e14;*/
 }
 h1 {
     padding: 0px;
@@ -25,7 +18,12 @@ h3 {
 a{
     text-decoration: none;
 }
-#header{
+#container{
+    width: 80%;
+    margin: auto;
+    box-shadow: 0px 0px 100px rgba(255,255,255,0.5);
+}
+#header, #breadcrumbs{
     padding: 2px 5px;
     font-size: 14px;
     color: white;
@@ -53,38 +51,31 @@ a{
 #logo a{
     color: #17374f;
 }
-.notification {
-    padding: 5px 0;
-    font-size: 12px;
-    display: inline-block;
-    width: 100%;
-    border-bottom: 1px solid;
-}
 #breadcrumbs {
-    padding: 5px;
-    color: white;
+    font-style: oblique;
 }
 #breadcrumbs a{
     color: white;
     font-weight: bold;
 }
+#breadcrumbs a:hover{
+    text-decoration: underline;
+}
+.notification {
+    padding: 5px;
+    border-bottom: 1px solid;
+}
 #content {
     background-color: white;
-    margin: auto;
-    margin-bottom: 10px;
     min-height: 350px;
-    box-shadow: 0px 0px 100px rgba(255,255,255,0.5);
-    width: 80%;
+    padding: 30px 5px;
 }
-
-/* Button */
+/* buttons */
 .button{
     display: inline-block;
     background-color: #dff0d8;
-    max-width: 110px;
     text-align: center;
     padding: 2px 3px 2px 3px;
-    margin: 2px 3px 2px 3px;
     font-weight: bold;
     border: 2px solid;
 }
@@ -103,7 +94,7 @@ a{
 .button.grey:hover{
     background-color: #b8b4b4;
 }
-/*Sub Classes*/
+/*sub classes*/
 .yellow{
     color: #c09853;
     background-color: #fcf8e3;
@@ -129,16 +120,14 @@ a{
     background-color: lightgray;
     border-color: #b8b4b4; 
 }
-/*Content*/
+/*content*/
 #content .frame {
     width: 100%;
 }
 
 #content .frame div {
-    /*display: table-cell;*/
     display: inline-block;
     border: 5px solid #ededed;
-    margin: 10px;
     width: 250px;
     vertical-align: top;
     padding: 15px;
@@ -163,3 +152,32 @@ a{
 #content .frame .action select {
     width: 150px;
 }
+/*login*/
+#logincontent{
+    text-align: center;
+    border: 5px solid #ededed;
+    font-size: 15px;
+    background-color: white;
+    margin: auto;
+    margin-top: 100px;	
+    box-shadow: 0px 0px 100px rgba(255,255,255,0.5);
+    width: 40%;
+    min-width: 300px;
+    padding: 60px;
+}
+#logincontent h1{
+    margin-bottom: 20px;
+}
+#loginform input{
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 10px;
+    width: 250px;
+    height: 40px;
+}
+#loginform-button{
+    width: 250px;
+}
+
+
+
