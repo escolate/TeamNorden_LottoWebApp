@@ -17,9 +17,11 @@ h3 {
 }
 a{
     text-decoration: none;
+    color: black;
 }
 #container{
-    width: 80%;
+    width: 90%;
+    min-width: 800px;
     margin: auto;
     box-shadow: 0px 0px 100px rgba(255,255,255,0.5);
 }
@@ -70,30 +72,6 @@ a{
     min-height: 350px;
     padding: 30px 5px;
 }
-/* buttons */
-.button{
-    display: inline-block;
-    background-color: #dff0d8;
-    text-align: center;
-    padding: 2px 3px 2px 3px;
-    font-weight: bold;
-    border: 2px solid;
-}
-.button.yellow:hover{
-    background-color: #faebcc;
-}
-.button.red:hover{
-    background-color: #ebccd1;
-}
-.button.green:hover{
-    background-color: #d6e9c6;
-}
-.button.blue:hover{
-    background-color: #bce8f1;
-}
-.button.grey:hover{
-    background-color: #b8b4b4;
-}
 /*sub classes*/
 .yellow{
     color: #c09853;
@@ -120,38 +98,67 @@ a{
     background-color: lightgray;
     border-color: #b8b4b4; 
 }
-/*content*/
-#content .frame {
-    width: 100%;
-}
-
-#content .frame div {
+/*content-elements*/
+.content-box{
+    position: relative;
     display: inline-block;
-    border: 5px solid #ededed;
-    width: 250px;
     vertical-align: top;
-    padding: 15px;
+    border: 5px solid #ededed;
+    padding: 20px;
+    margin: 15px 0;
+    min-width: 300px;
 }
-#content .frame table {
-    margin: 5px 0;
+.content-box-button{
+    position: absolute;
+    top: -21px;
+    right: -5px;
+    font-weight: bold;
+}
+.content-box-button:hover{
+    text-decoration: underline;
+}
+.content-box h1{
+    margin-bottom: 20px; 
+    text-align: center;
+}
+.content-box h2{
+    margin-bottom: 5px; 
+    text-align: center;
+}
+.list{
     width: 100%;
-    background-color: #ededed
-}
-#content .frame th {
     background-color: #ededed;
+    margin-bottom: 15px;
 }
-#content .frame table, tr, td{
+.list tr > td{
+    padding: 3px;
+}
+.list tr, td, th{
     border: 1px solid white;
 }
-#zahl_ziehung {
-    width: 40px;
+.list th{
+    padding: 8px 0;
 }
-#content .frame .action {
-    float: left;
+.list tfoot{
+    background-color: white;
+    font-style: oblique;
 }
-#content .frame .action select {
-    width: 150px;
+.list thead:hover{
+    background-color: #ededed;
 }
+.list tbody tr:hover{
+    background-color: white;
+}
+.list table a{
+    display: inline-block;
+    width: 100%;
+    height: 60%;
+}
+.pages{
+    text-align: center;
+    margin-top: 20px;
+}
+
 /*login*/
 #logincontent{
     text-align: center;
@@ -178,6 +185,3 @@ a{
 #loginform-button{
     width: 250px;
 }
-
-
-

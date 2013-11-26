@@ -16,8 +16,8 @@
 	    <div id="logo">
 		<h1><a href="index.php?page=default">Musikverein Lotto</a></h1>
 		<a href="login.php?page=">LOGIN</a> | 
-		<a href="index.php?page=login">LAUFENDES SPIEL</a> | 
-		<a href="index.php?page=login">VERANSTALTUNGEN</a> | 
+		<a href="index.php?page=currentEvent">LAUFENDES SPIEL</a> | 
+		<a href="index.php?page=events">VERANSTALTUNGEN</a> | 
 	    </div>
 	    <div id="breadcrumbs"><a href="/">Start</a> &gt; Veranstaltung</div>
 	    <!--<a href="#" class="notification yellow">"Biergarten & Lotto" wird gerade gespielt. Hier klicken um in das Spiel zu gelangen.</a>-->
@@ -27,11 +27,11 @@
 		<?php
 		if (!empty($_GET)) {
 		    switch ($_GET) {
-			case $_GET['page'] == 'login':
-			    include_once 'event.php';
+			case $_GET['page'] == 'currentEvent':
+			    include_once 'currentEvent.php';
 			    break;
-			case $_GET['page'] == 'veranstaltungen':
-			    include_once 'veranstaltungen.php';
+			case $_GET['page'] == 'events':
+			    include_once 'events.php';
 		    }
 		}
 		?>
