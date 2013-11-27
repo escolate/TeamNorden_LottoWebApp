@@ -1,0 +1,223 @@
+/*global*/
+body {    
+    font-family: "Segoe UI", sans-serif;
+    font-size: 12px;
+    background-color: #28608a;
+}
+h1 {
+    padding: 0px;
+    margin: 0px;
+}
+h2 {
+    padding: 0px;
+    margin: 0px;
+}
+h3 {
+    padding: 0px;
+    margin: 0px;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+input[type=submit],[type=select]{
+    background-color: #efefef;
+    border: 1px solid #333333; 
+}
+input[type=submit]:hover{
+    background-color: white;
+}
+select{
+    border: 1px solid #abadb3;
+}
+#container{
+    width: 90%;
+    min-width: 800px;
+    margin: auto;
+    margin-bottom: 50px;
+    box-shadow: 0px 0px 100px rgba(255,255,255,0.5);
+}
+#header, #breadcrumbs{
+    padding: 2px 5px;
+    font-size: 14px;
+    color: white;
+    background-color: #17374f;
+}
+#header a{
+    color: white;
+}
+#header a:hover{
+    text-decoration: underline;
+}
+#date {
+    display: inline;
+}
+#user{
+    float: right;
+    display: inline; 
+}
+#logo {
+    padding: 15px 5px;
+    color: #17374f;
+    background-color: white;
+    opacity:0.6;
+}
+#logo a{
+    color: #17374f;
+}
+#breadcrumbs {
+    font-style: oblique;
+}
+#breadcrumbs a{
+    color: white;
+    font-weight: bold;
+}
+#breadcrumbs a:hover{
+    text-decoration: underline;
+}
+.notification {
+    padding: 5px;
+    border-bottom: 1px solid;
+}
+#content {
+    background-color: white;
+    min-height: 350px;
+    padding: 20px 5px;
+    text-align: center;
+}
+/*sub classes*/
+.yellow{
+    color: #c09853;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+.red{
+    color: #b94a48;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+.green{
+    color: #468847;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+.blue{
+    color: #3a87ad;
+    background-color: #d9edf7;
+    border-color: #bce8f1; 
+}
+.grey{
+    color: black;
+    background-color: lightgray;
+    border-color: #b8b4b4; 
+}
+/*login*/
+#logincontent{
+    text-align: center;
+    border: 5px solid #ededed;
+    font-size: 15px;
+    background-color: white;
+    margin: auto;
+    margin-top: 100px;	
+    box-shadow: 0px 0px 100px rgba(255,255,255,0.5);
+    width: 40%;
+    min-width: 300px;
+    padding: 60px;
+}
+#logincontent h1{
+    margin-bottom: 20px;
+}
+#loginform input{
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 10px;
+    width: 250px;
+    height: 40px;
+}
+#loginform-button{
+    width: 250px;
+}
+/*content-elements*/
+.content-box{
+    text-align: left;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    border: 3px solid #efefef;
+    padding: 5px;
+    margin: 8px 0 8px 0;
+    margin: auto;
+    max-width: 500px;
+}
+.content-box-button{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    font-weight: bold;
+}
+.content-box-button:hover{
+    text-decoration: underline;
+}
+.content-box h1{
+    font-size: 20px;
+    text-align: center;
+    margin: 10px 0;
+}
+.content-box h2{
+    font-size: 15px;
+    text-align: center;
+    margin-top: 20px;
+}
+.list{
+    width: 100%;
+    background-color: #efefef;
+    margin-bottom: 15px;
+}
+.list tr > td{
+    padding: 1px 3px;
+}
+.list tr, td, th{
+    border: 1px solid white;
+}
+.list th{
+    padding: 8px 0;
+}
+.list tfoot{
+    background-color: white;
+    font-style: oblique;
+}
+.list tbody tr:hover{
+    background-color: white;
+}
+.list a{
+    display: inline-block;
+    width: 100%;
+    height: 60%;
+}
+.pages{
+    text-align: center;
+    margin-top: 20px;
+}
+/*lotto-card*/
+.lotto-card{
+    padding: 10px;
+    text-align: left;
+    background-color: orange;
+    width: 350px;
+    margin: auto;
+    margin: 10px 0;
+}
+.lotto-row{
+    color: #17374f;
+    font-weight: bolder;
+    background-color: darkorange;
+    margin: 5px 0;
+    padding: 2px;
+    border: 1px dotted #b94a48;
+}
+.lotto-row input{
+    width: 40px;
+    margin: 5px;
+}
+/*form*/
+

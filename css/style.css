@@ -1,137 +1,89 @@
-body {    
+/*test & develop*/
+div{
+    border: 0px solid lightgrey;
+}
+/*global*/
+body {
     font-family: "Segoe UI", sans-serif;
-    font-size: 14px;
-    background-color: #28608a;
+    font-size: 12px;
+    min-width: 500px;
 }
-h1 {
-    padding: 0px;
-    margin: 0px;
-}
-h2 {
-    padding: 0px;
-    margin: 0px;
-}
-h3 {
-    padding: 0px;
-    margin: 0px;
-}
-a{
+a:hover{
     text-decoration: none;
-    color: black;
 }
-#container{
-    width: 90%;
-    min-width: 800px;
-    margin: auto;
-    box-shadow: 0px 0px 100px rgba(255,255,255,0.5);
-}
-#header, #breadcrumbs{
-    padding: 2px 5px;
-    font-size: 14px;
+/*header*/
+#header{
+    width: 100%;
+    position: fixed;
+    background-color: #28608a;
     color: white;
-    background-color: #17374f;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
 }
 #header a{
     color: white;
 }
-#header a:hover{
-    text-decoration: underline;
-}
-#date {
+#header div{
     display: inline;
-}
-#user{
-    float: right;
-    display: inline; 
-}
-#logo {
-    padding: 15px 5px;
-    color: #17374f;
-    background-color: white;
-    opacity:0.6;
-}
-#logo a{
-    color: #17374f;
-}
-#breadcrumbs {
-    font-style: oblique;
-}
-#breadcrumbs a{
-    color: white;
-    font-weight: bold;
-}
-#breadcrumbs a:hover{
-    text-decoration: underline;
-}
-.notification {
-    padding: 5px;
-    border-bottom: 1px solid;
-}
-#content {
-    background-color: white;
-    min-height: 350px;
-    padding: 30px 5px;
-}
-/*sub classes*/
-.yellow{
-    color: #c09853;
-    background-color: #fcf8e3;
-    border-color: #faebcc;
-}
-.red{
-    color: #b94a48;
-    background-color: #f2dede;
-    border-color: #ebccd1;
-}
-.green{
-    color: #468847;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-}
-.blue{
-    color: #3a87ad;
-    background-color: #d9edf7;
-    border-color: #bce8f1; 
-}
-.grey{
-    color: black;
-    background-color: lightgray;
-    border-color: #b8b4b4; 
-}
-/*content-elements*/
-.content-box{
-    position: relative;
-    display: inline-block;
-    vertical-align: top;
-    border: 5px solid #ededed;
     padding: 20px;
-    margin: 15px 0;
-    min-width: 300px;
 }
-.content-box-button{
-    position: absolute;
-    top: -21px;
-    right: -5px;
-    font-weight: bold;
+#account{
+    float: right;
 }
-.content-box-button:hover{
-    text-decoration: underline;
+#breadcrumb{
+    float: left;
 }
-.content-box h1{
-    margin-bottom: 20px; 
-    text-align: center;
+/*content*/
+#content{
+    padding-top: 100px;
+    width: 90%;
+    margin: auto;
+    margin-bottom: 50px;
 }
-.content-box h2{
-    margin-bottom: 5px; 
-    text-align: center;
+/*form global*/
+form input[type="submit"]{
+    border: 1px solid #28608a;
+    background-color: #efefef;
 }
-.list{
+form input[type="submit"]:hover{
+    background-color: white;
+}
+/*form create*/
+.create form{
+    border: 1px solid black;
+}
+.create form div{
+    border: 0px solid black;
+    margin: 5px 0;
+}
+.create form input, label{
+    line-height: 25px;
+}
+.create form input[type="text"]{
+    width: 180px;
+}
+.create form input[type="submit"]{
+    border: 1px solid #28608a;
+    display: inline;
+    float: left;
+    margin: 5px 5px 5px 0;
+}
+.create form label{
+    float: left;
+    text-align: right;
+    width: 180px;
+    margin-right: 5px;
+}
+/*list(index)*/
+.list table {
     width: 100%;
-    background-color: #ededed;
-    margin-bottom: 15px;
+    background-color: #efefef;
+    margin-bottom: 10px;
+}
+.list table a{
+    text-decoration: none;
 }
 .list tr > td{
-    padding: 3px;
+    padding: 1px 3px;
 }
 .list tr, td, th{
     border: 1px solid white;
@@ -143,13 +95,10 @@ a{
     background-color: white;
     font-style: oblique;
 }
-.list thead:hover{
-    background-color: #ededed;
-}
 .list tbody tr:hover{
     background-color: white;
 }
-.list table a{
+.list a{
     display: inline-block;
     width: 100%;
     height: 60%;
@@ -158,30 +107,48 @@ a{
     text-align: center;
     margin-top: 20px;
 }
-
-/*login*/
-#logincontent{
-    text-align: center;
-    border: 5px solid #ededed;
-    font-size: 15px;
-    background-color: white;
+.pages form{
+    display: inline-block;
+}
+/*lotto-card*/
+.lotto-card{
+    border: 5px solid #efefef;
+    padding: 10px;
+    text-align: left;
+    width: 350px;
     margin: auto;
-    margin-top: 100px;	
-    box-shadow: 0px 0px 100px rgba(255,255,255,0.5);
-    width: 40%;
-    min-width: 300px;
-    padding: 60px;
+    margin: 10px 0;
+    /*gradient background-color*/
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(50%,#f3f3f3), color-stop(51%,#ededed), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
 }
-#logincontent h1{
-    margin-bottom: 20px;
+.lotto-row, .lotto-card label{
+    font-weight: bolder;
+    color: #17374f;
 }
-#loginform input{
-    margin: 0 auto;
-    display: block;
-    margin-bottom: 10px;
-    width: 250px;
-    height: 40px;
+.lotto-row{
+    padding: 2px;
+    margin: 5px 0;
+    border: 1px solid #efefef;
+    /*gradient background-color*/
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(50%,#f3f3f3), color-stop(51%,#ededed), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
 }
-#loginform-button{
-    width: 250px;
+.lotto-row input{
+    width: 40px;
+    margin: 5px;
 }
