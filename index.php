@@ -19,6 +19,7 @@
 		<a href="index.php?page=list_index">INDEX</a> | 
 		<a href="index.php?page=createLottocard">CREATE LOTTO</a> | 
 		<a href="index.php?page=showWinner">SHOW WINNER</a> | 
+		<a href="index.php?page=playEvent">PLAY EVENT</a> | 
 	    </div>
 	    <?php
 	    if (!empty($_GET)) {
@@ -37,6 +38,9 @@
 			break;
 		    case $_GET['page'] == 'showWinner':
 			include_once 'showWinner.php';
+			break;
+		    case $_GET['page'] == 'playEvent':
+			include_once 'playEvent.php';
 			break;
 		}
 	    }
