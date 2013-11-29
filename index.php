@@ -20,6 +20,10 @@
 		<a href="index.php?page=createLottocard">CREATE LOTTO</a> | 
 		<a href="index.php?page=showWinner">SHOW WINNER</a> | 
 		<a href="index.php?page=playEvent">PLAY EVENT</a> | 
+		<a href="index.php?page=showSerie">SHOW SERIE</a> | 
+		<a href="index.php?page=showEvent">SHOW EVENT</a> | 
+		<a href="index.php?page=showNumber">SHOW NUMBER</a> | 
+		<a href="index.php?page=editEvent">EDIT EVENT</a> | 
 	    </div>
 	    <?php
 	    if (!empty($_GET)) {
@@ -41,6 +45,18 @@
 			break;
 		    case $_GET['page'] == 'playEvent':
 			include_once 'playEvent.php';
+			break;
+		    case $_GET['page'] == 'showSerie':
+			include_once 'showSerie.php';
+			break;
+		    case $_GET['page'] == 'showEvent':
+			include_once 'showEvent.php';
+			break;
+		    case $_GET['page'] == 'showNumber':
+			include_once 'showNumber.php';
+			break;
+		    case $_GET['page'] == 'editEvent':
+			include_once 'editEvent.php';
 			break;
 		}
 	    }

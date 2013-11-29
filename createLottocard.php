@@ -2,8 +2,10 @@
     <h1>Neue Lottokarte erstellen</h1>
     <form>
 	<div class="lotto-card">
-	    <label>Nr.</label>
-	    <input type="text" name="number1" autocomplete="off" placeholder="Kartennummer">
+	    <div class="lotto-number">
+		<label>Nr.</label>
+		<input type="text" name="number1" autocomplete="off" placeholder="Kartennummer">
+	    </div>
 	    <div class="lotto-row">
 		<label>Reihe 1</label>
 		<input type="text" name="number1" autocomplete="off" placeholder="Zahl 1">

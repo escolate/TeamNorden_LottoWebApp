@@ -45,18 +45,19 @@ a, a:visited{
 }
 .content-box{
     border: 2px solid #28608a;
-    padding: 0 5px 10px 5px;
+    padding: 0 15px 15px 15px;
     max-width: 600px;
     min-width: 300px;
     display: inline-block;
     text-align: left;
     margin: 20px 20px 0 0;
+    vertical-align: top;
 }
 .content-box h1{
     vertical-align: top;
     display: block;
     background-color: #28608a;
-    margin: -2px -7px 10px -7px;
+    margin: -2px -15px 10px -15px;
     padding: 5px;
     text-align: center;
     color: white;
@@ -73,9 +74,6 @@ form input[type="submit"]:hover{
 .create form div{
     border: 0px solid black;
     margin: 5px 0;
-}
-.create form input, label{
-    line-height: 25px;
 }
 .create form input[type="text"]{
     width: 180px;
@@ -107,13 +105,13 @@ form input[type="submit"]:hover{
 
 }
 .list tr > td{
-    padding: 2px 0;
+    padding: 8px 4px;
 }
 .list tr, td, th{
     border: 1px solid white;
 }
 .list th{
-    padding: 8px 0;
+    padding: 8px 4px;
 }
 .list tfoot{
     background-color: white;
@@ -125,7 +123,6 @@ form input[type="submit"]:hover{
 .list a{
     display: inline-block;
     width: 100%;
-    height: 80%;
 }
 .pages{
     text-align: center;
@@ -136,43 +133,154 @@ form input[type="submit"]:hover{
 }
 /*lotto-card*/
 .lotto-card{
-    border: 5px solid #efefef;
+    border: 1px solid black;
     padding: 10px;
     text-align: left;
     width: 350px;
-    margin: auto;
-    margin: 10px 0;
-    /*gradient background-color*/
-    background: #ffffff; /* Old browsers */
-    background: -moz-linear-gradient(top,  #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(50%,#f3f3f3), color-stop(51%,#ededed), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
-
+    margin: 20px auto;
+    background-color: #facbd5;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
 }
-.lotto-row, .lotto-card label{
-    font-weight: bolder;
-    color: #17374f;
-}
-.lotto-row{
+.lotto-row, .lotto-number{
     padding: 2px;
     margin: 5px 0;
-    border: 1px solid #efefef;
-    /*gradient background-color*/
-    background: #ffffff; /* Old browsers */
-    background: -moz-linear-gradient(top,  #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(50%,#f3f3f3), color-stop(51%,#ededed), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
-
+}
+.lotto-row{
+    border: 1px solid black;
+}
+.lotto-number{
+    text-align: right;
+}
+.lotto-number span{
+    margin: 0;
+    border: none;
 }
 .lotto-row input{
     width: 40px;
     margin: 5px;
+}
+.lotto-row span{
+    margin-right: 25px;
+    font-size: 19px;
+}
+.lotto-row span:first-child, label{
+    font-weight: bold;
+}
+/*event-card*/
+.event-card{
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
+    width: 350px;
+    margin: 20px auto;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+}
+.column1{
+    display: inline-block;
+    margin-right: 10px;
+    font-weight: bold;
+    vertical-align: top;
+}
+.column2{
+    display: inline-block;
+    vertical-align: top;
+}
+/*balls*/
+.ball{
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    background: #28608a;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    margin: 5px auto;
+    padding: 3px;
+}
+.winning{
+    background: #ffea00;
+    color: black;
+}
+/*tooltip*/
+/*==================================================*/
+/*  $Tooltips                                       */
+/*==================================================*/
+[data-tip] {
+    position:relative;
+    cursor:help;
+}
+[data-tip]:before {
+    content:'';
+    /* hides the tooltip when not hovered */
+    display:none;
+    border:5px solid #1a1a1a;
+    /* 4 border technique to create the arrow */
+    border-top-color:#1a1a1a;
+    border-right-color:transparent;
+    border-bottom-color:transparent;
+    border-left-color:transparent;
+    position:absolute;
+    top:-7px;
+    left:10px;
+    z-index:8;
+    font-size:0;
+    line-height:0;
+    width:0;
+    height:0;
+}
+[data-tip]:after {
+    display:none;
+    content:attr(data-tip);
+    position:absolute;
+    top:-35px;
+    left:0px;
+    padding:5px 8px;
+    background:#1a1a1a;
+    color:#fff;
+    z-index:9;
+    font-size: 0.75em;
+    height:18px;
+    line-height:18px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    white-space:nowrap;
+    word-wrap:normal;
+}
+[data-tip]:hover:before,
+[data-tip]:hover:after {
+    display:block;
+}
+/*login*/
+#login{
+    text-align: center;
+    border: 5px solid #28608a;
+    font-size: 15px;
+    margin: auto;
+    margin-top: 100px;	
+    box-shadow: 0px 0px 100px rgba(0,0,0,0.5);
+    width: 40%;
+    min-width: 300px;
+    padding: 60px;
+}
+#login h1{
+    margin-bottom: 20px;
+    color: #28608a;
+}
+#login input{
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 10px;
+    width: 250px;
+    height: 40px;
+}
+/*serie*/
+#save-number{
+    margin-bottom: 10px; 
+    background-color: #facbd5;
+    display: inline-block;
+    padding: 3px;
+}
+#save-number input[type="text"]{
 }
