@@ -24,6 +24,7 @@
 		<a href="index.php?page=showEvent">SHOW EVENT</a> | 
 		<a href="index.php?page=showNumber">SHOW NUMBER</a> | 
 		<a href="index.php?page=editEvent">EDIT EVENT</a> | 
+		<a href="index.php?page=editNumber">EDIT NUMBER</a> | 
 	    </div>
 	    <?php
 	    if (!empty($_GET)) {
@@ -57,6 +58,9 @@
 			break;
 		    case $_GET['page'] == 'editEvent':
 			include_once 'editEvent.php';
+			break;
+		    case $_GET['page'] == 'editNumber':
+			include_once 'editNumber.php';
 			break;
 		}
 	    }

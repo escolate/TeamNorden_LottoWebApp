@@ -72,14 +72,16 @@ form input[type="submit"]:hover{
 }
 /*form create*/
 .create form div{
-    border: 0px solid black;
+    border: 1px solid black;
     margin: 5px 0;
+}
+.radios{
+    display: inline-block;
 }
 .create form input[type="text"]{
     width: 180px;
 }
 .create form input[type="submit"]{
-    border: 1px solid #28608a;
     display: inline;
     float: left;
     margin: 5px 5px 5px 0;
@@ -203,9 +205,6 @@ form input[type="submit"]:hover{
     color: black;
 }
 /*tooltip*/
-/*==================================================*/
-/*  $Tooltips                                       */
-/*==================================================*/
 [data-tip] {
     position:relative;
     cursor:help;
@@ -248,8 +247,7 @@ form input[type="submit"]:hover{
     white-space:nowrap;
     word-wrap:normal;
 }
-[data-tip]:hover:before,
-[data-tip]:hover:after {
+[data-tip]:hover:before, [data-tip]:hover:after {
     display:block;
 }
 /*login*/
