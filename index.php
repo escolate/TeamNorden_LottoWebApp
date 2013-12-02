@@ -8,11 +8,12 @@
     </head>
     <body>
 	<div id="header">
+	    <a href="index.php?page="><div id="logo"></div></a>
 	    <div id="breadcrumb"><a href="#">Start</a> &gt; <a href="#">Veranstaltung</a> &gt; Neue Veranstaltung erstellen</div>
-	    <div id="account"><a href="#">zaki@gmail.com</a> | <a href="#">Logout</a></div> 
+	    <div id="account"><a href="#">zakaria.agoulif@gmail.com</a> | <a href="#">Logout</a></div> 
 	</div>
 	<div id="content">
-	    <div id="logo">
+	    <div id="navigation">
 		<a href="login.php?page=">LOGIN</a> | 
 		<a href="index.php?page=create">CREATE</a> | 
 		<a href="index.php?page=show">SHOW</a> | 
@@ -26,6 +27,7 @@
 		<a href="index.php?page=editEvent">EDIT EVENT</a> | 
 		<a href="index.php?page=editNumber">EDIT NUMBER</a> | 
 	    </div>
+
 	    <?php
 	    if (!empty($_GET)) {
 		switch ($_GET) {
@@ -61,6 +63,9 @@
 			break;
 		    case $_GET['page'] == 'editNumber':
 			include_once 'editNumber.php';
+			break;
+		    default:
+			include_once 'default.php';
 			break;
 		}
 	    }
