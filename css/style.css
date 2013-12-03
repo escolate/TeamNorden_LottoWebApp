@@ -7,6 +7,7 @@ body {
     font-family: "Segoe UI", sans-serif;
     font-size: 12px;
     min-width: 500px;
+    background-color: #e5e5e5;
 }
 a:hover{
     text-decoration: none;
@@ -14,13 +15,54 @@ a:hover{
 a, a:visited{
     color: black;
 }
+/*dashboard*/
+.dashboard-links{
+    text-align: center;
+}
+/*buttons*/
+.button{
+    padding: 4px;
+    text-decoration: none;
+    border-radius: 2px;
+    margin: 4px;
+    border:1px solid #e5e5e5;
+}
+.button:hover{
+    background-color: white;
+}
+/*color*/
+.yellow{
+    color: #c09853;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+.red{
+    color: #b94a48;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+.green{
+    color: #468847;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+.blue{
+    color: #3a87ad;
+    background-color: #d9edf7;
+    border-color: #bce8f1; 
+}
+.grey{
+    color: black;
+    background-color: lightgray;
+    border-color: #b8b4b4; 
+}
 /*header*/
 #header{
     width: 100%;
     position: fixed;
     background-color: #4679bd;
     color: white;
-    box-shadow: 0px 0px 20px rgba(0,0,0,0.8);
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.8);
 }
 #header a{
     color: white;
@@ -43,10 +85,10 @@ a, a:visited{
     margin: 2px 0 0 2px;
 }
 #navigation{
-    color: white;   
+    color: whitesmoke;   
 }
 #navigation a{
-    color: white;   
+    color: whitesmoke;   
 }
 #navigation a:hover{
     color: black;   
@@ -60,7 +102,8 @@ a, a:visited{
     text-align: center;
 }
 .content-box{
-    border: 2px solid #4679bd;
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.4);
+    background-color: white;
     border-radius:2px;
     padding: 0 15px 15px 15px;
     max-width: 600px;
@@ -72,9 +115,10 @@ a, a:visited{
 }
 .content-box h1{
     vertical-align: top;
+    border-radius: 2px 2px 0 0;
     display: block;
     background-color: #4679bd;
-    margin: -2px -15px 10px -15px;
+    margin: 0 -15px 10px -15px;
     padding: 5px;
     text-align: center;
     color: white;
@@ -121,12 +165,8 @@ form input[type="submit"]:hover{
 .list table a{
     text-decoration: none;
 }
-.list td:first-child{
-    text-align: center;
-
-}
 .list tr > td{
-    padding: 8px 4px;
+    padding: 4px 4px;
 }
 .list tr, td, th{
     border: 1px solid white;
@@ -161,7 +201,7 @@ form input[type="submit"]:hover{
     width: 350px;
     margin: 20px auto;
     background-color: #facbd5;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.4);
 }
 .lotto-row, .lotto-number{
     padding: 2px;
@@ -197,7 +237,7 @@ form input[type="submit"]:hover{
     text-align: left;
     width: 350px;
     margin: 20px auto;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.4);
 }
 .column1{
     display: inline-block;
@@ -299,10 +339,18 @@ form input[type="submit"]:hover{
 }
 /*serie*/
 #save-number{
+    width: 96.5%;
     margin-bottom: 10px; 
-    background-color: #facbd5;
     display: inline-block;
     padding: 3px;
+    border-radius:2px;
 }
 #save-number input[type="text"]{
+    text-align: center;
+}
+#save-number input[type="submit"]{
+    background-color: #facbd5;
+}
+#save-number input[type="submit"]:hover{
+    background-color: white;
 }

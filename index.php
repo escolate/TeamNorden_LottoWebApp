@@ -13,21 +13,6 @@
 	    <div id="account"><a href="#">zakaria.agoulif@gmail.com</a> | <a href="#">Logout</a></div> 
 	</div>
 	<div id="content">
-	    <div id="navigation">
-		<a href="login.php?page=">LOGIN</a> | 
-		<a href="index.php?page=create">CREATE</a> | 
-		<a href="index.php?page=show">SHOW</a> | 
-		<a href="index.php?page=list_index">INDEX</a> | 
-		<a href="index.php?page=createLottocard">CREATE LOTTO</a> | 
-		<a href="index.php?page=showWinner">SHOW WINNER</a> | 
-		<a href="index.php?page=playEvent">PLAY EVENT</a> | 
-		<a href="index.php?page=showSerie">SHOW SERIE</a> | 
-		<a href="index.php?page=showEvent">SHOW EVENT</a> | 
-		<a href="index.php?page=showNumber">SHOW NUMBER</a> | 
-		<a href="index.php?page=editEvent">EDIT EVENT</a> | 
-		<a href="index.php?page=editNumber">EDIT NUMBER</a> | 
-	    </div>
-
 	    <?php
 	    if (!empty($_GET)) {
 		switch ($_GET) {
@@ -70,6 +55,20 @@
 		}
 	    }
 	    ?>
+	</div>
+	<div id="navigation">
+	    <a href="login.php?page=">LOGIN</a> | 
+	    <a href="index.php?page=create">CREATE</a> | 
+	    <a href="index.php?page=show">SHOW</a> | 
+	    <a href="index.php?page=list_index">INDEX</a> | 
+	    <a href="index.php?page=createLottocard">CREATE LOTTO</a> | 
+	    <a href="index.php?page=showWinner">SHOW WINNER</a> | 
+	    <a href="index.php?page=playEvent">PLAY EVENT</a> | 
+	    <a href="index.php?page=showSerie">SHOW SERIE</a> | 
+	    <a href="index.php?page=showEvent">SHOW EVENT</a> | 
+	    <a href="index.php?page=showNumber">SHOW NUMBER</a> | 
+	    <a href="index.php?page=editEvent">EDIT EVENT</a> | 
+	    <a href="index.php?page=editNumber">EDIT NUMBER</a> | 
 	</div>
     </body>
 </html>

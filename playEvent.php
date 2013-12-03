@@ -1,8 +1,11 @@
 <div class="content-box">
     <h1>Serie 7</h1>
-    <form id="save-number">
-	<input type="text" placeholder="Zahl" autocomplete="off">
-	<input type="submit" value="Ziehen!">
+    <form >
+	<fieldset id="save-number">
+	    <legend>Zahl ziehen!</legend>
+	    <input type="text" placeholder="Zahl" autocomplete="off">
+	    <input type="submit" value="Ziehen!">
+	</fieldset>
     </form>
     <div class="list">
 	<form name="events">
