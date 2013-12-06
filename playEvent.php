@@ -20,7 +20,7 @@
 		<tfoot>
 		    <tr>
 			<td><input type="checkbox"></td>
-			<td>Alle auswählen</td>
+			<td  id="events">Alle auswählen</td>
 			<td></td>
 		    </tr>
 		</tfoot>

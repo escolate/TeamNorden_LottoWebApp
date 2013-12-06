@@ -5,14 +5,21 @@
         <link rel="stylesheet" type="text/css" href="css/normalize.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <title>Musikverein Lotto</title>
+	<script src="jquery-1.10.2.min.js"></script>
+	<script src="application.js"></script>
     </head>
     <body>
+
 	<div id="header">
-	    <a href="index.php?page="><div id="logo"></div></a>
-	    <div id="breadcrumb"><a href="#">Start</a> &gt; <a href="#">Veranstaltung</a> &gt; Neue Veranstaltung erstellen</div>
-	    <div id="account"><a href="#">zakaria.agoulif@gmail.com</a> | <a href="#">Logout</a></div> 
+	    <img src="css/logo.png" id="logo">
+	    <div id="breadcrumb"><a href="index.php?page=">Start</a> &gt; <a href="#">Veranstaltung </a> &gt; <a href="#">Lotto und Biergarten </a> &gt; Zahl bearbeiten</div>
+	    <div id="account" data-tip="Hier kannst du dein Profil bearbeiten oder dich ausloggen."><a href="#">zakaria.agoulif@gmail.com</a> | <a href="#">Logout</a></div> 
 	</div>
 	<div id="content">
+	    <!--	    <div class="alert red">Fehler!</div>
+			<div class="alert green">Speichern erfolgreich!</div>-->
+	    <a href="#"><div class="alert blue">Hinweis. Spiel "Lotto und Biergarten" läuft!</div></a>
+	    <div id="debugg"></div>
 	    <?php
 	    if (!empty($_GET)) {
 		switch ($_GET) {

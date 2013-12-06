@@ -15,15 +15,15 @@
 	    <p>21. Januar 2012, 17:47 Uhr</p>
 	</div> 
 	<div>
-	    <div class="ball" data-tip="Gezogen am: 17:45:23">1</div> <div class="ball" data-tip="Gezogen am: 17:45:23">3</div> <div class="ball" data-tip="Gezogen am: 17:45:23">14</div>
-	    <div class="ball" data-tip="Gezogen am: 17:45:23">45</div> <div class="ball winning" data-tip="Gezogen am: 17:45:23">65</div> <div class="ball" data-tip="Gezogen am: 17:45:23">14</div>
-	    <div class="ball winning" data-tip="Gezogen am: 17:45:23">89</div> <div class="ball" data-tip="Gezogen am: 17:45:23">41</div> <div class="ball" data-tip="Gezogen am: 17:45:23">14</div>
-	    <div class="ball" data-tip="Gezogen am: 17:45:23">44</div> <div class="ball" data-tip="Gezogen am: 17:45:23">39</div> <div class="ball" data-tip="Gezogen am: 17:45:23">14</div>
-	    <div class="ball" data-tip="Gezogen am: 17:45:23">34</div> <div class="ball winning" data-tip="Gezogen am: 17:45:23">42</div> <div class="ball" data-tip="Gezogen am: 17:45:23">14</div>
-	    <div class="ball" data-tip="Gezogen am: 17:45:23">78</div> <div class="ball" data-tip="Gezogen am: 17:45:23">3</div> <div class="ball" data-tip="Gezogen am: 17:45:23">14</div>
-	    <div class="ball winning" data-tip="Gezogen am: 17:45:23">2</div> <div class="ball" data-tip="Gezogen am: 17:45:23">76</div> <div class="ball" data-tip="Gezogen am: 17:45:23">14</div>
-	    <div class="ball" data-tip="Gezogen am: 17:45:23">4</div> <div class="ball" data-tip="Gezogen am: 17:45:23">5</div> <div class="ball" data-tip="Gezogen am: 17:45:23">14</div>
-	    <div class="ball" data-tip="Gezogen am: 17:45:23">13</div> <div class="ball winning" data-tip="Gezogen am: 17:45:23">56</div> <div class="ball" data-tip="Gezogen am: 17:45:23">14</div>
+	    <div class="ball" >1</div> <div class="ball" >3</div> <div class="ball" >14</div>
+	    <div class="ball" >45</div> <div class="ball winning" >65</div> <div class="ball" >14</div>
+	    <div class="ball winning" >89</div> <div class="ball" >41</div> <div class="ball" >14</div>
+	    <div class="ball" >44</div> <div class="ball" >39</div> <div class="ball" >14</div>
+	    <div class="ball" >34</div> <div class="ball winning" >42</div> <div class="ball" >14</div>
+	    <div class="ball" >78</div> <div class="ball" >3</div> <div class="ball" >14</div>
+	    <div class="ball winning" >2</div> <div class="ball" >76</div> <div class="ball" >14</div>
+	    <div class="ball" >4</div> <div class="ball" >5</div> <div class="ball" >14</div>
+	    <div class="ball" >13</div> <div class="ball winning" >56</div> <div class="ball" >14</div>
 	</div>
     </div>
 

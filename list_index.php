@@ -85,57 +85,7 @@
 		    </tr>
 		    <tr>
 			<td><input type="checkbox"></td>
-			<td><a href="#">Pflaumentanz</a></td>
-			<td><a href="#">30.10.2013</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Pflaumentanz</a></td>
-			<td><a href="#">30.10.2013</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Pflaumentanz</a></td>
-			<td><a href="#">30.10.2013</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Pflaumentanz</a></td>
-			<td><a href="#">30.10.2013</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Pflaumentanz</a></td>
-			<td><a href="#">30.10.2013</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Pflaumentanz</a></td>
-			<td><a href="#">30.10.2013</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Pflaumentanz</a></td>
-			<td><a href="#">30.10.2013</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Pflaumentanz</a></td>
-			<td><a href="#">30.10.2013</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Pflaumentanz</a></td>
-			<td><a href="#">30.10.2013</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Pflaumentanz</a></td>
-			<td><a href="#">30.10.2013</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Happa Happa Lotto wir sind luschtig.qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</a></td>
+			<td><a href="#">Happa Happa Lotto wir sind luschtig!</a></td>
 			<td><a href="#">01.02.2012</a></td>
 		    </tr>
 		</tbody>
