@@ -1,0 +1,22 @@
+/user
+	- /index
+	- /show
+	- /create
+	- /update
+/event
+	- /index
+	- /show
+	- /create
+	- /update
+/play
+	- /[EVENTID]
+/cards
+	- /index
+	- /show
+	- /create
+	- /update
+/series
+	- /index
+	- /show
+	- /create
+	- /update
