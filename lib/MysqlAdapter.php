@@ -1,7 +1,5 @@
 <?php
 
-include_once "{$_SERVER['DOCUMENT_ROOT']}/model/FAQ.php";
-
 /**
  * Description of MysqlAdapter
  *
@@ -14,7 +12,7 @@ final class MysqlAdapter {
      * @var MysqlAdapter
      */
     private static $MysqlAdapter;
-    
+
     /**
      *
      * @var mysqli
@@ -23,43 +21,59 @@ final class MysqlAdapter {
 
 //put your code here
     private function __construct() {
-        $this->con = new mysqli(DB_SERVER, DB_USER, DB_PW, DB_DB);
-        if ($this->con->connect_errno) {
-            echo "Failed to connect to MySQL: (" . $this->con->connect_errno . ") " . $this->con->connect_error;
-        }
-        else {
-            $this->con->set_charset("utf8");
-        }
+	$this->con = new mysqli(DB_SERVER, DB_USER, DB_PW, DB_DB);
+	if ($this->con->connect_errno) {
+	    echo "Failed to connect to MySQL: (" . $this->con->connect_errno . ") " . $this->con->connect_error;
+	} else {
+	    $this->con->set_charset("utf8");
+	}
     }
 
     public static function getInstance() {
-        if (self::$MysqlAdapter == NULL) {
-            self::$MysqlAdapter = new MysqlAdapter();
-        }
-        
-        return self::$MysqlAdapter;
+	if (self::$MysqlAdapter == NULL) {
+	    self::$MysqlAdapter = new MysqlAdapter();
+	}
+
+	return self::$MysqlAdapter;
     }
 
     /**
-     * @return array Array of FAQ-Objects
+     * @return User
      */
-    public function getFAQs() {
-        $FAQs = array();
-        $query = "SELECT * FROM faqs WHERE state = 'active'";
-        $result = $this->con->query($query);
-        $result->data_seek(0);
-        
-        while ($row = $result->fetch_assoc()) {
-            $faq = new FAQ();
-            $faq->setId($row['id']);
-            $faq->setQuestion($row['question']);
-            $faq->setAnswer($row['answer']);
-            $faq->setState($row['state']);
-            $FAQs[] = $faq;
-        }
-        
-        return $FAQs;
-        
+    public function getUser($id) {
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/model/User.class.php';
+	$query = "SELECT * FROM user WHERE (use_del IS NULL OR use_del = 0) AND use_id = $id";
+	$result = $this->con->query($query);
+
+	if ($result->num_rows) {
+	    $row = $result->fetch_assoc();
+	    $user = new User();
+	    $user->setUse_id($row['use_id']);
+	    $user->setUse_lastname($row['use_lastname']);
+	    // comming soon;
+	    return $user;
+	}
+	return null;
+    }
+
+    /**
+     * 
+     * @param type $id
+     * @return \Winner
+     */
+    public function getWinner($id) {
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Winner.class.php';
+	$query = "SELECT * FROM winner WHERE win_id = $id";
+	$result = $this->con->query($query);
+
+	if ($result->num_rows) {
+	     $row = $result->fetch_assoc();
+	    $winner = new Winner();
+	    $winner->setUse_id($row['use_id']);
+	    return $winner;
+	}
+
+	return NULL;
     }
 
 }
