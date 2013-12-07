@@ -1,201 +1,309 @@
-/* 
-    Document   : style
-    Created on : 29.10.2013, 16:16:37
-    Author     : tscheurer
-    Description:
-        Purpose of the stylesheet follows.
-*/
-
-root { 
-    display: block;
-}
-
-body {
-    font-family: "Segoe UI", sans-serif;
-    font-size: 14px;
-    background-color: #060e14;
-}
-
-div {
-    /*border: 1px solid black;*/
-}
-
-h1 {
-    padding: 0px;
-    margin: 0px;
-}
-
-h2 {
-    padding: 0px;
-    margin: 0px;
-}
-
-h3 {
-    padding: 0px;
-    margin: 0px;
-}
-
-#bg {
-    padding-bottom: 10px;
-    background: #28608a; /* Old browsers */
-    background: -moz-linear-gradient(top,  #28608a 0%, #060e14 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#28608a), color-stop(100%,#060e14)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #28608a 0%,#060e14 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #28608a 0%,#060e14 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #28608a 0%,#060e14 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #28608a 0%,#060e14 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#28608a', endColorstr='#060e14',GradientType=0 ); /* IE6-9 */
-}
-
-#header {
-    background-color: lightgray;
-    /*border-bottom: 1px solid grey;*/
-    padding: 2px 5px;
-    font-size: 14px;
-
-    color: white;
-    background-color: darkslategray;
-}
-
-#date {
-    display: inline;
-}
-
-#user {
-    float: right;
-    display: inline;
-}
-
-#logo {
-    padding: 15px 5px;
-    background-color: #DF0029;
-    color: white;
-}
-
-#notifications {
-    background-color: #F2DEDE;
-    border-color: #EED3D7;
-    color: #B94A48;
-    padding: 5px;
-    font-size: 12px;
-}
-
-#breadcrumbs {
-    padding: 5px;
-    color: white;
-}
-
-#content {
+/*test & develop*/
+#debugg{
+    z-index: 1001;
+    font-size: 16px;
+    font-weight: bolder;
     background-color: white;
-    margin-bottom: 10px;
-    min-height: 350px;
-    box-shadow: 0px 0px 100px rgba(255,255,255,0.5);
 }
-a{
-    text-decoration: none;
-}
-.buttoncreate{
-    display: inline-block;
-    background-color: #dff0d8;
-    max-width: 100px;
-    text-align: center;
-    padding: 2px 3px 2px 3px;
-    margin: 2px 3px 2px 3px;
-    color: #468847;
-    font-weight: bold;
-    border: 1px solid #d6e9c6;
-}
-
-a:hover.buttoncreate{
-    background-color: #d6e9c6;
-    border: 1px solid #d6e9c6;
-}
-.buttonclose{
-    display: inline-block;
-    background-color: #f2dede;
-    max-width: 100px;
-    text-align: center;
-    padding: 2px 3px 2px 3px;
-    margin: 2px 3px 2px 3px;
-    color: #b94a48;
-    font-weight: bold;
-    border: 1px solid #ebccd1;
-}
-
-a:hover.buttonclose{
-    background-color: #ebccd1;
-}
-.buttonadd{
-    display: inline-block;
-    background-color: #d9edf7;
-    max-width: 100px;
-    text-align: center;
-    padding: 2px 3px 2px 3px;
-    margin: 2px 3px 2px 3px;
-    color: #3a87ad;
-    font-weight: bold;
-    border: 1px solid #bce8f1;
-}
-
-a:hover.buttonadd{
-    background-color: #bce8f1;
-
-    text-align: center;
-}
-
-#content .frame {
-    /*display: table;*/
+.alert{
     width: 100%;
-}
-
-#content .frame div {
-    /*display: table-cell;*/
+    padding: 10px;
     display: inline-block;
-    border: 5px solid lightgray;
-    margin: 10px;
-    width: 250px;
-    vertical-align: top;
-    padding: 5px;
-}
-
-#content .frame table {
-    margin: 5px 0;
-    width: 100%;
     border: 1px solid gray;
 }
-
-#content .frame th {
-    background-color: gray;
+/*global*/
+body {
+    font-family: "Segoe UI", sans-serif;
+    font-size: 12px;
+    background-color: #e5e5e5;
 }
-
-#zahl_ziehung {
-    width: 20px;
+a:hover{
+    text-decoration: none;
 }
-
-#content .frame .action {
+a, a:visited{
+    color: black;
+}
+/*dashboard*/
+.dashboard-links{
+    text-align: center;
+}
+/*buttons*/
+.button{
+    padding: 4px;
+    text-decoration: none;
+    border-radius: 2px;
+    margin: 4px;
+    border:1px solid #e5e5e5;
+}
+.button:hover{
+    background-color: white;
+}
+/*color*/
+.yellow{
+    color: #c09853;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+.red{
+    color: #b94a48;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+.green{
+    color: #468847;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+.blue{
+    color: #3a87ad;
+    background-color: #d9edf7;
+    border-color: #bce8f1; 
+}
+.grey{
+    color: black;
+    background-color: lightgray;
+    border-color: #b8b4b4; 
+}
+/*header*/
+#header{
+    white-space: nowrap;
+    width: 100%;
+    position: fixed;
+    background-color: #4679bd;
+    color: white;
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.4);
+}
+#logo{
+    float: left;
+    padding: 2px;
+    width: 60px;
+}
+#header a{
+    color: white;
+}
+#header div{
+    display: inline;
+    padding: 15px;
+}
+#account{
+    float: right;
+}
+#breadcrumb{
     float: left;
 }
 
-#content .frame .action select {
-    width: 150px;
+/*content*/
+#content{
+    padding-top: 50px;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 50px;
+    text-align: center;
 }
-
-.error {
-    background-color: #F2DEDE;
-    color: #B94A48;
+.content-box{
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.4);
+    background-color: white;
+    border-radius:2px;
+    padding: 0 15px 15px 15px;
+    max-width: 600px;
+    min-width: 300px;
+    display: inline-block;
+    text-align: left;
+    margin: 20px 20px 0 0;
+    vertical-align: top;
 }
-
-.warning {
-    background-color: #FCF8E3;
-    color: #C09853;
+.content-box h1{
+    vertical-align: top;
+    border-radius: 2px 2px 0 0;
+    display: block;
+    background-color: #4679bd;
+    margin: 0 -15px 10px -15px;
+    padding: 5px;
+    text-align: center;
+    color: white;
 }
-
-.info {
-    background-color: #D9EDF7;
-    color: #3A87AD;
+/*form*/
+form input[type="submit"]{
+    border: 1px solid #4679bd;
+    border-radius:2px;
+    background-color: #efefef;
+    margin: 15px 15px 0 0;;
 }
+form input[type="submit"]:hover{
+    background-color: white;
+}
+.forms label{
+    text-align: right;
+}
+.forms input{
+    line-height: 22px;
+}
+.forms input[type="text"], input[type="date"], select{
+    margin: 15px;
+    min-width: 150px;
+}
+.forms input[type="radio"]{
+    margin-right: 8px;
+}
+.forms fieldset{
+    margin: 0;
+    border: 1px solid #efefef;
+    border-radius:2px;
+}
+.wider{
+    display: inline-block;
+    width: 170px;
+}
+/*list(index)*/
+.list table {
+    width: 100%;
+    background-color: #efefef;
+    margin-bottom: 10px;
+    vertical-align: central;
+}
+.list table a{
+    text-decoration: none;
+}
+.list tr > td{
+    padding: 4px 4px;
+}
+.list tr, td, th{
+    border: 1px solid white;
+}
+.list th{
+    padding: 8px 4px;
+}
+.list tfoot{
+    background-color: white;
+    font-style: oblique;
+}
+.list tbody tr:hover{
+    background-color: white;
+}
+.list a{
+    display: inline-block;
+    width: 100%;
+}
+.pages{
+    text-align: center;
+    margin-top: 20px;
+}
+.pages form{
+    display: inline-block;
+}
+/*lotto-card*/
+.lotto-card{
 
-.success {
-    background-color: #DFF0D8;
-    color: #468847;
+    border-radius:2px;
+    padding: 10px;
+    text-align: left;
+    width: 350px;
+    margin: 20px auto;
+    background-color: #facbd5;
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.4);
+}
+.lotto-row, .lotto-number{
+    padding: 2px;
+    margin: 5px 0;
+}
+.lotto-row{
+    border: 1px solid black;
+    border-radius:2px;
+}
+.lotto-number{
+    text-align: right;
+}
+.lotto-number span{
+    margin: 0;
+    border: none;
+}
+.lotto-row input{
+    width: 40px;
+    margin: 5px;
+}
+.lotto-row span{
+    margin-right: 25px;
+    font-size: 19px;
+}
+.lotto-row span:first-child, label{
+    font-weight: bold;
+}
+/*event-card*/
+.event-card{
+    border: 1px solid #efefef;
+    border-radius:2px;
+    padding: 10px;
+    text-align: left;
+    width: 350px;
+    margin: 20px auto;
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.4);
+}
+.column1{
+    display: inline-block;
+    margin-right: 10px;
+    font-weight: bold;
+    vertical-align: top;
+}
+.column2{
+    display: inline-block;
+    vertical-align: top;
+}
+/*balls*/
+.ball{
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    background: #4679bd;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    margin: 5px auto;
+    padding: 3px;
+}
+.winning{
+    background: #ffea00;
+    color: black;
+}
+/*login*/
+#login{
+    background-color: white;
+    text-align: center;
+    border: 5px solid #efefef;
+    border-radius:2px;
+    font-size: 15px;
+    margin: auto;
+    margin-top: 100px;	
+    box-shadow: 0px 0px 100px rgba(0,0,0,0.3);
+    width: 40%;
+    min-width: 300px;
+    padding: 60px;
+}
+#login h1{
+    margin-bottom: 20px;
+    color: #4679bd;
+}
+#login input{
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 10px;
+    width: 250px;
+    height: 40px;
+}
+/*serie*/
+#save-number{
+    width: 96.5%;
+    margin-bottom: 10px; 
+    display: inline-block;
+    padding: 3px;
+    border-radius:2px;
+}
+#save-number input[type="text"]{
+    text-align: center;
+}
+#save-number input[type="submit"]{
+    background-color: #facbd5;
+}
+#save-number input[type="submit"]:hover{
+    background-color: white;
 }
