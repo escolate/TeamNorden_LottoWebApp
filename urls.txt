@@ -19,4 +19,4 @@
 	- /index
 	- /show
 	- /create
-	- /update
+	- /update 
