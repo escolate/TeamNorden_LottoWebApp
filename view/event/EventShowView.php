@@ -1,8 +1,10 @@
 <?php
 
 class EventShowView extends View {
-
+    private $evt_name;
     public function display() {
+	echo $this->vars['event']->getEvt_name();
+
 	echo <<<EVENTDETAIL
    <div class="content-box">
     <h1>Veranstaltung</h1>

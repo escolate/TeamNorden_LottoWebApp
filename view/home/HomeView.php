@@ -2,9 +2,15 @@
 
 class HomeView extends View {
 
+    /**
+     *
+     * @var event
+     */
+    private $event;
+
     public function display() {
-        echo <<<DASHBOARD
-        
+	$this->event = $this->vars['event'];
+	echo <<<DASHBOARD
         <div class="content-box">
     <h1>Neuste Veranstaltungen</h1>
     <div class="list">
@@ -12,36 +18,24 @@ class HomeView extends View {
 	    <thead>
 		<tr>
 		    <th>Name</th>
+		    <th>Veranstaltungsdatum</th>
 		    <th>Erstellt</th>
+		    <th>Geändert</th>
 		</tr>
 	    </thead>
 	    <tbody>
 		<tr>
-		    <td><a href="#">Biergarten und Lotto</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">Biergarten und Lotto</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">Biergarten und Lotto</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">Biergarten und Lotto</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">Biergarten und Lotto</a></td>
-		    <td><a href="#">31.10.2013</a></td>
+		    <td><a href="/event/{$this->event->getEvt_id()}">{$this->event->getEvt_name()}</a></td>
+		    <td><a href="/event/{$this->event->getEvt_id()}">{$this->event->getEvt_datetime()}</a></td>
+		    <td><a href="/event/{$this->event->getEvt_id()}">{$this->event->getEvt_cre_dat()}, {$this->event->getEvt_cre_id()}</a></td>
+		    <td><a href="/event/{$this->event->getEvt_id()}">{$this->event->getEvt_mod_date()}, {$this->event->getEvt_mod_id()}</a></td>
 		</tr>
 	    </tbody>
 	</table>
     </div>
     <div class="dashboard-links">
-	<a href="index.php?page=list_index" class="button blue">Alle anzeigen</a>
-	<a href="index.php?page=create" class="button green">Erstellen</a>
+	<a href="event" class="button blue">Alle anzeigen</a>
+	<a href="event/new" class="button green">Erstellen</a>
     </div>
 
 </div>

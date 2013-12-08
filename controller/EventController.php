@@ -17,8 +17,8 @@ class EventController extends Controller {
     }
 
     protected function index() {
-	include_once './view/event/EventListView.php';
-	$view = new EventListView();
+	include_once './view/event/EventView.php';
+	$view = new EventView();
 	$view->display();
     }
 
@@ -27,8 +27,8 @@ class EventController extends Controller {
     }
 
     protected function show() {
-	include_once './view/event/EventDetailView.php';
-	$view = new EventDetailView();
+	include_once './view/event/EventShowView.php';
+	$view = new EventShowView();
 	$event = MysqlAdapter::getInstance()->getEvent($this->resourceId);
 	$view->assign('event', $event);
 	$view->display();

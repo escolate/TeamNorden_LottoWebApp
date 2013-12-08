@@ -30,7 +30,8 @@ class WinnerController extends Controller {
         $view = new WinnerShowView();
 	$winner = MysqlAdapter::getInstance()->getWinner($this->resourceId);
 	$view->assign('winner', $winner);
-	$view->assign('user', MysqlAdapter::getInstance()->getUser($winner->getUse_id()));
+	$user = MysqlAdapter::getInstance()->getUser($winner->getUse_id());
+	$view->assign('user', $user);
         $view->display();
     }
 }

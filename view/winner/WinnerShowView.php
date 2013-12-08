@@ -19,10 +19,9 @@ class WinnerShowView extends View {
     private $user;
 
     public function display() {
-	/**
-	 * User
-	 */
+
 	$this->user = $this->vars['user'];
+
         echo <<<WINNER
         <div class="content-box">
     <h1>Gewinn</h1>
@@ -35,7 +34,7 @@ class WinnerShowView extends View {
 	    <p>Gezogene Zahlen:</p>
 	</div> 
 	<div class="column2">
-	    <p>Zakaria {$this->user->getUse_lastname()} (Gönner)</p>
+	    <p>{$this->user->getUse_firstname()} {$this->user->getUse_lastname()} (Gönner)</p>
 	    <p>Biergarten und Lotto</p>
 	    <p>7</p>
 	    <p>21. Januar 2012, 17:47 Uhr</p>
