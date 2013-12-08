@@ -46,13 +46,11 @@
 		    $controller = new HomeController();
 		    break;
 	    }
-
 	    $controller->route();
 	    ?>
         </div>
     </body>
 </html>
-
 <?php
 
 /**

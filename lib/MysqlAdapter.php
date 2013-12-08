@@ -67,15 +67,28 @@ final class MysqlAdapter {
 	$result = $this->con->query($query);
 
 	if ($result->num_rows) {
-	     $row = $result->fetch_assoc();
+	    $row = $result->fetch_assoc();
 	    $winner = new Winner();
 	    $winner->setUse_id($row['use_id']);
+	    // comming soon;
 	    return $winner;
 	}
-
 	return NULL;
     }
 
+    public function getEvent($id) {
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Event.class.php';
+	$query = "SELECT * FROM event WHERE evt_id = $id";
+	$result = $this->con->query($query);
+	if ($result->num_rows) {
+	    $row = $result->fetch_assoc();
+	    $event = new Event();
+	    $event->setEvt_id($row['evt_id']);
+	    $event->setEvt_name('evt_name');
+	    return $event;
+	}
+	return NULL;
+    }
 }
 
 ?>
