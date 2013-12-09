@@ -1,15 +1,8 @@
 <?php
 
 class HomeView extends View {
-
-    /**
-     *
-     * @var event
-     */
-    private $event;
-
+    
     public function display() {
-	$this->event = $this->vars['event'];
 	echo <<<DASHBOARD
         <div class="content-box">
     <h1>Neuste Veranstaltungen</h1>
@@ -24,12 +17,18 @@ class HomeView extends View {
 		</tr>
 	    </thead>
 	    <tbody>
-		<tr>
-		    <td><a href="/event/{$this->event->getEvt_id()}">{$this->event->getEvt_name()}</a></td>
-		    <td><a href="/event/{$this->event->getEvt_id()}">{$this->event->getEvt_datetime()}</a></td>
-		    <td><a href="/event/{$this->event->getEvt_id()}">{$this->event->getEvt_cre_dat()}, {$this->event->getEvt_cre_id()}</a></td>
-		    <td><a href="/event/{$this->event->getEvt_id()}">{$this->event->getEvt_mod_date()}, {$this->event->getEvt_mod_id()}</a></td>
-		</tr>
+DASHBOARD;
+	foreach ($this->vars as $value) {
+	    foreach ($value as $object) {
+		echo '<tr>';
+		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_name()}</a></td>";
+		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_datetime()}</a></td>";
+		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_cre_dat()}, {$object->getEvt_cre_id()}</a></td>";
+		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_mod_date()}, {$object->getEvt_mod_id()}</a></td>";
+		echo '</tr>';
+	    }
+	}
+	echo <<<DASHBOARD
 	    </tbody>
 	</table>
     </div>

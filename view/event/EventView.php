@@ -11,9 +11,11 @@ class EventView extends View {
 	    <table>
 		<thead>
 		    <tr>
-			<th></th>
-			<th>Name</th>
-			<th>Erstellt</th>
+		    <th></th>
+		    <th>Name</th>
+		    <th>Veranstaltungsdatum</th>
+		    <th>Erstellt</th>
+		    <th>Geändert</th>
 		    </tr>
 		</thead>
 		<tfoot>
@@ -21,29 +23,24 @@ class EventView extends View {
 			<td><input type="checkbox"></td>
 			<td>Alle auswählen</td>
 			<td></td>
+			<td></td>
+			<td></td>
 		    </tr>
 		</tfoot>
 		<tbody>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Biergarten und Lotto</a></td>
-			<td><a href="#">31.10.2013</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Pflaumentanz</a></td>
-			<td><a href="#">30.10.2013</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Pflaumentanz</a></td>
-			<td><a href="#">30.10.2013</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Pflaumentanz</a></td>
-			<td><a href="#">30.10.2013</a></td>
-		    </tr>
+EVENT;
+	foreach ($this->vars as $value) {
+	    foreach ($value as $object) {
+		echo '<tr>';
+		echo '<td><input type="checkbox"></td>';
+		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_name()}</a></td>";
+		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_datetime()}</a></td>";
+		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_cre_dat()}, {$object->getEvt_cre_id()}</a></td>";
+		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_mod_date()}, {$object->getEvt_mod_id()}</a></td>";
+		echo '</tr>';
+	    }
+	}
+	echo <<<EVENT
 		</tbody>
 	    </table>
 	    <select name="events-action">

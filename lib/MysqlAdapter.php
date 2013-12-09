@@ -79,23 +79,13 @@ final class MysqlAdapter {
 	return NULL;
     }
 
-    /**
-     * The param is optional. If param is empty or "[all]" the function return all events back.
-     * 
-     * @param type $id
-     * @return \Event|null
-     */
-    public function getEvent($id = "[all]") {
 
-	if ($id == "[all]") {
-	    $query = "SELECT * FROM event";
-	} elseif (is_int($id)) {
-	    $query = "SELECT * FROM event WHERE evt_id = $id";
-	}
+    public function getEvent($query) {
 	$result = $this->con->query($query);
+	$eventList = array();
 	if ($result->num_rows) {
-	    $event = new Event();
 	    while ($row = $result->fetch_assoc()) {
+		$event = new Event();
 		$event->setEvt_id($row['evt_id']);
 		$event->setEvt_name($row['evt_name']);
 		$event->setEvt_location($row['evt_location']);
@@ -107,8 +97,9 @@ final class MysqlAdapter {
 		$event->setEvt_mod_date($row['evt_mod_date']);
 		$event->setEvt_zip($row['evt_zip']);
 		$event->setEvt_mod_id($row['evt_mod_id']);
+		$eventList[] = $event;
 	    }
-	    return $event;
+		return $eventList;
 	}
 	return NULL;
     }
