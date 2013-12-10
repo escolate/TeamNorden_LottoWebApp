@@ -12,6 +12,11 @@ private $win_mod_dat;
 private $win_mod_id;
 private $win_del;
 private $win_prize;
+/**
+ *
+ * @var User
+ */
+private $user;
 
 public function getWin_id() {
     return $this->win_id;
@@ -93,6 +98,13 @@ public function setWin_prize($win_prize) {
     $this->win_prize = $win_prize;
 }
 
+public function getUser() {
+    return $this->user;
+}
+
+public function setUser(User $user) {
+    $this->user = $user;
+}
 
 }
 ?>
