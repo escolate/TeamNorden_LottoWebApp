@@ -32,9 +32,8 @@ include_once './view/View.php';
             </div>
             </noscript>
             <img src="/images/logos/logo.png" id="logo">
-            <div id="breadcrumb">
-		<?php echo getBreadCrumbs();?></div>
-            <div id="account" data-tip="Hier kannst du dein Profil bearbeiten oder dich ausloggen."><a href="/admin">zakaria.agoulif@gmail.com</a> | <a href="#">Logout</a></div>
+            <div id="breadcrumb"><?php echo getBreadCrumbs(); ?></div>
+            <div id="account" data-tip="Hier kannst du dein Profil bearbeiten oder dich ausloggen."><a href="#">zakaria.agoulif@gmail.com</a> | <form action="/login.php" method="post"> <input type="hidden" name="action" value="logout"><a id="logoutlink" href="#">Logout</a></form></div> 
         </div>
         <div id="content">
             <div id="debugg"></div>
