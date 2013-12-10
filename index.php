@@ -1,3 +1,10 @@
+<?php
+session_start();
+//Check login
+if(!isset($_SESSION['user']['id'])) {
+    header("Location: /login.php",TRUE,303);
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,9 +18,15 @@
     <body lang="de">
 
         <div id="header">
+            <noscript>
+            <div id="noscript" class="red">
+                Um die applikation verwenden zu können müssen sie Javascript aktivieren!
+                <img alt="X" src="/images/icons/cancel_sw.png">
+            </div>
+            </noscript>
             <img src="/images/logos/logo.png" id="logo">
             <div id="breadcrumb"><?php echo getBreadCrumbs(); ?></div>
-            <div id="account" data-tip="Hier kannst du dein Profil bearbeiten oder dich ausloggen."><a href="#">zakaria.agoulif@gmail.com</a> | <a href="#">Logout</a></div> 
+            <div id="account" data-tip="Hier kannst du dein Profil bearbeiten oder dich ausloggen."><a href="#">zakaria.agoulif@gmail.com</a> | <form action="/login.php" method="post"><input type="hidden" name="action" value="logout"><a id="logoutlink" href="#">Logout</a></form></div> 
         </div>
         <div id="content">
             <div id="debugg"></div>

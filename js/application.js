@@ -13,5 +13,13 @@ $(document).ready(function(){ // Ready function start
 	    checked = false;
 	}
     });
+    
+    $("#logoutlink").on('click',function () {
+        $(this).parent('form').submit();
+    });
+    
+    $('#noscript img').on('click',function () {
+        $('#noscript').slideUp().promise($(this).remove());
+    })
 
 });// Ready function end

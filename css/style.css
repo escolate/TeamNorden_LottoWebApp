@@ -307,3 +307,20 @@ form input[type="submit"]:hover{
 #save-number input[type="submit"]:hover{
     background-color: white;
 }
+
+#header #noscript {
+    display: block;
+    font-weight: bold;
+    /*text-align: center;*/
+}
+
+#header #noscript div {
+    float: right;
+}
+
+#noscript img {
+    position: absolute;
+    right: 15px;
+    vertical-align: middle;
+    cursor: pointer;
+}
