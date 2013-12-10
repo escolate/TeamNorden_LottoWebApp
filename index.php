@@ -77,16 +77,24 @@ include_once './view/View.php';
  */
 function getBreadCrumbs() {
     $arr = explode("/", $_SERVER['REQUEST_URI']);
+//    var_dump($arr);
     $out = '<a href="/" >Start</a>';
     $href = "";
+    $end =  end($arr);
 
     foreach ($arr as $val) {
-	if (!empty($val)) {
-	    $href .= $val . "/";
-	    $out .= " &gt; <a href=\"/{$href}\" >" . ucfirst($val) . "</a>";
+		if(!empty($val)){
+	   $out .= " &gt;"; 
 	}
-    }
+	if (!empty($val) AND $val != $end AND !empty($end)) {
+	    $href .= $val . "/";
+	    $out .= "<a href=\"/{$href}\" >" . preg_replace("/^[0-9]+-/", "", ucfirst($val)) . "</a>";
+	}else{
+	    $out .= preg_replace("/^[0-9]+-/", "", ucfirst($val));
+	}
 
+	
+    }
     return $out;
 }
 
