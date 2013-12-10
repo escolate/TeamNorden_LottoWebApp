@@ -141,40 +141,12 @@ DASHBOARD;
 		    <td><a href="#">01,10,45,87,90</a></td>
 		    <td><a href="#">31.10.2013</a></td>
 		</tr>
-		<tr>
-		    <td><a href="#">34456</a></td>
-		    <td><a href="#">01,10,45,87,90</a></td>
-		    <td><a href="#">01,10,45,87,90</a></td>
-		    <td><a href="#">01,10,45,87,90</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">34456</a></td>
-		    <td><a href="#">01,10,45,87,90</a></td>
-		    <td><a href="#">01,10,45,87,90</a></td>
-		    <td><a href="#">01,10,45,87,90</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">34456</a></td>
-		    <td><a href="#">01,10,45,87,90</a></td>
-		    <td><a href="#">01,10,45,87,90</a></td>
-		    <td><a href="#">01,10,45,87,90</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">34456</a></td>
-		    <td><a href="#">01,10,45,87,90</a></td>
-		    <td><a href="#">01,10,45,87,90</a></td>
-		    <td><a href="#">01,10,45,87,90</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
 	    </tbody>
 	</table>
     </div>
     <div class="dashboard-links">
-	<a href="index.php?page=list_index" class="button blue">Alle anzeigen</a>
-	<a href="index.php?page=create" class="button green">Erstellen</a>
+	<a href="card" class="button blue">Alle anzeigen</a>
+	<a href="new" class="button green">Erstellen</a>
     </div>
 </div>
 <div class="content-box">

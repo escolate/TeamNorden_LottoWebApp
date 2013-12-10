@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 //Check login
 if(!isset($_SESSION['user']['id'])) {
@@ -23,7 +22,6 @@ include_once './view/View.php';
         <script src="/js/application.js"></script>
     </head>
     <body lang="de">
-
         <div id="header">
             <noscript>
             <div id="noscript" class="red">
@@ -33,11 +31,11 @@ include_once './view/View.php';
             </noscript>
             <img src="/images/logos/logo.png" id="logo">
             <div id="breadcrumb"><?php echo getBreadCrumbs(); ?></div>
-            <div id="account" data-tip="Hier kannst du dein Profil bearbeiten oder dich ausloggen."><a href="#"><?php echo $_SESSION['user']['name']; ?></a> | <form action="/login.php" method="post"> <input type="hidden" name="action" value="logout"><a id="logoutlink" href="#">Logout</a></form></div> 
+            <div id="account" title="Bearbeite dein Account."><a href="#"><?php echo $_SESSION['user']['name']; ?></a> | <form action="/login.php" method="post"> <input type="hidden" name="action" value="logout"><a id="logoutlink" href="#" title="Hier beendest du die Lotto Web App.">Logout</a></form></div> 
         </div>
         <div id="content">
             <div id="debugg"></div>
-	    <?php
+<?php
 	    switch (getUriFirst()) {
 		case URI_EVENT:
 		    include_once './controller/EventController.php';
@@ -59,6 +57,10 @@ include_once './view/View.php';
 		    include_once './controller/AdminController.php';
 		    $controller = new AdminController();
 		    break;
+		case URI_CARD:
+		    include_once './controller/CardController.php';
+		    $controller = new CardController();
+		    break;
 		case URI_HOME:
 		default :
 		    include_once './controller/HomeController.php';
@@ -71,13 +73,8 @@ include_once './view/View.php';
     </body>
 </html>
 <?php
-
-/**
- * @return string HTML-Code
- */
 function getBreadCrumbs() {
     $arr = explode("/", $_SERVER['REQUEST_URI']);
-//    var_dump($arr);
     $out = '<a href="/" >Start</a>';
     $href = "";
     $end =  end($arr);
