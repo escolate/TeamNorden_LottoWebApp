@@ -1,15 +1,7 @@
 <?php
+include_once './view/event/EventView.php';
+include_once './view/event/EventShowView.php';
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of EventController
- *
- * @author stinkpad
- */
 class EventController extends Controller {
 
     protected function create() {
@@ -17,8 +9,10 @@ class EventController extends Controller {
     }
 
     protected function index() {
-	include_once './view/event/EventView.php';
 	$view = new EventView();
+	$eventList = MysqlAdapter::getInstance()->getEvent("SELECT * FROM event ORDER BY evt_cre_dat DESC");
+	$view->assign('eventList', $eventList);
+	$view->assign('breadcrumb', 'Events');
 	$view->display();
     }
 
@@ -27,9 +21,9 @@ class EventController extends Controller {
     }
 
     protected function show() {
-	include_once './view/event/EventShowView.php';
+	
 	$view = new EventShowView();
-	$event = MysqlAdapter::getInstance()->getEvent($this->resourceId);
+	$event = MysqlAdapter::getInstance()->getEvent("SELECT * FROM event WHERE evt_id = $this->resourceId");
 	$view->assign('event', $event);
 	$view->display();
     }

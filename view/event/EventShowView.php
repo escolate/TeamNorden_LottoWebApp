@@ -1,27 +1,24 @@
 <?php
 
 class EventShowView extends View {
-    private $evt_name;
     public function display() {
-	echo $this->vars['event']->getEvt_name();
-
 	echo <<<EVENTDETAIL
    <div class="content-box">
     <h1>Veranstaltung</h1>
     <div class="event-card">
 	<div class="column1">
 	    <p>Name:</p>
-	    <p>Adresse:</p>
+	    <p>Ort:</p>
 	    <p>Kanton:</p>
 	    <p>Postleitzahl:</p>
-	    <p>Datum:</p>
+	    <p>Veranstaltungsdatum:</p>
 	</div> 
 	<div class="column2">
-	    <p>Biergarten und Lotto</p>
-	    <p>Rheinstrasse 34</p>
-	    <p>Zürich</p>
-	    <p>8003</p>
-	    <p>23.10.1998</p>
+	    <p>{$this->vars['event'][0]->getEvt_name()}</p>
+	    <p>{$this->vars['event'][0]->getEvt_location()}</p>
+	    <p>{$this->vars['event'][0]->getEvt_city()}</p>
+	    <p>{$this->vars['event'][0]->getEvt_zip()}</p>
+	    <p>{$this->vars['event'][0]->getEvt_datetime()}</p>
 	</div> 
     </div>
     <form>
