@@ -16,6 +16,7 @@ body {
     font-family: "Segoe UI", sans-serif;
     font-size: 12px;
     background-color: #e5e5e5;
+    
 }
 a:hover{
     text-decoration: none;
@@ -68,6 +69,7 @@ a, a:visited{
 #header{
     white-space: nowrap;
     width: 100%;
+    min-width: 500px;
     position: fixed;
     background-color: #4679bd;
     color: white;
