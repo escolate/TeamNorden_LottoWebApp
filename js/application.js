@@ -20,6 +20,6 @@ $(document).ready(function(){ // Ready function start
     
     $('#noscript img').on('click',function () {
         $('#noscript').slideUp().promise($(this).remove());
-    })
+    });
 
 });// Ready function end

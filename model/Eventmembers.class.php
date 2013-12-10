@@ -2,8 +2,9 @@
 
 class Eventmembers {
 
-private $eve_id;
-private $use_id;
+    private $eve_id;
+    private $use_id;
 
 }
+
 ?>
