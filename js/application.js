@@ -13,5 +13,7 @@ $(document).ready(function(){ // Ready function start
 	    checked = false;
 	}
     });
+    
+    
 
 });// Ready function end

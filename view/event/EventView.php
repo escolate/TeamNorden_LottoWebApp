@@ -1,7 +1,6 @@
 <?php
 
 class EventView extends View {
-
     public function display() {
 	echo <<<EVENT
 <div class="content-box">
@@ -29,8 +28,8 @@ class EventView extends View {
 		</tfoot>
 		<tbody>
 EVENT;
-	foreach ($this->vars as $value) {
-	    foreach ($value as $object) {
+	
+	    foreach ($this->vars['eventList'] as $object) {
 		echo '<tr>';
 		echo '<td><input type="checkbox"></td>';
 		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_name()}</a></td>";
@@ -39,7 +38,7 @@ EVENT;
 		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_mod_date()}, {$object->getEvt_mod_id()}</a></td>";
 		echo '</tr>';
 	    }
-	}
+	
 	echo <<<EVENT
 		</tbody>
 	    </table>

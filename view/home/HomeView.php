@@ -1,7 +1,9 @@
 <?php
 
 class HomeView extends View {
-    
+    public function __construct() {
+	
+    }
     public function display() {
 	echo <<<DASHBOARD
         <div class="content-box">

@@ -4,26 +4,16 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/model/User.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Winner.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Event.class.php';
 
-/**
- * Description of MysqlAdapter
- *
- * @author tscheurer
- */
+
 final class MysqlAdapter {
 
-    /**
-     *
-     * @var MysqlAdapter
-     */
+
     private static $MysqlAdapter;
 
-    /**
-     *
-     * @var mysqli
-     */
-    private $con;
 
-//put your code here
+    private $con;
+    private $limit;
+
     private function __construct() {
 	$this->con = new mysqli(DB_SERVER, DB_USER, DB_PW, DB_DB);
 	if ($this->con->connect_errno) {
@@ -37,33 +27,27 @@ final class MysqlAdapter {
 	if (self::$MysqlAdapter == NULL) {
 	    self::$MysqlAdapter = new MysqlAdapter();
 	}
-
 	return self::$MysqlAdapter;
     }
 
-    /**
-     * @return User
-     */
-    public function getUser($id) {
-	$query = "SELECT * FROM user WHERE (use_del IS NULL OR use_del = 0) AND use_id = $id";
+
+    public function getUser($query) {
 	$result = $this->con->query($query);
+	$userList = array();
 	if ($result->num_rows) {
-	    $row = $result->fetch_assoc();
-	    $user = new User();
-	    $user->setUse_id($row['use_id']);
-	    $user->setUse_lastname($row['use_lastname']);
-	    $user->setUse_firstname($row['use_firstname']);
-	    // comming soon;
-	    return $user;
+	    while ($row = $result->fetch_assoc()) {
+		$user = new User();
+		$user->setUse_id($row['use_id']);
+		$user->setUse_lastname($row['use_lastname']);
+		$user->setUse_firstname($row['use_firstname']);
+		return $userList;
+		
+	    }
 	}
 	return null;
     }
 
-    /**
-     * 
-     * @param type $id
-     * @return \Winner|null
-     */
+
     public function getWinner($id) {
 	$query = "SELECT * FROM winner WHERE win_id = $id";
 	$result = $this->con->query($query);
@@ -78,7 +62,6 @@ final class MysqlAdapter {
 	}
 	return NULL;
     }
-
 
     public function getEvent($query) {
 	$result = $this->con->query($query);
@@ -99,7 +82,7 @@ final class MysqlAdapter {
 		$event->setEvt_mod_id($row['evt_mod_id']);
 		$eventList[] = $event;
 	    }
-		return $eventList;
+	    return $eventList;
 	}
 	return NULL;
     }

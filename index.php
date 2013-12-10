@@ -1,3 +1,9 @@
+<?php
+include_once './config/config.php';
+include_once './controller/Controller.php';
+include_once './lib/MysqlAdapter.php';
+include_once './view/View.php';
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,17 +18,13 @@
 
         <div id="header">
             <img src="/images/logos/logo.png" id="logo">
-            <div id="breadcrumb"><?php echo getBreadCrumbs(); ?></div>
-            <div id="account" data-tip="Hier kannst du dein Profil bearbeiten oder dich ausloggen."><a href="#">zakaria.agoulif@gmail.com</a> | <a href="#">Logout</a></div> 
+            <div id="breadcrumb">
+		<?php echo getBreadCrumbs();?></div>
+            <div id="account" data-tip="Hier kannst du dein Profil bearbeiten oder dich ausloggen."><a href="/admin">zakaria.agoulif@gmail.com</a> | <a href="#">Logout</a></div> 
         </div>
         <div id="content">
             <div id="debugg"></div>
 	    <?php
-	    include_once './config/config.php';
-	    include_once './controller/Controller.php';
-	    include_once './lib/MysqlAdapter.php';
-	    include_once './view/View.php';
-
 	    switch (getUriFirst()) {
 		case URI_EVENT:
 		    include_once './controller/EventController.php';
@@ -39,6 +41,10 @@
 		case URI_API:
 		    include_once './controller/ApiController.php';
 		    $controller = new ApiController();
+		    break;
+		case URI_ADMIN:
+		    include_once './controller/AdminController.php';
+		    $controller = new AdminController();
 		    break;
 		case URI_HOME:
 		default :

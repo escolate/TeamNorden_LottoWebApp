@@ -12,6 +12,7 @@ class EventController extends Controller {
 	$view = new EventView();
 	$eventList = MysqlAdapter::getInstance()->getEvent("SELECT * FROM event ORDER BY evt_cre_dat DESC");
 	$view->assign('eventList', $eventList);
+	$view->assign('breadcrumb', 'Events');
 	$view->display();
     }
 
