@@ -1,17 +1,29 @@
 <?php
 session_start();
-    if(!empty($_POST['email'])) {
-        //->VALIDATE
-        if($_POST['email'] == "login@lotto") {
-            $_SESSION['user']['id'] = 1;
-            header("Location: /",TRUE,303);
-            exit();
-        }
-    }
+$notification = "";
+
+//Check login
+if (!empty($_POST['email']) && !empty($_POST['password'])) {
+    include_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
+    include_once $_SERVER['DOCUMENT_ROOT'].'/lib/MysqlAdapter.php';
+    $user = MysqlAdapter::getInstance()->authenticateUser($_POST['email'], $_POST['password']);
     
-    if(!empty($_POST['action']) && $_POST['action'] == 'logout') {
-        unset($_SESSION['user']);
+    if ($user !== NULL) {
+        $_SESSION['user']['id'] = $user->getUse_id();
+        $_SESSION['user']['email'] = $user->getUse_email();
+        $_SESSION['user']['name'] = $user->getUse_firstname()." ".$user->getUse_lastname();
+        header("Location: /", TRUE, 303);
+        exit();
     }
+    else {
+        $notification = '<div class="red">Benutzername oder Passwort falsch</div>';
+    }
+}
+
+//logout
+if (!empty($_POST['action']) && $_POST['action'] == 'logout') {
+    unset($_SESSION['user']);
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,7 +53,8 @@ session_start();
                 <?php echo $passwordfield; ?>
                 <input type="submit" id="loginform-button" class="button blue" name="loginform_submit" value="<?php echo $buttontext; ?>">
             </form>
-                <?php echo $recoverlink; ?>
+            <?php echo $notification ?>
+            <?php echo $recoverlink; ?>
         </div>
     </body>
 </html>

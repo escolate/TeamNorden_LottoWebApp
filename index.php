@@ -27,13 +27,13 @@ include_once './view/View.php';
         <div id="header">
             <noscript>
             <div id="noscript" class="red">
-                Um die applikation verwenden zu können müssen sie Javascript aktivieren!
+                Um die Applikation verwenden zu können müssen sie Javascript aktivieren!
                 <img alt="X" src="/images/icons/cancel_sw.png">
             </div>
             </noscript>
             <img src="/images/logos/logo.png" id="logo">
             <div id="breadcrumb"><?php echo getBreadCrumbs(); ?></div>
-            <div id="account" data-tip="Hier kannst du dein Profil bearbeiten oder dich ausloggen."><a href="#">zakaria.agoulif@gmail.com</a> | <form action="/login.php" method="post"> <input type="hidden" name="action" value="logout"><a id="logoutlink" href="#">Logout</a></form></div> 
+            <div id="account" data-tip="Hier kannst du dein Profil bearbeiten oder dich ausloggen."><a href="#"><?php echo $_SESSION['user']['name']; ?></a> | <form action="/login.php" method="post"> <input type="hidden" name="action" value="logout"><a id="logoutlink" href="#">Logout</a></form></div> 
         </div>
         <div id="content">
             <div id="debugg"></div>
