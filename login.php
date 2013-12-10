@@ -5,6 +5,7 @@ session_start();
         if($_POST['email'] == "login@lotto") {
             $_SESSION['user']['id'] = 1;
             header("Location: /",TRUE,303);
+            exit();
         }
     }
     

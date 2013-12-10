@@ -3,6 +3,7 @@ session_start();
 //Check login
 if(!isset($_SESSION['user']['id'])) {
     header("Location: /login.php",TRUE,303);
+    exit();
 }
 ?>
 <!DOCTYPE html>
