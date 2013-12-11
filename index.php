@@ -8,8 +8,8 @@ if(!isset($_SESSION['user']['id'])) {
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/config/config.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/controller/Controller.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/view/View.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Lotto.class.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/view/View.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/lib/MysqlAdapter.php';
 ?>
 <!DOCTYPE html>

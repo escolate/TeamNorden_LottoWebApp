@@ -1,15 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of WinnerView
- *
- * @author tscheurer
- */
 class WinnerView extends View {
 
     public function display() {

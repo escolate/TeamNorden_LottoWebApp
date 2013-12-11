@@ -5,6 +5,7 @@ $notification = "";
 //Check login
 if (!empty($_POST['email']) && !empty($_POST['password'])) {
     include_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Lotto.class.php';
     include_once $_SERVER['DOCUMENT_ROOT'].'/lib/MysqlAdapter.php';
     $user = MysqlAdapter::getInstance()->authenticateUser($_POST['email'], $_POST['password']);
     
