@@ -1,36 +1,27 @@
 <?php
 
 class HomeView extends View {
-    public function __construct() {
-	
-    }
     public function display() {
-	echo <<<DASHBOARD
+	echo <<<HTML
         <div class="content-box">
-    <h1>Neuste Veranstaltungen</h1>
+    <h1>Bevorstehende Veranstaltungen</h1>
     <div class="list">
 	<table>
 	    <thead>
 		<tr>
 		    <th>Name</th>
 		    <th>Veranstaltungsdatum</th>
-		    <th>Erstellt</th>
-		    <th>Geändert</th>
 		</tr>
 	    </thead>
 	    <tbody>
-DASHBOARD;
-	foreach ($this->vars as $value) {
-	    foreach ($value as $object) {
+HTML;
+	foreach ($this->vars['eventList'] as $object) {
 		echo '<tr>';
 		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_name()}</a></td>";
-		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_datetime()}</a></td>";
-		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_cre_dat()}, {$object->getEvt_cre_id()}</a></td>";
-		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_mod_date()}, {$object->getEvt_mod_id()}</a></td>";
-		echo '</tr>';
-	    }
+		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$this->getDateTime($object->getEvt_datetime())}</a></td>";
+		echo '</tr>';   
 	}
-	echo <<<DASHBOARD
+	echo <<<HTML
 	    </tbody>
 	</table>
     </div>
@@ -49,35 +40,26 @@ DASHBOARD;
 	    <thead>
 		<tr>
 		    <th>Name</th>
-		    <th>Gewonnen</th>
+		    <th>Gewinndatum</th>  
 		</tr>
 	    </thead>
 	    <tbody>
-		<tr>
-		    <td><a href="#">Marc Jenzer</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">Marc Jenzer</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">Marc Jenzer</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">Marc Jenzer</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">Marc Jenzer</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
+HTML;
+	
+	    foreach ($this->vars['winnerList'] as $object) {
+		echo '<tr>';
+
+		echo "<td><a href=\"/winner/{$object->getWin_id()}-{$object->getWin_firstname()}{$object->getWin_lastname()}\">{$object->getWin_firstname()} {$object->getWin_lastname()}</a></td>";
+		echo "<td><a href=\"/winner/{$object->getWin_id()}-{$object->getWin_firstname()}{$object->getWin_lastname()}\">{$this->getDate($object->getWin_cre_dat())}</a></td>";
+		echo '</tr>';
+	    }
+	
+	echo <<<HTML
 	    </tbody>
 	</table>
     </div>
     <div class="dashboard-links">
-	<a href="index.php?page=list_index" class="button blue">Alle anzeigen</a>
+	<a href="winner" class="button blue">Alle anzeigen</a>
 	<a href="index.php?page=create" class="button green">Erstellen</a>
     </div>
 </div>
@@ -93,24 +75,8 @@ DASHBOARD;
 	    </thead>
 	    <tbody>
 		<tr>
-		    <td><a href="#">Florian Wiesner</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">Florian Wiesner</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">Florian Wiesner</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">Florian Wiesner</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">Florian Wiesner</a></td>
-		    <td><a href="#">31.10.2013</a></td>
+		    <td><a href="#"></a></td>
+		    <td><a href="#"></a></td>
 		</tr>
 	    </tbody>
 	</table>
@@ -135,11 +101,11 @@ DASHBOARD;
 	    </thead>
 	    <tbody>
 		<tr>
-		    <td><a href="#">34456</a></td>
-		    <td><a href="#">01,10,45,87,90</a></td>
-		    <td><a href="#">01,10,45,87,90</a></td>
-		    <td><a href="#">01,10,45,87,90</a></td>
-		    <td><a href="#">31.10.2013</a></td>
+		    <td><a href="#"></a></td>
+		    <td><a href="#"></a></td>
+		    <td><a href="#"></a></td>
+		    <td><a href="#"></a></td>
+		    <td><a href="#"></a></td>
 		</tr>
 	    </tbody>
 	</table>
@@ -161,24 +127,8 @@ DASHBOARD;
 	    </thead>
 	    <tbody>
 		<tr>
-		    <td><a href="#">E-Mail an zakaria@agoulif.com versendet.</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">Lottokarte 34503 erstellt.</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">Spieler Marc Jenzer erstellt.</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">Spieler Tobias Bernet erstellt.</a></td>
-		    <td><a href="#">31.10.2013</a></td>
-		</tr>
-		<tr>
-		    <td><a href="#">Event Biergarten und Lotto erstellt.</a></td>
-		    <td><a href="#">31.10.2013</a></td>
+		    <td><a href="#"></a></td>
+		    <td><a href="#"></a></td>
 		</tr>
 	    </tbody>
 	</table>
@@ -188,7 +138,7 @@ DASHBOARD;
     </div>
 </div>
         
-DASHBOARD;
+HTML;
     }
 
 }

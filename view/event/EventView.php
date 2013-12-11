@@ -2,7 +2,7 @@
 
 class EventView extends View {
     public function display() {
-	echo <<<EVENT
+	echo <<<HTML
 <div class="content-box">
     <h1>Veranstaltungen</h1>
     <div class="list">
@@ -12,9 +12,9 @@ class EventView extends View {
 		    <tr>
 		    <th></th>
 		    <th>Name</th>
-		    <th>Veranstaltungsdatum</th>
-		    <th>Erstellt</th>
-		    <th>Geändert</th>
+		    <th>Veranstaltungsdatum</th>  
+		    <th>Ersteller</th>
+		    <th>Erstellungsdatum</th>
 		    </tr>
 		</thead>
 		<tfoot>
@@ -27,19 +27,19 @@ class EventView extends View {
 		    </tr>
 		</tfoot>
 		<tbody>
-EVENT;
+HTML;
 	
 	    foreach ($this->vars['eventList'] as $object) {
 		echo '<tr>';
 		echo '<td><input type="checkbox"></td>';
 		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_name()}</a></td>";
-		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_datetime()}</a></td>";
-		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_cre_dat()}, {$object->getEvt_cre_id()}</a></td>";
-		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_mod_date()}, {$object->getEvt_mod_id()}</a></td>";
+		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$this->getDate($object->getEvt_datetime())}</a></td>";
+		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getUse_cre_firstname()} {$object->getUse_cre_lastname()}</a></td>";
+		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$this->getDateTime($object->getEvt_cre_dat())}</a></td>";
 		echo '</tr>';
 	    }
 	
-	echo <<<EVENT
+	echo <<<HTML
 		</tbody>
 	    </table>
 	    <select name="events-action">
@@ -65,7 +65,7 @@ EVENT;
 	</div>
     </div>
 </div>
-EVENT;
+HTML;
     }
 
 }

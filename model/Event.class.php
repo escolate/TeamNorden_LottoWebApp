@@ -1,6 +1,5 @@
 <?php
-
-class Event {
+class Event extends Lotto{
 
     private $evt_id;
     private $evt_name;

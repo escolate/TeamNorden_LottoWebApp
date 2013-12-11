@@ -1,6 +1,6 @@
 <?php
 
-class Winner {
+class Winner extends Lotto{
 
 private $win_id;
 private $use_id;
@@ -12,11 +12,44 @@ private $win_mod_dat;
 private $win_mod_id;
 private $win_del;
 private $win_prize;
-/**
- *
- * @var User
- */
 private $user;
+private $win_firstname;
+private $win_lastname;
+private $win_eventname;
+private $win_notificated;
+
+public function getWin_notificated() {
+    return $this->win_notificated;
+}
+
+public function setWin_notificated($win_notificated) {
+    $this->win_notificated = $win_notificated;
+}
+
+
+public function getWin_firstname() {
+    return $this->win_firstname;
+}
+
+public function setWin_firstname($win_firstname) {
+    $this->win_firstname = $win_firstname;
+}
+
+public function getWin_lastname() {
+    return $this->win_lastname;
+}
+
+public function setWin_lastname($win_lastname) {
+    $this->win_lastname = $win_lastname;
+}
+
+public function getWin_eventname() {
+    return $this->win_eventname;
+}
+
+public function setWin_eventname($win_eventname) {
+    $this->win_eventname = $win_eventname;
+}
 
 public function getWin_id() {
     return $this->win_id;
