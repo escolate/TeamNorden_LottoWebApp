@@ -91,7 +91,7 @@ CREATE TABLE `event` (
 
 LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
-INSERT INTO `event` VALUES (1,'Träume erfüllen mit Lotto','Bellagio','Las Vegas','89044','2014-04-09 20:01:00','2014-04-09 20:00:00',1,'2014-04-09 20:00:00',2,NULL),(2,'Mega Lotto','Bellagio','Las Vegas','89044','2014-06-09 20:00:00','2014-04-09 20:00:00',2,'2014-04-09 20:00:00',2,NULL),(3,'Fasnacht Lotto','Bellagio','Las Vegas','89044','2005-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',NULL,NULL),(4,'Swisslotto','Bellagio','Las Vegas','89044','2004-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',NULL,NULL),(5,'Weihnachts Special 2013','Bellagio','Las Vegas','89044','2001-04-09 20:00:00','2014-04-09 20:00:00',1,'2014-04-09 20:00:00',NULL,NULL),(6,'Deine Mutti spielt Lotto?','Bellagio','Las Vegas','89044','2007-04-09 20:00:00','2014-04-09 20:00:00',1,'2014-04-09 20:00:00',NULL,NULL),(7,'Million Dollar $$$ Dreams','Bellagio','Las Vegas','89044','2011-04-09 20:00:00','2014-04-09 20:00:00',5,'2014-04-09 20:00:00',NULL,NULL),(8,'Wow!','Bellagio','Las Vegas','89044','2009-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',NULL,NULL),(9,'BAMM BAMM','Bellagio','Las Vegas','89044','2012-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',NULL,NULL),(10,'James Bond - Casino Royal','Bellagio','Las Vegas','89044','2013-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',NULL,NULL),(11,'SheBang!','Bellagio','Las Vegas','89044','1999-04-09 20:00:00','2014-04-09 20:00:00',2,'2014-04-09 20:00:00',NULL,NULL);
+INSERT INTO `event` VALUES (1,'Träume erfüllen mit Lotto','Bellagio','Las Vegas','89044','2014-04-09 20:01:00','2014-04-09 20:00:00',1,'2014-04-09 20:00:00',2,NULL),(2,'Mega Lotto','Bellagio','Las Vegas','89044','2014-06-09 20:00:00','2014-04-09 20:00:00',2,'2014-04-09 20:00:00',2,NULL),(3,'Fasnacht Lotto','Bellagio','Las Vegas','89044','2005-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',5,NULL),(4,'Swisslotto','Bellagio','Las Vegas','89044','2004-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',3,NULL),(5,'Weihnachts Special 2013','Bellagio','Las Vegas','89044','2001-04-09 20:00:00','2014-04-09 20:00:00',1,'2014-04-09 20:00:00',4,NULL),(6,'Deine Mutti spielt Lotto?','Bellagio','Las Vegas','89044','2007-04-09 20:00:00','2014-04-09 20:00:00',1,'2014-04-09 20:00:00',2,NULL),(7,'Million Dollar $$$ Dreams','Bellagio','Las Vegas','89044','2011-04-09 20:00:00','2014-04-09 20:00:00',5,'2014-04-09 20:00:00',1,NULL),(8,'Wow!','Bellagio','Las Vegas','89044','2009-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',2,NULL),(9,'BAMM BAMM','Bellagio','Las Vegas','89044','2012-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',3,NULL),(10,'James Bond - Casino Royal','Bellagio','Las Vegas','89044','2013-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',4,NULL),(11,'SheBang!','Bellagio','Las Vegas','89044','1999-04-09 20:00:00','2014-04-09 20:00:00',2,'2014-04-09 20:00:00',4,NULL);
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,10 +104,8 @@ DROP TABLE IF EXISTS `eventmembers`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `eventmembers` (
   `eve_id` smallint(6) NOT NULL,
-  `use_id` smallint(6) DEFAULT NULL,
-  PRIMARY KEY (`eve_id`),
-  UNIQUE KEY `eve_id_UNIQUE` (`eve_id`),
-  UNIQUE KEY `use_id_UNIQUE` (`use_id`)
+  `use_id` smallint(6) NOT NULL,
+  PRIMARY KEY (`eve_id`,`use_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -117,7 +115,7 @@ CREATE TABLE `eventmembers` (
 
 LOCK TABLES `eventmembers` WRITE;
 /*!40000 ALTER TABLE `eventmembers` DISABLE KEYS */;
-INSERT INTO `eventmembers` VALUES (1,1),(2,2),(3,3);
+INSERT INTO `eventmembers` VALUES (1,1),(2,2),(3,1),(3,2),(3,3),(3,4),(3,5);
 /*!40000 ALTER TABLE `eventmembers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -237,7 +235,7 @@ CREATE TABLE `numbers` (
 
 LOCK TABLES `numbers` WRITE;
 /*!40000 ALTER TABLE `numbers` DISABLE KEYS */;
-INSERT INTO `numbers` VALUES (1,2,NULL,NULL,NULL,NULL,NULL,NULL),(2,3,NULL,NULL,NULL,NULL,NULL,NULL),(3,1,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `numbers` VALUES (1,2,3,NULL,NULL,NULL,NULL,NULL),(2,3,89,NULL,NULL,NULL,NULL,NULL),(3,1,100,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `numbers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -257,9 +255,8 @@ CREATE TABLE `series` (
   `ser_mod_id` smallint(6) DEFAULT NULL,
   `ser_del` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`ser_id`),
-  UNIQUE KEY `ser_id_UNIQUE` (`ser_id`),
-  UNIQUE KEY `eve_id_UNIQUE` (`eve_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `ser_id_UNIQUE` (`ser_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,7 +265,7 @@ CREATE TABLE `series` (
 
 LOCK TABLES `series` WRITE;
 /*!40000 ALTER TABLE `series` DISABLE KEYS */;
-INSERT INTO `series` VALUES (1,2,NULL,NULL,NULL,NULL,NULL),(2,3,NULL,NULL,NULL,NULL,NULL),(3,1,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `series` VALUES (1,2,NULL,NULL,NULL,NULL,NULL),(2,3,NULL,NULL,NULL,NULL,NULL),(3,1,NULL,NULL,NULL,NULL,NULL),(4,3,NULL,NULL,NULL,NULL,NULL),(5,3,NULL,NULL,NULL,NULL,NULL),(6,3,NULL,NULL,NULL,NULL,NULL),(7,3,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `series` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -312,7 +309,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Wiesner','Florian',NULL,'Gönner','Bachmatt 12','5073','Gipf-Oberfrick','23.08.1977','Switzerland',NULL,'+41798220207','f.wiesner@gmx.ch','*0E4A970F19FD5F25B14F4BA294938BDEAEBA0F12',1,'c76478070371017a10307351841bae5ccba3629f','2007-12-20 13:00:00',1,'2007-12-20 13:00:00',NULL,NULL),(2,'Scheurer','Tobias',NULL,'Gönner','Müntzbergstrasse 2','5400','Baden','22.10.1989','Switzerland',NULL,'+41797319150','tobias.scheurer@libosan.ch','*59D00822BD12F3B66926A175C0D76CFC2B5285D0',1,'62d5bf2a502e80d15810ee1ec77e6e0f09235ab9',NULL,NULL,NULL,NULL,NULL),(3,'Agoulif','Zakaria',NULL,'Gönner','Rötelstrasse 127','8037','Zurich','31.10.1986','Switzerland',NULL,'+41793125292','zakaria.agoulif@gmail.com','*ECCA593ED93F82D30E2E28929DD8DA458DF03BC0',1,'46eedf3b8ea2abfaf3f101084db9e600d65a674b',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `user` VALUES (1,'Wiesner','Florian',NULL,'Gönner','Bachmatt 12','5073','Gipf-Oberfrick','23.08.1977','Switzerland',NULL,'+41798220207','f.wiesner@gmx.ch','*0E4A970F19FD5F25B14F4BA294938BDEAEBA0F12',1,'c76478070371017a10307351841bae5ccba3629f','2007-12-20 13:00:00',1,'2007-12-20 13:00:00',NULL,NULL),(2,'Scheurer','Tobias',NULL,'Gönner','Müntzbergstrasse 2','5400','Baden','22.10.1989','Switzerland',NULL,'+41797319150','tobias.scheurer@libosan.ch','*59D00822BD12F3B66926A175C0D76CFC2B5285D0',1,'62d5bf2a502e80d15810ee1ec77e6e0f09235ab9',NULL,NULL,NULL,NULL,NULL),(3,'Agoulif','Zakaria',NULL,'Gönner','Rötelstrasse 127','8037','Zurich','31.10.1986','Switzerland',NULL,'+41793125292','zakaria.agoulif@gmail.com','*ECCA593ED93F82D30E2E28929DD8DA458DF03BC0',1,'46eedf3b8ea2abfaf3f101084db9e600d65a674b',NULL,NULL,NULL,NULL,NULL),(4,'Müller','Oliver',NULL,'Gast','Müllerweg 3','8032','Neuhausen a.Rhf.','31.10.1986','Switzerland',NULL,'+41793125292','oliver.müller@gmail.com','*ECCA593ED93F82D30E2E28929DD8DA458DF03BC0',1,'46eedf3b8ea2abfaf3f101084db9e600d65a674b','2007-12-20 13:00:00',2,'2007-12-20 13:00:00',2,NULL),(5,'Rüdele','Fabian',NULL,'Gönner','Rüdelweg','9003','Baden','31.10.1988','Deutschland',NULL,'+41793125292','fabian.ruedel@gmx.ch','*ECCA593ED93F82D30E2E28929DD8DA458DF03BC0',1,'46eedf3b8ea2abfaf3f101084db9e600d65a674b',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -359,4 +356,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-11 17:17:46
+-- Dump completed on 2013-12-12 16:15:13

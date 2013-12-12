@@ -15,7 +15,7 @@ class WinnerView extends View {
 		    <th></th>
 		    <th>Name</th>
 		    <th>Gewinndatum</th>  
-		    <th>Bestätigung</th>
+		    <th>E-Mail Bestätigung</th>
 		    </tr>
 		</thead>
 		<tfoot>
