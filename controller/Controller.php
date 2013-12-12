@@ -1,10 +1,5 @@
 <?php
 
-/**
- * abstract class for all controllers 
- *
- * @author Marc Jenzer
- */
 abstract class Controller {
 
     protected $resourceId;

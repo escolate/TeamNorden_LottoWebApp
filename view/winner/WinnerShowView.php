@@ -22,7 +22,7 @@ class WinnerShowView extends View {
 
 	$this->user = $this->vars['user'];
 
-        echo <<<WINNER
+        echo <<<HTML
         <div class="content-box">
     <h1>Gewinn</h1>
     <div class="event-card">
@@ -83,7 +83,7 @@ class WinnerShowView extends View {
 	</div>
     </div>
 </div>
-WINNER;
+HTML;
     }
 
 }

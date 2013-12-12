@@ -1,7 +1,7 @@
 <?php
 
 class EventShowView extends View {
-    public function display() {
+   public function display() {
 	echo <<<EVENTDETAIL
    <div class="content-box">
     <h1>Veranstaltung</h1>
@@ -18,8 +18,8 @@ class EventShowView extends View {
 	    <p>{$this->vars['event'][0]->getEvt_location()}</p>
 	    <p>{$this->vars['event'][0]->getEvt_city()}</p>
 	    <p>{$this->vars['event'][0]->getEvt_zip()}</p>
-	    <p>{$this->vars['event'][0]->getEvt_datetime()}</p>
-	</div> 
+	    <p>{$this->getDateTime($this->vars['event'][0]->getEvt_datetime())}</p>	
+</div> 
     </div>
     <form>
 	<input type="submit" value="Bearbeiten">
@@ -27,5 +27,7 @@ class EventShowView extends View {
 </div>
 EVENTDETAIL;
     }
+
+
 }
 

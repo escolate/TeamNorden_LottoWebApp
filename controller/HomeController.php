@@ -10,8 +10,10 @@ class HomeController extends Controller {
 
     protected function index() {
 	$view = new HomeView();
-	$eventList = MysqlAdapter::getInstance()->getEvent("SELECT * FROM event ORDER BY evt_cre_dat DESC LIMIT 4");
+	$eventList = MysqlAdapter::getInstance()->getEventList(5);
 	$view->assign('eventList', $eventList);
+	$winnerList = MysqlAdapter::getInstance()->getWinnerList(5);
+	$view->assign('winnerList', $winnerList);
 	$view->display();
     }
 

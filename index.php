@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 //Check login
 if(!isset($_SESSION['user']['id'])) {
@@ -7,10 +6,11 @@ if(!isset($_SESSION['user']['id'])) {
     exit();
 }
 
-include_once './config/config.php';
-include_once './controller/Controller.php';
-include_once './lib/MysqlAdapter.php';
-include_once './view/View.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/config/config.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/controller/Controller.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Lotto.class.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/view/View.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/lib/MysqlAdapter.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,11 +32,11 @@ include_once './view/View.php';
             </noscript>
             <img src="/images/logos/logo.png" id="logo">
             <div id="breadcrumb"><?php echo getBreadCrumbs(); ?></div>
-            <div id="account" title="Hier kannst du dein Profil bearbeiten oder dich ausloggen."><a href="#"><?php echo $_SESSION['user']['name']; ?></a> | <form action="/login.php" method="post"> <input type="hidden" name="action" value="logout"><a id="logoutlink" href="#">Logout</a></form></div> 
+            <div id="account" title="Bearbeite dein Account."><a href="#"><?php echo $_SESSION['user']['name']; ?></a> | <form action="/login.php" method="post"> <input type="hidden" name="action" value="logout"><a id="logoutlink" href="#" title="Hier beendest du die Lotto Web App.">Logout</a></form></div> 
         </div>
         <div id="content">
             <div id="debugg"></div>
-	    <?php
+<?php
 	    switch (getUriFirst()) {
 		case URI_EVENT:
 		    include_once './controller/EventController.php';
@@ -58,6 +58,10 @@ include_once './view/View.php';
 		    include_once './controller/AdminController.php';
 		    $controller = new AdminController();
 		    break;
+		case URI_CARD:
+		    include_once './controller/CardController.php';
+		    $controller = new CardController();
+		    break;
 		case URI_HOME:
 		default :
 		    include_once './controller/HomeController.php';
@@ -70,22 +74,25 @@ include_once './view/View.php';
     </body>
 </html>
 <?php
-
-/**
- * @return string HTML-Code
- */
 function getBreadCrumbs() {
     $arr = explode("/", $_SERVER['REQUEST_URI']);
     $out = '<a href="/" >Start</a>';
     $href = "";
+    $end =  end($arr);
 
     foreach ($arr as $val) {
-	if (!empty($val)) {
-	    $href .= $val . "/";
-	    $out .= " &gt; <a href=\"/{$href}\" >" . ucfirst($val) . "</a>";
+		if(!empty($val)){
+	   $out .= " &gt;"; 
 	}
-    }
+	if (!empty($val) AND $val != $end AND !empty($end)) {
+	    $href .= $val . "/";
+	    $out .= "<a href=\"/{$href}\" >" . preg_replace("/^[0-9]+-/", "", ucfirst($val)) . "</a>";
+	}else{
+	    $out .= preg_replace("/^[0-9]+-/", "", ucfirst($val));
+	}
 
+	
+    }
     return $out;
 }
 
