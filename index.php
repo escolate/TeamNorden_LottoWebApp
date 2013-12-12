@@ -23,7 +23,6 @@ include_once './view/View.php';
         <script src="/js/application.js"></script>
     </head>
     <body lang="de">
-
         <div id="header">
             <noscript>
             <div id="noscript" class="red">
@@ -33,7 +32,7 @@ include_once './view/View.php';
             </noscript>
             <img src="/images/logos/logo.png" id="logo">
             <div id="breadcrumb"><?php echo getBreadCrumbs(); ?></div>
-            <div id="account" data-tip="Hier kannst du dein Profil bearbeiten oder dich ausloggen."><a href="#"><?php echo $_SESSION['user']['name']; ?></a> | <form action="/login.php" method="post"> <input type="hidden" name="action" value="logout"><a id="logoutlink" href="#">Logout</a></form></div> 
+            <div id="account" title="Hier kannst du dein Profil bearbeiten oder dich ausloggen."><a href="#"><?php echo $_SESSION['user']['name']; ?></a> | <form action="/login.php" method="post"> <input type="hidden" name="action" value="logout"><a id="logoutlink" href="#">Logout</a></form></div> 
         </div>
         <div id="content">
             <div id="debugg"></div>

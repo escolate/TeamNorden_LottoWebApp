@@ -3,6 +3,7 @@
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/User.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Winner.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Event.class.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Message.class.php';
 
 final class MysqlAdapter {
 
@@ -123,6 +124,29 @@ final class MysqlAdapter {
         return NULL;
     }
 
+    /**
+     * 
+     * @param type $type
+     * @return \Message|null
+     */
+    public function getMessage($type) {
+        $query = "SELECT * FROM messages WHERE mes_type = {$type} AND mes_status = 1";
+        $result = $this->con->query($query);
+
+        if ($result->num_rows) {
+            $row = mysqli_fetch_assoc($result);
+            $message = new Message();
+            $message->setId($row['mes_id']);
+            $message->setType($row['mes_type']);
+            $message->setSubject($row['mes_subject']);
+            $message->setBody($row['mes_body']);
+            $message->setSender($row['mes_sender']);
+            $result->free();
+            return $message;
+        }
+
+        return NULL;
+    }
 }
 
 ?>

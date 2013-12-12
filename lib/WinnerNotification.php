@@ -6,10 +6,12 @@
  */
 include_once '../model/Winner.class.php';
 include_once '../model/User.class.php';
+include_once './MysqlAdapter.php';
+include_once '../config/config.php';
 $winner = new Winner();
 $winner->setUser(new User());
 $winner->getUser()->setUse_email("tobi@example.com");
-$not = new WinnerNotification($winner);
+$not = new WinnerNotification($winner,WinnerNotification::WIN);
 $not->send();
 
 /**
@@ -19,17 +21,27 @@ $not->send();
  */
 class WinnerNotification {
 
+    const WIN = 1;
+    const PWR = 2;
+
     /**
      *
      * @var Winner
      */
     private $winner;
+    private $type;
+    private $param = array();
 
     //put your code here
-    public function __construct(Winner $winner) {
+    public function __construct(Winner $winner, $type) {
         $this->winner = $winner;
+        $this->type = $type;
     }
     
+    private function addParam($key,$value) {
+        $this->param[$key] = $value;
+    }
+
     private function getWinNotification() {
         $temp = <<<NOTIFICATION
 <!DOCTYPE html>
@@ -68,17 +80,31 @@ class WinnerNotification {
 
 </html>
 NOTIFICATION;
-        
+
         return $temp;
     }
 
+    /**
+     * 
+     * @return boolean
+     */
     public function send() {
         $empfaenger = $this->winner->getUser()->getUse_email();
-        $betreff = 'Lottogewinn';
-        $header = 'Content-Type: text/html; charset=UTF-8'.'\r\n'
-                .'X-Mailer: PHP/' . phpversion();
+        $message = MysqlAdapter::getInstance()->getMessage($this->type);
+        if ($empfaenger !== null && $message !== null) {
+            $body = $message->getBody();
+            //replace params
+            foreach ($this->param as $key => $val) {
+                $body = str_replace('#'.$key.'#', $val, $body);
+            }
+            
+            $header = 'Content-Type: text/html; charset=UTF-8' . '\r\n'
+                    . 'X-Mailer: PHP/' . phpversion();
 
-        return mail($empfaenger, $betreff, $this->getWinNotification(), $header);
+            //Send Message
+            return mail($empfaenger, $message->getSubject(), $body, $header);
+        }
+        return false;
     }
 
 }
