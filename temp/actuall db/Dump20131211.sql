@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 5.5.34, for Win64 (x86)
+CREATE DATABASE  IF NOT EXISTS `lotto` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `lotto`;
+-- MySQL dump 10.13  Distrib 5.6.13, for Win32 (x86)
 --
--- Host: localhost    Database: lotto
+-- Host: 127.0.0.1    Database: lotto
 -- ------------------------------------------------------
--- Server version	5.5.34
+-- Server version	5.6.14
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,16 +16,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Current Database: `lotto`
---
-
-/*!40000 DROP DATABASE IF EXISTS `lotto`*/;
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `lotto` /*!40100 DEFAULT CHARACTER SET utf8 */;
-
-USE `lotto`;
 
 --
 -- Table structure for table `card`
@@ -90,7 +82,7 @@ CREATE TABLE `event` (
   `evt_del` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`evt_id`),
   UNIQUE KEY `evt_id_UNIQUE` (`evt_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +91,7 @@ CREATE TABLE `event` (
 
 LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
-INSERT INTO `event` VALUES (1,'PoserLotto','Bellagio','Las Vegas','89044','2014-04-09 20:00:00',NULL,NULL,NULL,NULL,NULL),(2,'VainlyLotto','Casino de Montréal','Montréal',' 	H1A 0A1','2014-08-23 19:00:00',NULL,NULL,NULL,NULL,NULL),(3,'HornyLotto','Grand Lodge Casino','South Lake Tahoe','96150','2014-09-30 21:00:00',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `event` VALUES (1,'Träume erfüllen mit Lotto','Bellagio','Las Vegas','89044','2014-04-09 20:01:00','2014-04-09 20:00:00',1,'2014-04-09 20:00:00',2,NULL),(2,'Mega Lotto','Bellagio','Las Vegas','89044','2014-06-09 20:00:00','2014-04-09 20:00:00',2,'2014-04-09 20:00:00',2,NULL),(3,'Fasnacht Lotto','Bellagio','Las Vegas','89044','2005-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',NULL,NULL),(4,'Swisslotto','Bellagio','Las Vegas','89044','2004-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',NULL,NULL),(5,'Weihnachts Special 2013','Bellagio','Las Vegas','89044','2001-04-09 20:00:00','2014-04-09 20:00:00',1,'2014-04-09 20:00:00',NULL,NULL),(6,'Deine Mutti spielt Lotto?','Bellagio','Las Vegas','89044','2007-04-09 20:00:00','2014-04-09 20:00:00',1,'2014-04-09 20:00:00',NULL,NULL),(7,'Million Dollar $$$ Dreams','Bellagio','Las Vegas','89044','2011-04-09 20:00:00','2014-04-09 20:00:00',5,'2014-04-09 20:00:00',NULL,NULL),(8,'Wow!','Bellagio','Las Vegas','89044','2009-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',NULL,NULL),(9,'BAMM BAMM','Bellagio','Las Vegas','89044','2012-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',NULL,NULL),(10,'James Bond - Casino Royal','Bellagio','Las Vegas','89044','2013-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',NULL,NULL),(11,'SheBang!','Bellagio','Las Vegas','89044','1999-04-09 20:00:00','2014-04-09 20:00:00',2,'2014-04-09 20:00:00',NULL,NULL);
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -259,7 +251,7 @@ DROP TABLE IF EXISTS `series`;
 CREATE TABLE `series` (
   `ser_id` smallint(6) NOT NULL AUTO_INCREMENT,
   `eve_id` smallint(6) DEFAULT NULL,
-  `se_cre_dat` datetime DEFAULT NULL,
+  `ser_cre_dat` datetime DEFAULT NULL,
   `ser_cre_id` smallint(6) DEFAULT NULL,
   `ser_mod_dat` datetime DEFAULT NULL,
   `ser_mod_id` smallint(6) DEFAULT NULL,
@@ -342,6 +334,7 @@ CREATE TABLE `winner` (
   `win_mod_id` smallint(6) DEFAULT NULL,
   `win_del` tinyint(4) DEFAULT NULL,
   `win_prize` varchar(45) DEFAULT NULL,
+  `win_notificated` datetime DEFAULT NULL,
   PRIMARY KEY (`win_id`),
   UNIQUE KEY `win_id_UNIQUE` (`win_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -353,7 +346,7 @@ CREATE TABLE `winner` (
 
 LOCK TABLES `winner` WRITE;
 /*!40000 ALTER TABLE `winner` DISABLE KEYS */;
-INSERT INTO `winner` VALUES (1,3,2,1,NULL,NULL,NULL,NULL,NULL,NULL),(2,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL),(3,2,3,2,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `winner` VALUES (1,3,2,1,'2014-09-12 03:00:00',3,NULL,1,NULL,NULL,'2014-09-12 04:33:03'),(2,1,1,1,'2014-09-12 05:00:00',3,NULL,2,NULL,NULL,'2014-09-12 04:33:03'),(3,2,3,2,'2012-09-12 03:00:40',3,NULL,3,NULL,NULL,'2014-09-12 04:33:03'),(4,1,3,2,'2012-09-12 03:00:40',3,NULL,3,NULL,NULL,'2014-09-12 04:33:03'),(6,2,7,2,'2012-09-12 03:00:40',3,NULL,3,NULL,NULL,'2014-09-12 04:33:03'),(7,2,6,2,'2012-09-12 03:00:40',3,NULL,3,NULL,NULL,'2014-09-12 04:33:03'),(8,3,8,2,'2012-09-12 03:00:40',3,NULL,3,NULL,NULL,NULL),(9,2,4,2,'2012-09-12 03:00:40',3,NULL,3,NULL,NULL,NULL),(10,1,1,2,'2012-09-12 03:00:40',3,NULL,3,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `winner` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -366,4 +359,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-12  7:50:32
+-- Dump completed on 2013-12-11 17:17:46
