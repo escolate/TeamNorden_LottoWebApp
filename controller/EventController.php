@@ -20,13 +20,13 @@ class EventController extends Controller {
     }
 
     protected function show() {
-	
 	$view = new EventShowView();
-	$event = MysqlAdapter::getInstance()->getEvent("SELECT * FROM event WHERE evt_id = $this->resourceId");
+	$event = MysqlAdapter::getInstance()->getEvent($this->resourceId);
 	$view->assign('event', $event);
+	$eventmemberList = MysqlAdapter::getInstance()->getEventmemberList($this->resourceId);
+	$view->assign('eventmemberList', $eventmemberList);
 	$view->display();
     }
-
 }
 
 ?>

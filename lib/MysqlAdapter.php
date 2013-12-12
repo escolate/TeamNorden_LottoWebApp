@@ -3,8 +3,9 @@
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/User.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Winner.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Event.class.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Eventmembers.class.php';
 
-final class MysqlAdapter{
+final class MysqlAdapter {
 
     private static $MysqlAdapter;
     private $con;
@@ -30,20 +31,21 @@ final class MysqlAdapter{
 	return self::$MysqlAdapter;
     }
 
-    public function getUser($query) {
-	$result = $this->con->query($query);
-	$userList = array();
-	if ($result->num_rows) {
-	    while ($row = $result->fetch_assoc()) {
-		$user = new User();
-		$user->setUse_id($row['use_id']);
-		$user->setUse_lastname($row['use_lastname']);
-		$user->setUse_firstname($row['use_firstname']);
-		return $userList;
-	    }
-	}
-	return null;
-    }
+// WERDEN GLAUBE ICH NICHT GEBRAUCHT
+//    public function getUser($query) {
+//	$result = $this->con->query($query);
+//	$userList = array();
+//	if ($result->num_rows) {
+//	    while ($row = $result->fetch_assoc()) {
+//		$user = new User();
+//		$user->setUse_id($row['use_id']);
+//		$user->setUse_lastname($row['use_lastname']);
+//		$user->setUse_firstname($row['use_firstname']);
+//		return $userList;
+//	    }
+//	}
+//	return null;
+//    }
 
     public function getUser_($id) {
 	$ide = $this->con->real_escape_string($id);
@@ -61,20 +63,19 @@ final class MysqlAdapter{
 	return null;
     }
 
-    public function getWinner($id) {
-	$query = "SELECT * FROM winner WHERE win_id = $id";
-	$result = $this->con->query($query);
-
-	if ($result->num_rows) {
-	    $row = $result->fetch_assoc();
-	    $winner = new Winner();
-	    $winner->setUse_id($row['use_id']);
-
-	    // comming soon;
-	    return $winner;
-	}
-	return NULL;
-    }
+// WERDEN GLAUBE ICH NICHT GEBRAUCHT
+//    public function getWinner($id) {
+//	$query = "SELECT * FROM winner WHERE win_id = $id";
+//	$result = $this->con->query($query);
+//	if ($result->num_rows) {
+//	    $row = $result->fetch_assoc();
+//	    $winner = new Winner();
+//	    $winner->setUse_id($row['use_id']);
+//	    // comming soon;
+//	    return $winner;
+//	}
+//	return NULL;
+//    }
 
     public function getWinnerList($limit = "0,18446744073709551615") {
 	$query = "SELECT 
@@ -89,7 +90,7 @@ final class MysqlAdapter{
 		s.ser_id as ser_name
 	FROM 
 		lotto.winner 
-		LEFT JOIN
+	LEFT JOIN
 		lotto.user uc
 	ON 
 		win_cre_id = uc.use_id 
@@ -140,26 +141,46 @@ final class MysqlAdapter{
 	return NULL;
     }
 
-    public function getEvent($query) {
+    public function getEvent($id) {
+	$query = "
+	SELECT 
+		event.*, 
+		uc.use_firstname as use_cre_firstname,  
+		uc.use_lastname as use_cre_lastname, 
+		um.use_firstname as use_mod_firstname, 
+		um.use_lastname as use_mod_lastname
+	FROM 
+		event 
+	LEFT JOIN
+		lotto.user uc
+	ON 
+		evt_cre_id = uc.use_id 
+	LEFT JOIN 
+		lotto.user um 
+	ON 
+		evt_mod_id = um.use_id
+	WHERE evt_id = $id;";
+
 	$result = $this->con->query($query);
-	$eventList = array();
 	if ($result->num_rows) {
-	    while ($row = $result->fetch_assoc()) {
-		$event = new Event();
-		$event->setEvt_id($row['evt_id']);
-		$event->setEvt_name($row['evt_name']);
-		$event->setEvt_location($row['evt_location']);
-		$event->setEvt_city($row['evt_city']);
-		$event->setEvt_cre_dat($row['evt_cre_dat']);
-		$event->setEvt_cre_id($row['evt_cre_id']);
-		$event->setEvt_datetime($row['evt_datetime']);
-		$event->setEvt_del($row['evt_del']);
-		$event->setEvt_mod_date($row['evt_mod_date']);
-		$event->setEvt_zip($row['evt_zip']);
-		$event->setEvt_mod_id($row['evt_mod_id']);
-		$eventList[] = $event;
-	    }
-	    return $eventList;
+	    $row = $result->fetch_assoc();
+	    $event = new Event();
+	    $event->setEvt_id($row['evt_id']);
+	    $event->setEvt_name($row['evt_name']);
+	    $event->setEvt_location($row['evt_location']);
+	    $event->setEvt_city($row['evt_city']);
+	    $event->setEvt_cre_dat($row['evt_cre_dat']);
+	    $event->setEvt_cre_id($row['evt_cre_id']);
+	    $event->setEvt_datetime($row['evt_datetime']);
+	    $event->setEvt_del($row['evt_del']);
+	    $event->setEvt_mod_date($row['evt_mod_date']);
+	    $event->setEvt_zip($row['evt_zip']);
+	    $event->setEvt_mod_id($row['evt_mod_id']);
+	    $event->setUse_cre_firstname($row['use_cre_firstname']);
+	    $event->setUse_cre_lastname($row['use_cre_lastname']);
+	    $event->setUse_mod_firstname($row['use_mod_firstname']);
+	    $event->setUse_mod_lastname($row['use_mod_lastname']);
+	    return $event;
 	}
 	return NULL;
     }
@@ -210,6 +231,44 @@ final class MysqlAdapter{
 	    return $eventList;
 	}
 	return NULL;
+    }
+
+    public function getEventmemberList($id, $limit = "0,18446744073709551615") {
+	$query = "
+	    SELECT 
+	     eventmembers.*, 
+	     u.use_firstname, 
+	     u.use_lastname 
+	    FROM 
+	     lotto.eventmembers 
+	    LEFT 
+	     join lotto.user u 
+	    on 
+	     eventmembers.use_id = u.use_id 
+	    where 
+	     eventmembers.eve_id = $id
+	    LIMIT
+	     $limit;";
+	$result = $this->con->query($query);
+	$list = array();
+	if ($result->num_rows) {
+	    while ($row = $result->fetch_assoc()) {
+		$eventmembers = new Eventmembers();
+		$eventmembers->setEve_id($row['eve_id']);
+		$eventmembers->setUse_firstname($row['use_firstname']);
+		$eventmembers->setUse_id($row['use_id']);
+		$eventmembers->setUse_lastname($row['use_lastname']);
+		$list[] = $eventmembers;
+	    }
+	    return $list;
+	}
+	return NULL;
+    }
+
+    public function getSeries() {
+	$query = "
+	    SELECT series.*, e.evt_name FROM series left join lotto.event e on eve_id = e.evt_id;	    
+	    ";
     }
 
     /**

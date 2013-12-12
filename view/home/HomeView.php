@@ -4,7 +4,11 @@ class HomeView extends View {
     public function display() {
 	echo <<<HTML
         <div class="content-box">
-    <h1>Bevorstehende Veranstaltungen</h1>
+    <h1>Veranstaltungen</h1>
+        <div class="button-box">
+	<a href="event" class="button blue">Alle anzeigen</a>
+	<a href="event/new" class="button green">Erstellen</a>
+    </div>
     <div class="list">
 	<table>
 	    <thead>
@@ -25,16 +29,15 @@ HTML;
 	    </tbody>
 	</table>
     </div>
-    <div class="dashboard-links">
-	<a href="event" class="button blue">Alle anzeigen</a>
-	<a href="event/new" class="button green">Erstellen</a>
-    </div>
-
 </div>
 
 
 <div class="content-box">
     <h1>Neuste Gewinner</h1>
+        <div class="button-box">
+	<a href="winner" class="button blue">Alle anzeigen</a>
+	<a href="index.php?page=create" class="button green">Erstellen</a>
+    </div>
     <div class="list">
 	<table>
 	    <thead>
@@ -58,13 +61,14 @@ HTML;
 	    </tbody>
 	</table>
     </div>
-    <div class="dashboard-links">
-	<a href="winner" class="button blue">Alle anzeigen</a>
-	<a href="index.php?page=create" class="button green">Erstellen</a>
-    </div>
 </div>
+
 <div class="content-box">
     <h1>Neuste Spieler</h1>
+    <div class="button-box">
+	<a href="index.php?page=list_index" class="button blue">Alle anzeigen</a>
+	<a href="index.php?page=create" class="button green">Erstellen</a>
+    </div>
     <div class="list">
 	<table>
 	    <thead>
@@ -81,13 +85,15 @@ HTML;
 	    </tbody>
 	</table>
     </div>
-    <div class="dashboard-links">
-	<a href="index.php?page=list_index" class="button blue">Alle anzeigen</a>
-	<a href="index.php?page=create" class="button green">Erstellen</a>
-    </div>
 </div>
+
+
 <div class="content-box">
     <h1>Neuste Lottokarten</h1>
+    <div class="button-box">
+	<a href="card" class="button blue">Alle anzeigen</a>
+	<a href="new" class="button green">Erstellen</a>
+    </div>
     <div class="list">
 	<table>
 	    <thead>
@@ -110,13 +116,13 @@ HTML;
 	    </tbody>
 	</table>
     </div>
-    <div class="dashboard-links">
-	<a href="card" class="button blue">Alle anzeigen</a>
-	<a href="new" class="button green">Erstellen</a>
-    </div>
 </div>
+
 <div class="content-box">
     <h1>Verlauf</h1>
+    <div class="button-box">
+	<a href="index.php?page=list_index" class="button blue">Alle anzeigen</a>
+    </div>
     <div class="list">
 	<table>
 	    <thead>
@@ -132,9 +138,6 @@ HTML;
 		</tr>
 	    </tbody>
 	</table>
-    </div>
-    <div class="dashboard-links">
-	<a href="index.php?page=list_index" class="button blue">Alle anzeigen</a>
     </div>
 </div>
         

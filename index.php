@@ -1,8 +1,8 @@
 <?php
 session_start();
 //Check login
-if(!isset($_SESSION['user']['id'])) {
-    header("Location: /login.php",TRUE,303);
+if (!isset($_SESSION['user']['id'])) {
+    header("Location: /login.php", TRUE, 303);
     exit();
 }
 
@@ -36,7 +36,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/lib/MysqlAdapter.php';
         </div>
         <div id="content">
             <div id="debugg"></div>
-<?php
+	    <?php
 	    switch (getUriFirst()) {
 		case URI_EVENT:
 		    include_once './controller/EventController.php';
@@ -74,24 +74,23 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/lib/MysqlAdapter.php';
     </body>
 </html>
 <?php
+
 function getBreadCrumbs() {
     $arr = explode("/", $_SERVER['REQUEST_URI']);
     $out = '<a href="/" >Start</a>';
     $href = "";
-    $end =  end($arr);
+    $end = end($arr);
 
     foreach ($arr as $val) {
-		if(!empty($val)){
-	   $out .= " &gt;"; 
+	if (!empty($val)) {
+	    $out .= " &gt;";
 	}
 	if (!empty($val) AND $val != $end AND !empty($end)) {
 	    $href .= $val . "/";
-	    $out .= "<a href=\"/{$href}\" >" . preg_replace("/^[0-9]+-/", "", ucfirst($val)) . "</a>";
-	}else{
-	    $out .= preg_replace("/^[0-9]+-/", "", ucfirst($val));
+	    $out .= "<a href=\"/{$href}\" >" . preg_replace("/^[0-9]+-/", "", ucfirst(rawurldecode($val))) . "</a>";
+	} else {
+	    $out .= preg_replace("/^[0-9]+-/", "", ucfirst(rawurldecode($val)));
 	}
-
-	
     }
     return $out;
 }
