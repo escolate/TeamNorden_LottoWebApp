@@ -5,6 +5,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Winner.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Event.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Message.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Eventmembers.class.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Series.class.php';
 
 final class MysqlAdapter {
 
@@ -266,10 +267,59 @@ final class MysqlAdapter {
 	return NULL;
     }
 
-    public function getSeries() {
+    public function getSeriesList($id, $limit = "0,18446744073709551615") { // like = '%' returns all
 	$query = "
-	    SELECT series.*, e.evt_name FROM series left join lotto.event e on eve_id = e.evt_id;	    
-	    ";
+	    SELECT 
+		series.*, 
+		e.evt_name as ser_evt_name,
+		uc.use_firstname as use_cre_firstname,  
+		uc.use_lastname as use_cre_lastname, 
+		um.use_firstname as use_mod_firstname, 
+		um.use_lastname as use_mod_lastname 
+	    FROM 
+		series 
+	    left join 
+		lotto.event e 
+	    on 
+		eve_id = e.evt_id
+	    LEFT JOIN 
+		lotto.user uc
+	    ON 
+		ser_cre_id = uc.use_id 
+	    LEFT JOIN 
+		lotto.user um 
+	    ON 
+		ser_mod_id = um.use_id
+	    WHERE 
+		series.eve_id = $id
+	    ORDER by
+		ser_id
+	    DESC
+	    LIMIT
+		$limit	    
+	    ;";
+	$result = $this->con->query($query);
+	$list = array();
+	if ($result->num_rows) {
+	    while ($row = $result->fetch_assoc()) {
+		$series = new Series();
+		$series->setSer_id($row['ser_id']);
+		$series->setSer_cre_dat($row['ser_cre_dat']);
+		$series->setSer_cre_id($row['ser_cre_id']);
+		$series->setSer_del($row['ser_del']);
+		$series->setSer_evt_name($row['ser_evt_name']);
+		$series->setSer_id($row['ser_id']);
+		$series->setSer_mod_dat($row['ser_mod_dat']);
+		$series->setSer_mod_id($row['ser_mod_id']);
+		$series->setUse_cre_firstname($row['use_cre_firstname']);
+		$series->setUse_cre_lastname($row['use_cre_lastname']);
+		$series->setUse_mod_firstname($row['use_mod_firstname']);
+		$series->setUse_mod_lastname($row['use_mod_lastname']);
+		$list[] = $series;
+	    }
+	    return $list;
+	}
+	return NULL;
     }
 
     /**
@@ -300,23 +350,24 @@ final class MysqlAdapter {
      * @return \Message|null
      */
     public function getMessage($type) {
-        $query = "SELECT * FROM messages WHERE mes_type = {$type} AND mes_status = 1";
-        $result = $this->con->query($query);
+	$query = "SELECT * FROM messages WHERE mes_type = {$type} AND mes_status = 1";
+	$result = $this->con->query($query);
 
-        if ($result->num_rows) {
-            $row = mysqli_fetch_assoc($result);
-            $message = new Message();
-            $message->setId($row['mes_id']);
-            $message->setType($row['mes_type']);
-            $message->setSubject($row['mes_subject']);
-            $message->setBody($row['mes_body']);
-            $message->setSender($row['mes_sender']);
-            $result->free();
-            return $message;
-        }
+	if ($result->num_rows) {
+	    $row = mysqli_fetch_assoc($result);
+	    $message = new Message();
+	    $message->setId($row['mes_id']);
+	    $message->setType($row['mes_type']);
+	    $message->setSubject($row['mes_subject']);
+	    $message->setBody($row['mes_body']);
+	    $message->setSender($row['mes_sender']);
+	    $result->free();
+	    return $message;
+	}
 
-        return NULL;
+	return NULL;
     }
+
 }
 
 ?>

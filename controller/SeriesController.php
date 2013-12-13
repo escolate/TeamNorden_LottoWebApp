@@ -18,8 +18,7 @@ class SeriesController extends Controller {
     }
 
     protected function index() {
-	$view = new SeriesView();
-	$view->display();
+
     }
 
     protected function init() {
@@ -27,7 +26,8 @@ class SeriesController extends Controller {
     }
 
     protected function show() {
-	
+	$view = new SeriesShowView();
+	$view->display();
     }
 
 }

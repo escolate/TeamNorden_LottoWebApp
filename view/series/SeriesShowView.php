@@ -10,7 +10,7 @@
  *
  * @author stinkpad
  */
-class SeriesView extends View{
+class SeriesShowView extends View{
    
     public function display() {
 

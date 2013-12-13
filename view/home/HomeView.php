@@ -33,10 +33,9 @@ HTML;
 
 
 <div class="content-box">
-    <h1>Neuste Gewinner</h1>
+    <h1>Gewinner</h1>
         <div class="button-box">
 	<a href="winner" class="button blue">Alle anzeigen</a>
-	<a href="index.php?page=create" class="button green">Erstellen</a>
     </div>
     <div class="list">
 	<table>
@@ -64,10 +63,10 @@ HTML;
 </div>
 
 <div class="content-box">
-    <h1>Neuste Spieler</h1>
+    <h1>Spieler</h1>
     <div class="button-box">
-	<a href="index.php?page=list_index" class="button blue">Alle anzeigen</a>
-	<a href="index.php?page=create" class="button green">Erstellen</a>
+	<a href="user" class="button blue">Alle anzeigen</a>
+	<a href="new" class="button green">Erstellen</a>
     </div>
     <div class="list">
 	<table>

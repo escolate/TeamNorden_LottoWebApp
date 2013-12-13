@@ -142,26 +142,14 @@ HTML;
 		    </tr>
 		</tfoot>
 		<tbody>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Ziehung 22</a></td>
-			<td><a href="#">89</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Ziehung 21</a></td>
-			<td><a href="#">45</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Ziehung 20</a></td>
-			<td><a href="#">23</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Ziehung 19</a></td>
-			<td><a href="#">1</a></td>
-		    </tr>
+HTML;
+//			    <tr>
+//			<td><input type="checkbox"></td>
+//			<td><a href="#">Ziehung 22</a></td>
+//			<td><a href="#">89</a></td>
+//		    </tr>
+	echo <<<HTML
+
 		</tbody>
 	    </table>
 	    <select name="events-action">
@@ -196,7 +184,7 @@ HTML;
 		<thead>
 		    <tr>
 			<th></th>
-			<th>Ziehung</th>
+			<th>Seriename</th>
 		    </tr>
 		</thead>
 		<tfoot>
@@ -206,22 +194,17 @@ HTML;
 		    </tr>
 		</tfoot>
 		<tbody>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Serie 5</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Serie 4</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Serie 3</a></td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td><a href="#">Serie 2</a></td>
-		    </tr>
+HTML;
+	    $zähler = count($this->vars['seriesList']);
+	    foreach ($this->vars['seriesList'] as $object) {
+		echo '<tr>';
+		echo '<td><input type="checkbox"></td>';
+		echo "<td><a href=\"/serie/{$object->getSer_id()}-Serie $zähler ({$this->vars['event']->getEvt_name()})\">Serie $zähler</a></td>";
+		echo '</tr>';
+		$zähler--;
+	    }
+	
+	echo <<<HTML
 		</tbody>
 	    </table>
 	    <select name="events-action">

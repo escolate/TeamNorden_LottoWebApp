@@ -1,4 +1,5 @@
 <?php
+
 include_once './view/event/EventView.php';
 include_once './view/event/EventShowView.php';
 
@@ -25,8 +26,11 @@ class EventController extends Controller {
 	$view->assign('event', $event);
 	$eventmemberList = MysqlAdapter::getInstance()->getEventmemberList($this->resourceId);
 	$view->assign('eventmemberList', $eventmemberList);
+	$seriesList = MysqlAdapter::getInstance()->getSeriesList($this->resourceId);
+	$view->assign('seriesList', $seriesList);
 	$view->display();
     }
+
 }
 
 ?>
