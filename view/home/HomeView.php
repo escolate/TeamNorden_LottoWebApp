@@ -120,7 +120,7 @@ HTML;
 <div class="content-box">
     <h1>Verlauf</h1>
     <div class="button-box">
-	<a href="index.php?page=list_index" class="button blue">Alle anzeigen</a>
+	<a href="#" class="button blue">Alle anzeigen</a>
     </div>
     <div class="list">
 	<table>

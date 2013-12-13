@@ -195,7 +195,8 @@ HTML;
 		</tfoot>
 		<tbody>
 HTML;
-	    $zähler = count($this->vars['seriesList']);
+	$zähler = count($this->vars['seriesList']);
+	if (!is_null($this->vars['seriesList'])) {
 	    foreach ($this->vars['seriesList'] as $object) {
 		echo '<tr>';
 		echo '<td><input type="checkbox"></td>';
@@ -203,7 +204,8 @@ HTML;
 		echo '</tr>';
 		$zähler--;
 	    }
-	
+	}
+
 	echo <<<HTML
 		</tbody>
 	    </table>
