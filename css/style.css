@@ -336,3 +336,44 @@ form input[type="submit"]:hover{
     vertical-align: middle;
     cursor: pointer;
 }
+
+#userdata input[type=text],#userdata input[type=email],#userdata input[type=password],#userdata select {
+    padding: 5px;
+    display: block;
+    margin: 5px 0;
+    width:  265px;
+}
+
+#userdata select {
+    display: inline-block;
+    min-width: 10px;
+    width: 75px;
+    margin-top: 0px;
+}
+
+#day ,#month {
+    display: inline-block;
+    width: 10px;
+}
+
+#userdata #month {
+    margin: 0 5px;
+}
+
+#userdata #year {
+    width: 117px;
+}
+
+#userdata fieldset {
+    margin-bottom: 20px;
+}
+
+#error_404 {
+    font-size: 48pt;
+    padding: 20px 0;
+    color: #4679BD;
+}
+
+#error_404_msg {
+    font-size: 20pt;
+}
