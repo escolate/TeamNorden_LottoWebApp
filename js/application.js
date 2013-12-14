@@ -21,5 +21,15 @@ $(document).ready(function(){ // Ready function start
     $('#noscript img').on('click',function () {
         $('#noscript').slideUp().promise($(this).remove());
     });
+    
+    //Location to PLZ
+    $("#zip").on("blur", function() {
+        var val = $(this).val();
+        if (!val == '' && $('#place').val() == '') {
+            $.get("/api.php?action=zip&zip="+ val, function(data) {
+                $("#place").val(data);
+            });
+        }
+    });
 
 });// Ready function end

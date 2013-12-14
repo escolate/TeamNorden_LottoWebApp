@@ -62,11 +62,18 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/lib/MysqlAdapter.php';
 		    include_once './controller/CardController.php';
 		    $controller = new CardController();
 		    break;
+                case URI_USER:
+		    include_once './controller/UserController.php';
+		    $controller = new UserController();
+		    break;
 		case URI_HOME:
-		default :
+                case '/':
 		    include_once './controller/HomeController.php';
 		    $controller = new HomeController();
 		    break;
+                default :
+                    include_once './controller/ErrorController.php';
+                    $controller = new ErrorController();
 	    }
 	    $controller->route();
 	    ?>
