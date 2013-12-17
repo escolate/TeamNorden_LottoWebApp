@@ -1,7 +1,11 @@
 <?php
 
 abstract class Controller {
-
+    
+    /**
+     * ID of the URL request
+     * @var type 
+     */
     protected $resourceId;
 
     /**

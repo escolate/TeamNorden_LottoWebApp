@@ -14,6 +14,8 @@ class HomeController extends Controller {
 	$view->assign('eventList', $eventList);
 	$winnerList = MysqlAdapter::getInstance()->getWinnerList(5);
 	$view->assign('winnerList', $winnerList);
+	$cardList = MysqlAdapter::getInstance()->getCardList(5);
+	$view->assign('cardList', $cardList);
 	$view->display();
     }
 
