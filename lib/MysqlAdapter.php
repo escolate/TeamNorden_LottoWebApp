@@ -97,6 +97,15 @@ final class MysqlAdapter {
     public function saveUser(User $user) {
         $id = $user->getUse_id();
         if (empty($id)) {
+            //Check if user already exists
+            $q = "SELECT use_id FROM user WHERE use_email = '{$user->getUse_email()}' AND use_del is not true";
+            $res = $this->con->query($q);
+            if($res->num_rows) {
+                $row = $res->fetch_assoc();
+                $user = $row['use_id'];
+                return false;
+            }
+            
             //Insert
             $query = "INSERT INTO user (
                 use_lastname, use_firstname, use_status, use_address, use_zip, use_city, use_birth, use_country, use_phone, use_mobile, use_email, use_administrator, use_salt, use_cre_dat, use_cre_id) 

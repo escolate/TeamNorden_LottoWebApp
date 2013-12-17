@@ -34,7 +34,8 @@ class UserController extends Controller {
             exit();
         }
         
-        $this->show();
+        header("Location: /user/" . $user->getUse_id(), TRUE, 303);
+        exit();
     }
 
     protected function index() {
