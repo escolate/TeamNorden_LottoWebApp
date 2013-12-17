@@ -49,6 +49,7 @@ HTML;
 	    <tbody>
 HTML;
 
+<<<<<<< HEAD
         foreach ($this->vars['winnerList'] as $object) {
             echo '<tr>';
 
@@ -58,6 +59,14 @@ HTML;
         }
 
         echo <<<HTML
+=======
+		echo "<td><a href=\"/winner/{$object->getWin_id()}-\"></a></td>";
+		echo "<td><a href=\"/winner/{$object->getWin_id()}-\">{$this->getDate($object->getWin_cre_dat())}</a></td>";
+		echo '</tr>';
+	    }
+	
+	echo <<<HTML
+>>>>>>> zaki
 	    </tbody>
 	</table>
     </div>
@@ -96,7 +105,7 @@ OUT;
 
 
 <div class="content-box">
-    <h1>Neuste Lottokarten</h1>
+    <h1>Lottokarten</h1>
     <div class="button-box">
 	<a href="card" class="button blue">Alle anzeigen</a>
 	<a href="new" class="button green">Erstellen</a>
@@ -113,13 +122,18 @@ OUT;
 		</tr>
 	    </thead>
 	    <tbody>
-		<tr>
-		    <td><a href="#"></a></td>
-		    <td><a href="#"></a></td>
-		    <td><a href="#"></a></td>
-		    <td><a href="#"></a></td>
-		    <td><a href="#"></a></td>
-		</tr>
+HTML;
+	    foreach ($this->vars['cardList'] as $object) {
+		echo '<tr>';
+		echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$object->getCar_serialnumber()}</a></td>";
+		echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$object->getCar_row1_nr1()}, {$object->getCar_row1_nr2()}, {$object->getCar_row1_nr3()}, {$object->getCar_row1_nr4()}, {$object->getCar_row1_nr5()}</a></td>";
+		echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$object->getCar_row2_nr1()}, {$object->getCar_row2_nr2()}, {$object->getCar_row2_nr3()}, {$object->getCar_row2_nr4()}, {$object->getCar_row2_nr5()}</a></td>";
+		echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$object->getCar_row3_nr1()}, {$object->getCar_row3_nr2()}, {$object->getCar_row3_nr3()}, {$object->getCar_row3_nr4()}, {$object->getCar_row3_nr5()}</a></td>";
+		echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$this->getDate($object->getCar_cre_dat())}</a></td>";
+		echo '</tr>';
+	    }
+	
+	echo <<<HTML
 	    </tbody>
 	</table>
     </div>

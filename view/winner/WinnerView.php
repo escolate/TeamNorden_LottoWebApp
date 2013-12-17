@@ -32,9 +32,9 @@ HTML;
 	    foreach ($this->vars['list'] as $object) {
 		echo '<tr>';
 		echo '<td><input type="checkbox"></td>';
-		echo "<td><a href=\"/winner/{$object->getWin_id()}-{$object->getWin_firstname()}{$object->getWin_lastname()}\">{$object->getWin_firstname()} {$object->getWin_lastname()}</a></td>";
-		echo "<td><a href=\"/winner/{$object->getWin_id()}-{$object->getWin_firstname()}{$object->getWin_lastname()}\">{$this->getDate($object->getWin_cre_dat())}</a></td>";
-		echo "<td><a href=\"/winner/{$object->getWin_id()}-{$object->getWin_firstname()}{$object->getWin_lastname()}\">". (!is_null($object->getWin_notificated()) ? $this->getDate($object->getWin_notificated()):"Ausstehend") ."</a></td>";
+		echo "<td><a href=\"/winner/{$object->getWin_id()}-\"></a></td>";
+		echo "<td><a href=\"/winner/{$object->getWin_id()}-\"></a></td>";
+		echo "<td><a href=\"/winner/{$object->getWin_id()}-\">". (!is_null($object->getWin_notificated()) ? $this->getDate($object->getWin_notificated()):"Ausstehend") ."</a></td>";
 		echo '</tr>';
 	    }
 	

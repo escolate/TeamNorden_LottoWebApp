@@ -29,7 +29,10 @@ class WinnerController extends Controller {
     }
 
     protected function show() {
-
+	$view = new WinnerShowView();
+	$object = MysqlAdapter::getInstance()->getWinner($this->resourceId);
+	$view->assign('winner', $object);
+	$view->display();
     }
 }
 

@@ -1,24 +1,23 @@
 <?php
 
-class Series extends Lotto{
+class Series {
 
 private $ser_id;
 private $eve_id;
+private $ser_name;
 private $ser_cre_dat;
 private $ser_cre_id;
 private $ser_mod_dat;
 private $ser_mod_id;
 private $ser_del;
-private $ser_evt_name;
 
-public function getSer_evt_name() {
-    return $this->ser_evt_name;
+public function getSer_name() {
+    return $this->ser_name;
 }
 
-public function setSer_evt_name($ser_evt_name) {
-    $this->ser_evt_name = $ser_evt_name;
+public function setSer_name($ser_name) {
+    $this->ser_name = $ser_name;
 }
-
 
 public function getSer_id() {
     return $this->ser_id;
@@ -75,7 +74,6 @@ public function getSer_del() {
 public function setSer_del($ser_del) {
     $this->ser_del = $ser_del;
 }
-
 
 
 }
