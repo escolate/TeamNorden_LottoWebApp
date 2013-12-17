@@ -1,8 +1,9 @@
 <?php
 
 class HomeView extends View {
+
     public function display() {
-	echo <<<HTML
+        echo <<<HTML
         <div class="content-box">
     <h1>Veranstaltungen</h1>
         <div class="button-box">
@@ -19,13 +20,13 @@ class HomeView extends View {
 	    </thead>
 	    <tbody>
 HTML;
-	foreach ($this->vars['eventList'] as $object) {
-		echo '<tr>';
-		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_name()}</a></td>";
-		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$this->getDateTime($object->getEvt_datetime())}</a></td>";
-		echo '</tr>';   
-	}
-	echo <<<HTML
+        foreach ($this->vars['eventList'] as $object) {
+            echo '<tr>';
+            echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_name()}</a></td>";
+            echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$this->getDateTime($object->getEvt_datetime())}</a></td>";
+            echo '</tr>';
+        }
+        echo <<<HTML
 	    </tbody>
 	</table>
     </div>
@@ -47,26 +48,26 @@ HTML;
 	    </thead>
 	    <tbody>
 HTML;
-	
-	    foreach ($this->vars['winnerList'] as $object) {
-		echo '<tr>';
 
-		echo "<td><a href=\"/winner/{$object->getWin_id()}-{$object->getWin_firstname()}{$object->getWin_lastname()}\">{$object->getWin_firstname()} {$object->getWin_lastname()}</a></td>";
-		echo "<td><a href=\"/winner/{$object->getWin_id()}-{$object->getWin_firstname()}{$object->getWin_lastname()}\">{$this->getDate($object->getWin_cre_dat())}</a></td>";
-		echo '</tr>';
-	    }
-	
-	echo <<<HTML
+        foreach ($this->vars['winnerList'] as $object) {
+            echo '<tr>';
+
+            echo "<td><a href=\"/winner/{$object->getWin_id()}-{$object->getWin_firstname()}{$object->getWin_lastname()}\">{$object->getWin_firstname()} {$object->getWin_lastname()}</a></td>";
+            echo "<td><a href=\"/winner/{$object->getWin_id()}-{$object->getWin_firstname()}{$object->getWin_lastname()}\">{$this->getDate($object->getWin_cre_dat())}</a></td>";
+            echo '</tr>';
+        }
+
+        echo <<<HTML
 	    </tbody>
 	</table>
     </div>
 </div>
 
 <div class="content-box">
-    <h1>Spieler</h1>
+    <h1>Neuste Spieler</h1>
     <div class="button-box">
-	<a href="user" class="button blue">Alle anzeigen</a>
-	<a href="new" class="button green">Erstellen</a>
+	<a href="/user" class="button blue">Alle anzeigen</a>
+	<a href="/user/new" class="button green">Erstellen</a>
     </div>
     <div class="list">
 	<table>
@@ -77,10 +78,17 @@ HTML;
 		</tr>
 	    </thead>
 	    <tbody>
-		<tr>
-		    <td><a href="#"></a></td>
-		    <td><a href="#"></a></td>
-		</tr>
+HTML;
+
+        foreach ($this->vars['userlist'] as $user) {
+            echo <<<OUT
+        <tr>
+        <td><a href = "/user/{$user->getUse_id()}">{$user->getUse_firstname()} {$user->getUse_lastname()}</a></td>
+        <td><a href = "/user/{$user->getUse_id()}">{$user->getUse_cre_dat()}</a></td>
+        </tr>
+OUT;
+        }
+        echo <<<HTML
 	    </tbody>
 	</table>
     </div>

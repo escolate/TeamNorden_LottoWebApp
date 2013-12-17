@@ -38,8 +38,8 @@ class UserInitView extends View {
             <fieldset>
                 <legend>Login</legend>
                 <input type="email" id="email" placeholder="E-Mail Adresse" name="email" value="{$this->user->getUse_email()}"/>
-                <input type="password" id="password1" placeholder="Passwort" name="password1" />
-                <input type="password" id="password2" placeholder="Passwort wiederholen" name="password2" />
+                <input type="password" autocomplete="off" id="password1" placeholder="Passwort" name="password1" />
+                <input type="password" autocomplete="off" id="password2" placeholder="Passwort wiederholen" name="password2" />
                 <input type="checkbox" {$isAdmin} id="admin" name="admin"> <label for="admin">Administrator</label>
             </fieldset>
         

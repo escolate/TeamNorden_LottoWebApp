@@ -10,8 +10,16 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Series.class.php';
 
 final class MysqlAdapter {
 
+    /**
+     *
+     * @var MysqlAdapter
+     */
     private static $MysqlAdapter;
     private $con;
+
+    private $limit = 0;
+    private $count = 0;
+    private $order = '';
 
     private function __construct() {
         $this->con = new mysqli(DB_SERVER, DB_USER, DB_PW, DB_DB);
@@ -27,10 +35,14 @@ final class MysqlAdapter {
      * 
      * @return MysqlAdapter
      */
-    public static function getInstance() {
+    public static function getInstance() {        
         if (self::$MysqlAdapter == NULL) {
             self::$MysqlAdapter = new MysqlAdapter();
         }
+        self::$MysqlAdapter->setLimit('');
+        self::$MysqlAdapter->setCount('');
+        self::$MysqlAdapter->setOrder('');
+        
         return self::$MysqlAdapter;
     }
 
@@ -50,6 +62,11 @@ final class MysqlAdapter {
 //	return null;
 //    }
 
+    /**
+     * 
+     * @param type $id
+     * @return \User|null
+     */
     public function getUser_($id) {
         $ide = $this->con->real_escape_string($id);
         $query = "SELECT * FROM lotto.user WHERE use_id = '{$ide}'";
@@ -77,9 +94,17 @@ final class MysqlAdapter {
      * 
      * @return array\User
      */
-    public function getUserList() {
+    public function getUserList($limit = 0) {
         $arr = array();
-        $query = "SELECT * FROM user ORDER BY use_lastname,use_firstname";
+        $order = '';
+        $lim = '';
+        
+        if($limit) {
+            $order = 'use_cre_dat DESC,';
+            $lim = 'LIMIT '.$limit;
+        }
+        
+        $query = "SELECT * FROM user ORDER BY {$order}use_lastname,use_firstname ".$lim;
         $result = $this->con->query($query);
 
         while ($row = $result->fetch_assoc()) {
@@ -93,6 +118,7 @@ final class MysqlAdapter {
             $user->setUse_city($row['use_city']);
             $user->setUse_administrator($row['use_administrator']);
             $user->setUse_birth($row['use_birth']);
+            $user->setUse_cre_dat($row['use_cre_dat']);
             $arr[] = $user;
         }
         return $arr;
@@ -417,6 +443,19 @@ final class MysqlAdapter {
 
         return "";
     }
+
+    public function setLimit($limit) {
+        $this->limit = $limit;
+    }
+
+    public function setCount($count) {
+        $this->count = $count;
+    }
+
+    public function setOrder($order) {
+        $this->order = $order;
+    }
+
 
 }
 
