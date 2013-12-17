@@ -14,4 +14,6 @@ define("DB_SERVER", "127.0.0.1");
 define("DB_USER", "lotto");
 define("DB_PW", "lotto");
 define("DB_DB", "lotto");
+
+define("DEBUG", true);
 ?>

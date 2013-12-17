@@ -16,7 +16,6 @@ final class MysqlAdapter {
      */
     private static $MysqlAdapter;
     private $con;
-
     private $limit = 0;
     private $count = 0;
     private $order = '';
@@ -35,14 +34,14 @@ final class MysqlAdapter {
      * 
      * @return MysqlAdapter
      */
-    public static function getInstance() {        
+    public static function getInstance() {
         if (self::$MysqlAdapter == NULL) {
             self::$MysqlAdapter = new MysqlAdapter();
         }
         self::$MysqlAdapter->setLimit('');
         self::$MysqlAdapter->setCount('');
         self::$MysqlAdapter->setOrder('');
-        
+
         return self::$MysqlAdapter;
     }
 
@@ -92,19 +91,104 @@ final class MysqlAdapter {
 
     /**
      * 
+     * @param User $user
+     * @return boolean
+     */
+    public function saveUser(User $user) {
+        $id = $user->getUse_id();
+        if (empty($id)) {
+            //Insert
+            $query = "INSERT INTO user (
+                use_lastname, use_firstname, use_status, use_address, use_zip, use_city, use_birth, use_country, use_phone, use_mobile, use_email, use_administrator, use_salt, use_cre_dat, use_cre_id) 
+                VALUES (
+                '{$this->con->real_escape_string($user->getUse_lastname())}',
+                '{$this->con->real_escape_string($user->getUse_firstname())}',
+                '1',
+                '{$this->con->real_escape_string($user->getUse_address())}',
+                '{$this->con->real_escape_string($user->getUse_zip())}',
+                '{$this->con->real_escape_string($user->getUse_city())}',
+                '{$this->con->real_escape_string($user->getUse_birth())}',
+                '{$this->con->real_escape_string($user->getUse_country())}',
+                '{$this->con->real_escape_string($user->getUse_phone())}',
+                '{$this->con->real_escape_string($user->getUse_mobile())}',
+                '{$this->con->real_escape_string($user->getUse_email())}',
+                '{$this->con->real_escape_string($user->getUse_administrator())}',
+                sha(rand()),
+                now(),
+                '{$_SESSION['user']['id']}')";
+        } else {
+            //Update
+            $query = "UPDATE user SET 
+                use_lastname = '{$this->con->real_escape_string($user->getUse_lastname())}',
+                use_firstname = '{$this->con->real_escape_string($user->getUse_firstname())}',
+                use_status = '{$this->con->real_escape_string($user->getUse_status())}',
+                use_address = '{$this->con->real_escape_string($user->getUse_address())}',
+                use_zip = '{$this->con->real_escape_string($user->getUse_zip())}',
+                use_city = '{$this->con->real_escape_string($user->getUse_city())}',
+                use_birth = '{$this->con->real_escape_string($user->getUse_birth())}',
+                use_country = '{$this->con->real_escape_string($user->getUse_country())}',
+                use_phone = '{$this->con->real_escape_string($user->getUse_phone())}',
+                use_mobile = '{$this->con->real_escape_string($user->getUse_mobile())}',
+                use_administrator = {$this->con->real_escape_string($user->getUse_administrator())},
+                use_mod_id = '{$_SESSION['user']['id']}'
+                WHERE use_id = ".$user->getUse_id()." AND use_del is not true";
+        }
+
+        //Save
+        if (!$this->con->query($query)) {
+            $this->error($query);
+            return FALSE;
+        }
+        
+        //Assign id to User
+        if(empty($id)) {
+            $user->setUse_id($this->con->insert_id);
+        }
+
+        //Check if PW should be set and do so if is not empty, return false if password could not be set
+        $pw = $user->getUse_password();
+        if (!empty($pw)) {
+            return $this->setPassword($user->getUse_email(), $user->getUse_password());
+        }
+
+        return true;
+    }
+
+    /**
+     * 
+     * @param type $email E-Mail
+     * @param type $pw Password
+     * @return boolean
+     */
+    public function setPassword($email, $pw) {
+        $pwe = $this->con->real_escape_string($pw);
+        $emaile = $this->con->real_escape_string($email);
+        $query = "UPDATE user SET use_password = password(concat(use_salt,'{$pwe}')) WHERE use_email = '{$emaile}' AND use_del is not true";
+        if (!$this->con->query($query)) {
+            $this->error($query);
+            return FALSE;
+        }
+        if (!$this->con->affected_rows) {
+            return FALSE;
+        }
+        return true;
+    }
+
+    /**
+     * 
      * @return array\User
      */
     public function getUserList($limit = 0) {
         $arr = array();
         $order = '';
         $lim = '';
-        
-        if($limit) {
+
+        if ($limit) {
             $order = 'use_cre_dat DESC,';
-            $lim = 'LIMIT '.$limit;
+            $lim = 'LIMIT ' . $limit;
         }
-        
-        $query = "SELECT * FROM user ORDER BY {$order}use_lastname,use_firstname ".$lim;
+
+        $query = "SELECT * FROM user ORDER BY {$order}use_lastname,use_firstname " . $lim;
         $result = $this->con->query($query);
 
         while ($row = $result->fetch_assoc()) {
@@ -385,21 +469,24 @@ final class MysqlAdapter {
      * 
      * @param type $email
      * @param type $pw unescaped password
-     * @return User
+     * @return User|null
      */
     public function authenticateUser($email, $pw) {
         $pwe = $this->con->real_escape_string($pw);
         $emaile = $this->con->real_escape_string($email);
-        $query = "SELECT use_id FROM user WHERE use_email = '{$emaile}' AND use_password = password(concat(use_salt,'{$pwe}'))";
+        $query = "SELECT use_id FROM user WHERE use_email = '{$emaile}' AND use_password = password(concat(use_salt,'{$pwe}')) AND use_del is not true AND use_administrator is true";
         $result = $this->con->query($query);
 
         if ($result->num_rows) {
             $row = mysqli_fetch_assoc($result);
             $user = $this->getUser_($row['use_id']);
             $result->free();
+            $query = "UPDATE user SET use_lastlogin = now() WHERE use_email = '{$emaile}' AND use_del is not true";
+            if (!$this->con->query($query)) {
+                $this->error($query);
+            }
             return $user;
         }
-
         return NULL;
     }
 
@@ -456,6 +543,11 @@ final class MysqlAdapter {
         $this->order = $order;
     }
 
+    private function error($query) {
+        if (DEBUG) {
+            exit('Error ' . $this->con->errno . ': ' . $this->con->error . '\n<br>' . $query);
+        }
+    }
 
 }
 
