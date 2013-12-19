@@ -49,24 +49,16 @@ HTML;
 	    <tbody>
 HTML;
 
-<<<<<<< HEAD
+
         foreach ($this->vars['winnerList'] as $object) {
             echo '<tr>';
-
-            echo "<td><a href=\"/winner/{$object->getWin_id()}-{$object->getWin_firstname()}{$object->getWin_lastname()}\">{$object->getWin_firstname()} {$object->getWin_lastname()}</a></td>";
-            echo "<td><a href=\"/winner/{$object->getWin_id()}-{$object->getWin_firstname()}{$object->getWin_lastname()}\">{$this->getDate($object->getWin_cre_dat())}</a></td>";
-            echo '</tr>';
-        }
-
-        echo <<<HTML
-=======
 		echo "<td><a href=\"/winner/{$object->getWin_id()}-\"></a></td>";
 		echo "<td><a href=\"/winner/{$object->getWin_id()}-\">{$this->getDate($object->getWin_cre_dat())}</a></td>";
 		echo '</tr>';
 	    }
 	
 	echo <<<HTML
->>>>>>> zaki
+
 	    </tbody>
 	</table>
     </div>
