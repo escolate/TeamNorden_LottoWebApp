@@ -16,7 +16,6 @@ class EventShowView extends View {
     <h1>Veranstaltung</h1>
     <div class="button-box">
 	<a href="#" class="button grey">Bearbeiten</a>
-	<a href="#" class="button red">Veranstaltung stoppen</a>
     </div>
     <div class="event-card">
 	<table class="show-table">
@@ -128,7 +127,7 @@ HTML;
 
 	echo <<<HTML
     <div class="button-box">
-	<a href="#" class="button red">Serie beenden</a>
+	<a href="#" class="button red">Serie $sTitleCounter abschliessen</a>
     </div>
     <form >
 	<fieldset id="save-number">
