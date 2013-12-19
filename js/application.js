@@ -31,5 +31,16 @@ $(document).ready(function(){ // Ready function start
             });
         }
     });
+    
+    //Validate forms
+    $('#userdata').on('submit',function (e) {
+        if($('#password1').val() != $('#password2').val()) {
+            e.preventDefault();
+            alert('Die eingegebenen Passworte stimmen nicht überein!');
+            $('#password1').val('');
+            $('#password2').val('');
+            $('#password1').focus();
+        }
+    });
 
 });// Ready function end

@@ -17,12 +17,20 @@ class UserInitView extends View {
      * @var User
      */
     private $user;
+    
+    private $notification = "";
 
     public function display() {
         if (isset($this->vars['user']) && $this->vars['user'] instanceof User) {
             $this->user = $this->vars['user'];
+            $boxtitle = "Benutzer bearbeiten";
         } else {
             $this->user = new User();
+            $boxtitle = "Neuer Benutzer anlegen";
+        }
+        
+        if(isset($this->vars['notify'])) {
+            $this->notification = '<div class="red">'.$this->vars['notify'].'</div>';
         }
 
         $gebdat = $this->getBirthDateInput($this->user->getUse_birth());
@@ -30,7 +38,8 @@ class UserInitView extends View {
 
         echo <<<OUT
         <div class="content-box">
-    <h1>Neuer Benutzer anlegen</h1>
+    <h1>{$boxtitle}</h1>
+        {$this->notification}
     <div class="list">
         <form id="userdata" action="/user/init" method="POST">
             <input type="hidden" name="userid" value="{$this->user->getUse_id()}"/>
