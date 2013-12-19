@@ -4,7 +4,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/model/User.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Winner.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Event.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Message.class.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Eventmembers.class.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Eventmember.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Series.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Number.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Card.class.php';
@@ -17,7 +17,6 @@ final class MysqlAdapter {
      */
     private static $MysqlAdapter;
     private $con;
-
     private $limit = 0;
     private $count = 0;
     private $order = '';
@@ -36,17 +35,15 @@ final class MysqlAdapter {
      * 
      * @return MysqlAdapter
      */
+    public static function getInstance() {
+	if (self::$MysqlAdapter == NULL) {
+	    self::$MysqlAdapter = new MysqlAdapter();
+	}
+	self::$MysqlAdapter->setLimit('');
+	self::$MysqlAdapter->setCount('');
+	self::$MysqlAdapter->setOrder('');
 
-    public static function getInstance() {        
-        if (self::$MysqlAdapter == NULL) {
-            self::$MysqlAdapter = new MysqlAdapter();
-        }
-        self::$MysqlAdapter->setLimit('');
-        self::$MysqlAdapter->setCount('');
-        self::$MysqlAdapter->setOrder('');
-        
-        return self::$MysqlAdapter;
-
+	return self::$MysqlAdapter;
     }
 
     public function getCardList($limit = "0,18446744073709551615") {
@@ -118,6 +115,7 @@ final class MysqlAdapter {
 	    $user->setUse_birth($row['use_birth']);
 	    $user->setUse_phone($row['use_phone']);
 	    $user->setUse_mobile($row['use_mobile']);
+	    $user->setUse_status($row['use_status']);
 	    return $user;
 	}
 	return null;
@@ -127,70 +125,44 @@ final class MysqlAdapter {
      * 
      * @return array\User
      */
-
     public function getUserList($limit = 0) {
-        $arr = array();
-        $order = '';
-        $lim = '';
-        
-        if($limit) {
-            $order = 'use_cre_dat DESC,';
-            $lim = 'LIMIT '.$limit;
-        }
-        
-        $query = "SELECT * FROM user ORDER BY {$order}use_lastname,use_firstname ".$lim;
-        $result = $this->con->query($query);
+	$arr = array();
+	$order = '';
+	$lim = '';
 
-        while ($row = $result->fetch_assoc()) {
-            $user = new User();
-            $user->setUse_id($row['use_id']);
-            $user->setUse_lastname($row['use_lastname']);
-            $user->setUse_firstname($row['use_firstname']);
-            $user->setUse_email($row['use_email']);
-            $user->setUse_address($row['use_address']);
-            $user->setUse_zip($row['use_zip']);
-            $user->setUse_city($row['use_city']);
-            $user->setUse_administrator($row['use_administrator']);
-            $user->setUse_birth($row['use_birth']);
-            $user->setUse_cre_dat($row['use_cre_dat']);
-            $arr[] = $user;
-        }
-        return $arr;
+	if ($limit) {
+	    $order = 'use_cre_dat DESC,';
+	    $lim = 'LIMIT ' . $limit;
+	}
 
+	$query = "SELECT * FROM user ORDER BY {$order}use_lastname,use_firstname " . $lim;
+	$result = $this->con->query($query);
+
+	while ($row = $result->fetch_assoc()) {
+	    $user = new User();
+	    $user->setUse_id($row['use_id']);
+	    $user->setUse_lastname($row['use_lastname']);
+	    $user->setUse_firstname($row['use_firstname']);
+	    $user->setUse_email($row['use_email']);
+	    $user->setUse_address($row['use_address']);
+	    $user->setUse_zip($row['use_zip']);
+	    $user->setUse_city($row['use_city']);
+	    $user->setUse_administrator($row['use_administrator']);
+	    $user->setUse_birth($row['use_birth']);
+	    $user->setUse_cre_dat($row['use_cre_dat']);
+	    $arr[] = $user;
+	}
+	return $arr;
     }
 
     public function getWinner($id) {
 	$query = "
 	SELECT 
-		winner.*, 
-		e.evt_name,
-		u.use_firstname,
-		u.use_lastname,
-		s.ser_name
+	    *
 	FROM 
-		lotto.winner 
-	LEFT JOIN
-		lotto.user uc
-	ON 
-		win_cre_id = uc.use_id 
-	LEFT JOIN 
-		lotto.user um 
-	ON 
-		win_mod_id = um.use_id
-	LEFT JOIN
-		lotto.event e
-	on
-		eve_id = e.evt_id
-	LEFT join
-		lotto.user u
-	on
-		winner.use_id = u.use_id
-	LEFT JOIN
-		lotto.series s
-	on
-		winner.ser_id = s.ser_id
+	    lotto.winner 
 	WHERE
-		winner.win_id = $id;
+	    win_id = $id;
 	";
 	$result = $this->con->query($query);
 	if ($result->num_rows) {
@@ -204,16 +176,6 @@ final class MysqlAdapter {
 		$winner->setWin_mod_dat($row['win_mod_dat']);
 		$winner->setWin_mod_id($row['win_mod_id']);
 		$winner->setWin_prize($row['win_prize']);
-		$user = new User();
-		$user->setUse_firstname($row['use_firstname']);
-		$user->setUse_lastname($row['use_lastname']);
-		$winner->setUser($user);
-		$event = new Event();
-		$event->setEvt_name($row['evt_name']);
-		$winner->setEvent($event);
-		$series = new Series();
-		$series->setSer_name($row['ser_name']);
-		$winner->setSeries($series);
 	    }
 	    return $winner;
 	}
@@ -268,6 +230,10 @@ final class MysqlAdapter {
 		$winner->setWin_mod_dat($row['win_mod_dat']);
 		$winner->setWin_mod_id($row['win_mod_id']);
 		$winner->setWin_prize($row['win_prize']);
+		$user = new User();
+		$user->setUse_firstname($row['use_firstname']);
+		$user->setUse_lastname($row['use_lastname']);
+		$winner->setUser($user);
 		$list[] = $winner;
 	    }
 	    return $list;
@@ -278,7 +244,11 @@ final class MysqlAdapter {
     public function getEvent($id) {
 	$query = "
 	SELECT 
-		event.*
+		event.*,
+		uc.use_firstname,
+		uc.use_lastname,
+		um.use_firstname,
+		um.use_lastname
 	FROM 
 		event 
 	LEFT JOIN
@@ -313,17 +283,9 @@ final class MysqlAdapter {
 
     public function getEventList($limit = "0,18446744073709551615") {  // http://dev.mysql.com/doc/refman/5.0/en/select.html --> SELECT * FROM tbl LIMIT 95,18446744073709551615;
 	$query = "SELECT 
-		event.*
+		*
 	    FROM 
-		lotto.event 
-	    LEFT JOIN 
-		lotto.user uc
-	    ON 
-		evt_cre_id = uc.use_id 
-	    LEFT JOIN 
-		lotto.user um 
-	    ON 
-		evt_mod_id = um.use_id
+		event
 	    ORDER BY
 		evt_datetime DESC
 	    LIMIT
@@ -354,29 +316,23 @@ final class MysqlAdapter {
     public function getEventmemberList($id, $limit = "0,18446744073709551615") {
 	$query = "
 	    SELECT 
-	     eventmembers.*, 
-	     u.use_firstname, 
-	     u.use_lastname 
+	     *
 	    FROM 
-	     lotto.eventmembers 
-	    LEFT 
-	     join lotto.user u 
-	    on 
-	     eventmembers.use_id = u.use_id 
+	     eventmember
 	    where 
-	     eventmembers.eve_id = $id
+	     eve_id = $id
 	    LIMIT
 	     $limit;";
 	$result = $this->con->query($query);
-	$list = array();
+	$eventmemberList = array();
 	if ($result->num_rows) {
 	    while ($row = $result->fetch_assoc()) {
-		$eventmembers = new Eventmembers();
-		$eventmembers->setEve_id($row['eve_id']);
-		$eventmembers->setUse_id($row['use_id']);
-		$list[] = $eventmembers;
+		$eventmember = new Eventmember();
+		$eventmember->setEve_id($row['eve_id']);
+		$eventmember->setUse_id($row['use_id']);
+		$eventmemberList[] = $eventmember;
 	    }
-	    return $list;
+	    return $eventmemberList;
 	}
 	return NULL;
     }
@@ -384,22 +340,13 @@ final class MysqlAdapter {
     public function getSeriesList($id, $limit = "0,18446744073709551615") {
 	$query = "
 	    SELECT 
-		series.*, 
-		e.evt_name
+		*
 	    FROM 
 		series 
 	    left join 
 		lotto.event e 
 	    on 
 		eve_id = e.evt_id
-	    LEFT JOIN 
-		lotto.user uc
-	    ON 
-		ser_cre_id = uc.use_id 
-	    LEFT JOIN 
-		lotto.user um 
-	    ON 
-		ser_mod_id = um.use_id
 	    WHERE 
 		series.eve_id = $id
 	    ORDER by
@@ -423,6 +370,41 @@ final class MysqlAdapter {
 		$list[] = $series;
 	    }
 	    return $list;
+	}
+	return NULL;
+    }
+
+    public function getNewestSeries($id) {
+	$query = "
+	    SELECT 
+		*
+	    FROM 
+		series 
+	    left join 
+		lotto.event e 
+	    on 
+		eve_id = e.evt_id
+	    WHERE 
+		series.eve_id = $id
+	    ORDER by
+		ser_id
+	    DESC
+	    LIMIT
+		1	    
+	    ;";
+	$result = $this->con->query($query);
+	if ($result->num_rows) {
+	    while ($row = $result->fetch_assoc()) {
+		$series = new Series();
+		$series->setSer_id($row['ser_id']);
+		$series->setSer_cre_dat($row['ser_cre_dat']);
+		$series->setSer_cre_id($row['ser_cre_id']);
+		$series->setSer_del($row['ser_del']);
+		$series->setSer_id($row['ser_id']);
+		$series->setSer_mod_dat($row['ser_mod_dat']);
+		$series->setSer_mod_id($row['ser_mod_id']);
+	    }
+	    return $series;
 	}
 	return NULL;
     }
@@ -527,17 +509,16 @@ final class MysqlAdapter {
     }
 
     public function setLimit($limit) {
-        $this->limit = $limit;
+	$this->limit = $limit;
     }
 
     public function setCount($count) {
-        $this->count = $count;
+	$this->count = $count;
     }
 
     public function setOrder($order) {
-        $this->order = $order;
+	$this->order = $order;
     }
-
 
 }
 

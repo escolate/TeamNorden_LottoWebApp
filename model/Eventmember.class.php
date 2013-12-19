@@ -1,6 +1,6 @@
 <?php
 
-class Eventmembers {
+class Eventmember {
 
 private $eve_id;
 private $use_id;

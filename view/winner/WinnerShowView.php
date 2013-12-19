@@ -12,36 +12,37 @@ class WinnerShowView extends View {
 	    <tbody>
 		<tr>
 		<td>Gewinner:</td>
-		<td>{$this->vars['winner']->getUser()->getUse_firstname()} {$this->vars['winner']->getUser()->getUse_lastname()}</td>
+		<td></td>
 		</tr>
 		<tr>
 		<td>Event:</td>
-		<td>{$this->vars['winner']->getEvent()->getEvt_name()}</td>
+		<td></td>
 		</tr>
 		<tr>
 		<td>Serie:</td>
-		<td>{$this->vars['winner']->getSeries()->getSer_name()}</td>
+		<td></td>
 		</tr>
 		<tr>
 		<td>Datum und Zeit:</td>
-		<td>{$this->getDateTime($this->vars['winner']->getWin_cre_dat())}</td>
+		<td></td>
 		</tr>
 		<tr>
 		<td>Gezogene Zahlen:</td>
 		<td>
-		<div class="ball" >1</div> <div class="ball" >3</div> <div class="ball" >14</div>
-		<div class="ball" >45</div> <div class="ball winning" >65</div> <div class="ball" >14</div>
-		<br>
-		<div class="ball winning" >89</div> <div class="ball" >41</div> <div class="ball" >14</div>
-		<div class="ball" >44</div> <div class="ball" >39</div> <div class="ball" >14</div>
-		<br>
-		<div class="ball" >34</div> <div class="ball winning" >42</div> <div class="ball" >14</div>
-		<div class="ball" >78</div> <div class="ball" >3</div> <div class="ball" >14</div>
-		<br>
-		<div class="ball winning" >2</div> <div class="ball" >76</div> <div class="ball" >14</div>
-		<div class="ball" >4</div> <div class="ball" >5</div> <div class="ball" >14</div>
-		<br>
-		<div class="ball" >13</div> <div class="ball winning" >56</div> <div class="ball" >14</div>
+HTML;
+	$y = 7; // How many balls per line
+	$i = $y;
+	foreach ($this->vars['numberList'] as $object) {
+	    echo '<div class="ball winning">';
+	    echo $object->getNum_num();
+	    echo '</div>';
+	    $i--;
+	    if(!$i){
+		echo '<br>';
+		$i = $y;
+	    }
+	}
+	echo <<<HTML
 		</td>
 		</tr>
 	    </tbody>

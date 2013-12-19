@@ -13,6 +13,19 @@ private $evt_cre_id;
 private $evt_mod_date;
 private $evt_mod_id;
 private $evt_del;
+/**
+ *
+ * @var type \User
+ */
+private $user;
+
+public function getUser() {
+    return $this->user;
+}
+
+public function setUser($user) {
+    $this->user = $user;
+}
 
 public function getEvt_id() {
     return $this->evt_id;

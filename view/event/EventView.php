@@ -28,15 +28,16 @@ class EventView extends View {
 		</tfoot>
 		<tbody>
 HTML;
-	
+	    $i = 0;
 	    foreach ($this->vars['eventList'] as $object) {
 		echo '<tr>';
 		echo '<td><input type="checkbox"></td>';
 		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_name()}</a></td>";
 		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$this->getDate($object->getEvt_datetime())}</a></td>";
-		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\"> </a></td>";
+		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\"> {$this->vars['eventCreatorList'][$i]->getUse_firstname()} {$this->vars['eventCreatorList'][$i]->getUse_lastname()}</a></td>";
 		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$this->getDateTime($object->getEvt_cre_dat())}</a></td>";
 		echo '</tr>';
+		$i++;
 	    }
 	
 	echo <<<HTML

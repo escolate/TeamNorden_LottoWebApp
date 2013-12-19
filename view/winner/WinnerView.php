@@ -1,5 +1,4 @@
 <?php
-
 class WinnerView extends View {
 
     public function display() {

@@ -1,6 +1,6 @@
 <?php
 
-class Eventmemberscard {
+class Eventmembercard {
 
 private $use_id;
 private $car_id;

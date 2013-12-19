@@ -13,6 +13,11 @@ class EventController extends Controller {
 	$view = new EventView();
 	$eventList = MysqlAdapter::getInstance()->getEventList();
 	$view->assign('eventList', $eventList);
+	$eventCreatorList = array();
+	foreach ($eventList as $object) {
+	    $eventCreatorList[] = MysqlAdapter::getInstance()->getUser_($object->getEvt_cre_id());
+	}
+	$view->assign('eventCreatorList', $eventCreatorList);
 	$view->display();
     }
 
@@ -21,20 +26,40 @@ class EventController extends Controller {
     }
 
     protected function show() {
+	// Event shown
 	$view = new EventShowView();
 	$event = MysqlAdapter::getInstance()->getEvent($this->resourceId);
 	$view->assign('event', $event);
+	// Event user and creator show
+	$eventCre = MysqlAdapter::getInstance()->getUser_($event->getEvt_cre_id());
+	$eventMod = MysqlAdapter::getInstance()->getUser_($event->getEvt_mod_id());
+	$view->assign('eventCre', $eventCre);
+	$view->assign('eventMod', $eventMod);
+	// Event members
 	$eventmemberList = MysqlAdapter::getInstance()->getEventmemberList($this->resourceId);
-	$view->assign('eventmemberList', $eventmemberList);
+	$eventmemberNameList = array();
+	if ($eventmemberList) {
+	    foreach ($eventmemberList as $object) {
+		$eventmemberNameList[] = MysqlAdapter::getInstance()->getUser_($object->getUse_id());
+	    }
+	}
+	$view->assign('eventmemberNameList', $eventmemberNameList);
+	// Series list
 	$seriesList = MysqlAdapter::getInstance()->getSeriesList($this->resourceId);
 	$view->assign('seriesList', $seriesList);
-	if(!$seriesList[0]){
+	if (!$seriesList[0]) {
 	    $serId = 0;
-	}else{
+	} else {
 	    $serId = $seriesList[0]->getSer_id();
 	}
-	$numberList = MysqlAdapter::getInstance()->getNumberList($serId); // Muss noch angepasst werden
+	// Numbers list
+	$numberList = NULL;
+	$newestSeries = MysqlAdapter::getInstance()->getNewestSeries($this->resourceId);
+	if ($newestSeries) {
+	    $numberList = MysqlAdapter::getInstance()->getNumberList($newestSeries->getSer_id()); // Muss noch angepasst werden
+	}
 	$view->assign('numberList', $numberList);
+	// Display the event
 	$view->display();
     }
 
