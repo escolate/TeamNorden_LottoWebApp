@@ -2,97 +2,110 @@
 
 class Log {
 
-private $log_id;
-private $use_id;
-private $log_action;
-private $log_timestamp;
-private $log_level;
-private $log_cre_dat;
-private $log_cre_id;
-private $log_mod_dat;
-private $log_mod_id;
-private $log_del;
+    const EMERGENCY = 0;
+    const ALERT = 1;
+    const CRITICAL = 2;
+    const ERROR = 3;
+    const WARNING = 4;
+    const NOTICE = 5;
+    const INFORMATIONAL = 6;
+    const DEBUG = 7;
 
-public function getLog_id() {
-    return $this->log_id;
+    private $log_id;
+    private $use_id;
+    private $log_action;
+    private $log_timestamp;
+    private $log_level;
+    private $log_ip;
+
+    public function __construct() {
+        $this->log_ip = $_SERVER['REMOTE_ADDR'];
+        $this->use_id = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : 0;
+    }
+
+    public function getLog_id() {
+        return $this->log_id;
+    }
+
+    public function setLog_id($log_id) {
+        $this->log_id = $log_id;
+    }
+
+    public function getUse_id() {
+        return $this->use_id;
+    }
+
+    public function setUse_id($use_id) {
+        $this->use_id = $use_id;
+    }
+
+    public function getLog_action() {
+        return $this->log_action;
+    }
+
+    public function setLog_action($log_action) {
+        $this->log_action = $log_action;
+    }
+
+    public function getLog_timestamp() {
+        return $this->log_timestamp;
+    }
+
+    public function setLog_timestamp($log_timestamp) {
+        $this->log_timestamp = $log_timestamp;
+    }
+
+    public function getLog_level() {
+        return $this->log_level;
+    }
+
+    public function setLog_level($log_level) {
+        $this->log_level = $log_level;
+    }
+
+    public function getLog_ip() {
+        return $this->log_ip;
+    }
+
+    public function setLog_ip($log_ip) {
+        $this->log_ip = $log_ip;
+    }
+
+    public function send() {
+        //Send email
+        if ($this->getLog_level() <= LOG_NOTIFICATIONLEVEL) {
+            $message = "
+                Timestamp: ".date("d.m.Y H:i:s")."
+                Level: {$this->getLevelString()}
+                IP-Address: {$this->getLog_ip()}
+                Message: {$this->getLog_action()}
+                ";
+            $headers .= 'Content-type: text/plain; charset=utf-8' . "\r\n";
+            mail(LOG_MAILADDR, "LottoApplication Error", $message, $headers);
+        }
+    }
+
+    private function getLevelString() {
+        switch ($this->log_level) {
+            case 0:
+                return "Emergency";
+            case 1:
+                return "Alert";
+            case 2:
+                return "Critical";
+            case 3:
+                return "Error";
+            case 4:
+                return "Warning";
+            case 5:
+                return "Notice";
+            case 6:
+                return "Informational";
+            case 7:
+                return "Debug";
+        }
+    }
+
 }
 
-public function setLog_id($log_id) {
-    $this->log_id = $log_id;
-}
-
-public function getUse_id() {
-    return $this->use_id;
-}
-
-public function setUse_id($use_id) {
-    $this->use_id = $use_id;
-}
-
-public function getLog_action() {
-    return $this->log_action;
-}
-
-public function setLog_action($log_action) {
-    $this->log_action = $log_action;
-}
-
-public function getLog_timestamp() {
-    return $this->log_timestamp;
-}
-
-public function setLog_timestamp($log_timestamp) {
-    $this->log_timestamp = $log_timestamp;
-}
-
-public function getLog_level() {
-    return $this->log_level;
-}
-
-public function setLog_level($log_level) {
-    $this->log_level = $log_level;
-}
-
-public function getLog_cre_dat() {
-    return $this->log_cre_dat;
-}
-
-public function setLog_cre_dat($log_cre_dat) {
-    $this->log_cre_dat = $log_cre_dat;
-}
-
-public function getLog_cre_id() {
-    return $this->log_cre_id;
-}
-
-public function setLog_cre_id($log_cre_id) {
-    $this->log_cre_id = $log_cre_id;
-}
-
-public function getLog_mod_dat() {
-    return $this->log_mod_dat;
-}
-
-public function setLog_mod_dat($log_mod_dat) {
-    $this->log_mod_dat = $log_mod_dat;
-}
-
-public function getLog_mod_id() {
-    return $this->log_mod_id;
-}
-
-public function setLog_mod_id($log_mod_id) {
-    $this->log_mod_id = $log_mod_id;
-}
-
-public function getLog_del() {
-    return $this->log_del;
-}
-
-public function setLog_del($log_del) {
-    $this->log_del = $log_del;
-}
-
-
-}
 ?>

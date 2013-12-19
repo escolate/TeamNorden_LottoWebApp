@@ -145,15 +145,18 @@ HTML;
 		</tr>
 	    </thead>
 	    <tbody>
-		<tr>
-		    <td><a href="#"></a></td>
-		    <td><a href="#"></a></td>
-		</tr>
+HTML;
+        /* @var $val Log */
+        foreach ($this->vars['logList'] as $val)
+		echo'<tr>
+		    <td><a href="/log/'.$val->getLog_id ().'">'.$val->getLog_action ().'</a></td>
+		    <td><a href="/log/'.$val->getLog_id().'">'.$val->getLog_timestamp().'</a></td>
+		</tr>';
+echo <<<HTML
 	    </tbody>
 	</table>
     </div>
-</div>
-        
+</div>        
 HTML;
     }
 
