@@ -1,4 +1,6 @@
 <?php
+define("DEBUG", true);
+
 define("URI_HOME", "/home");
 define("URI_EVENT", "/event");
 define("URI_USER", "/user");
@@ -15,5 +17,8 @@ define("DB_USER", "lotto");
 define("DB_PW", "lotto");
 define("DB_DB", "lotto");
 
-define("DEBUG", true);
+define("MAIL_TITLE","Musikverein Lotto");
+define("MAIL_ORGANIZATION","Musikverein Hannigalp");
+define("MAIL_ADDRESS","SomeStreet");
+define("MAIL_CITY","3925 Gr&auml;chen");
 ?>

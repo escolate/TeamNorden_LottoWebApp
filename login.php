@@ -28,7 +28,19 @@ if (!empty($_POST['action']) && $_POST['action'] == 'logout') {
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : '';
 
 if ($action == 'reset') {
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/config/config.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/model/EmailNotification.class.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/lib/MysqlAdapter.php';
+    //Create Password
+    $pw = substr(md5(rand()),0,8);
+    MysqlAdapter::getInstance()->setPassword($_POST['email'], $pw);
+    
     //Send mail
+    $not = new EmailNotification($_POST['email'], EmailNotification::PWR);
+    $not->addParam('password', $pw);
+    $not->compose();
+    $not->send();
+    
     //Redirect
     header("Location: /login.php?action=sent", TRUE, 303);
     exit();

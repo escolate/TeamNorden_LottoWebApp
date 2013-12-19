@@ -99,10 +99,13 @@ final class MysqlAdapter {
         if (empty($id)) {
             //Check if user already exists
             $q = "SELECT use_id FROM user WHERE use_email = '{$user->getUse_email()}' AND use_del is not true";
+            
+            /* @var $res mysqli_result */
             $res = $this->con->query($q);
+            
             if($res->num_rows) {
                 $row = $res->fetch_assoc();
-                $user = $row['use_id'];
+                $user->setUse_id($row['use_id']);
                 return false;
             }
             
@@ -116,7 +119,7 @@ final class MysqlAdapter {
                 '{$this->con->real_escape_string($user->getUse_address())}',
                 '{$this->con->real_escape_string($user->getUse_zip())}',
                 '{$this->con->real_escape_string($user->getUse_city())}',
-                '{$this->con->real_escape_string($user->getUse_birth())}',
+                nullif('{$this->con->real_escape_string($user->getUse_birth())}',''),
                 '{$this->con->real_escape_string($user->getUse_country())}',
                 '{$this->con->real_escape_string($user->getUse_phone())}',
                 '{$this->con->real_escape_string($user->getUse_mobile())}',
@@ -134,7 +137,7 @@ final class MysqlAdapter {
                 use_address = '{$this->con->real_escape_string($user->getUse_address())}',
                 use_zip = '{$this->con->real_escape_string($user->getUse_zip())}',
                 use_city = '{$this->con->real_escape_string($user->getUse_city())}',
-                use_birth = '{$this->con->real_escape_string($user->getUse_birth())}',
+                use_birth = nullif('{$this->con->real_escape_string($user->getUse_birth())}',''),
                 use_country = '{$this->con->real_escape_string($user->getUse_country())}',
                 use_phone = '{$this->con->real_escape_string($user->getUse_phone())}',
                 use_mobile = '{$this->con->real_escape_string($user->getUse_mobile())}',
@@ -157,10 +160,25 @@ final class MysqlAdapter {
         //Check if PW should be set and do so if is not empty, return false if password could not be set
         $pw = $user->getUse_password();
         if (!empty($pw)) {
-            return $this->setPassword($user->getUse_email(), $user->getUse_password());
+            return $this->setPassword($user->getUse_email(), $pw);
         }
 
         return true;
+    }
+    
+    /**
+     * 
+     * @param type $id UserID
+     * @return boolean
+     */
+    public function deleteUser($id) {
+        $query = "UPDATE user SET use_del = true WHERE id = ".$id;
+        /* @var $result mysqli_result */
+        $result = $this->con->query($query);
+        if($result->num_rows) {
+            return TRUE;
+        }
+        return FALSE;
     }
 
     /**
