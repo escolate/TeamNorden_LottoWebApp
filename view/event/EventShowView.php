@@ -6,7 +6,6 @@ class EventShowView extends View {
     private $drawCounter;
 
     public function display() {
-
 	// Counts the series
 	$this->seriesCounter = count($this->vars['seriesList']);
 	// Counts the numbers
@@ -17,7 +16,6 @@ class EventShowView extends View {
     <h1>Veranstaltung</h1>
     <div class="button-box">
 	<a href="#" class="button grey">Bearbeiten</a>
-	<a href="#" class="button red">Veranstaltung stoppen</a>
     </div>
     <div class="event-card">
 	<table class="show-table">
@@ -51,10 +49,10 @@ class EventShowView extends View {
 	    <tbody>
 		<tr>
 		<td>Erstellt:</td>
-		<td></td>
+		<td>{$this->vars['eventCre']->getUse_firstname()} {$this->vars['eventCre']->getUse_firstname()}</td>
 		</tr>
 		<td>Zuletzt geändert:</td>
-		<td></td>
+		<td>{$this->vars['eventMod']->getUse_firstname()} {$this->vars['eventMod']->getUse_firstname()}</td>
 		</tr>
 	    </tbody>
 	</table>
@@ -83,11 +81,11 @@ class EventShowView extends View {
 		</tfoot>
 		<tbody>
 HTML;
-	if ($this->vars['eventmemberList']) {
-	    foreach ($this->vars['eventmemberList'] as $object) {
+	if ($this->vars['eventmemberNameList']) {
+	    foreach ($this->vars['eventmemberNameList'] as $object) {
 		echo '<tr>';
 		echo '<td><input type="checkbox"></td>';
-		echo "<td><a href=\"/event/{}\"></a></td>";
+		echo "<td><a href=\"/user/{$object->getUse_id()}\">{$object->getUse_firstname()} {$object->getUse_lastname()} ({$object->getUse_status()})</a></td>";
 		echo '</tr>';
 	    }
 	}
@@ -129,7 +127,7 @@ HTML;
 
 	echo <<<HTML
     <div class="button-box">
-	<a href="#" class="button red">Serie beenden</a>
+	<a href="#" class="button red">Serie $sTitleCounter abschliessen</a>
     </div>
     <form >
 	<fieldset id="save-number">
@@ -231,7 +229,7 @@ HTML;
 	    foreach ($this->vars['seriesList'] as $object) {
 		echo '<tr>';
 		echo '<td><input type="checkbox"></td>';
-		echo "<td><a href=\"/serie/{$object->getSer_id()}-Serie $seriesCounter ({$this->vars['event']->getEvt_name()})\">Serie $seriesCounter</a></td>";
+		echo "<td><a href=\"/series/{$object->getSer_id()}-Serie $seriesCounter ({$this->vars['event']->getEvt_name()})\">Serie $seriesCounter</a></td>";
 		echo '</tr>';
 		$seriesCounter--;
 	    }

@@ -29,9 +29,14 @@ class WinnerController extends Controller {
     }
 
     protected function show() {
+	// Get winner id
 	$view = new WinnerShowView();
 	$object = MysqlAdapter::getInstance()->getWinner($this->resourceId);
 	$view->assign('winner', $object);
+	// Get winner's numbers
+	$numberList = MysqlAdapter::getInstance()->getNumberList(1);
+	$view->assign('numberList', $numberList);
+	// Let's show
 	$view->display();
     }
 }
