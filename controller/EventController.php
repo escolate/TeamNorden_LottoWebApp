@@ -28,6 +28,13 @@ class EventController extends Controller {
 	$view->assign('eventmemberList', $eventmemberList);
 	$seriesList = MysqlAdapter::getInstance()->getSeriesList($this->resourceId);
 	$view->assign('seriesList', $seriesList);
+	if(!$seriesList[0]){
+	    $serId = 0;
+	}else{
+	    $serId = $seriesList[0]->getSer_id();
+	}
+	$numberList = MysqlAdapter::getInstance()->getNumberList($serId); // Muss noch angepasst werden
+	$view->assign('numberList', $numberList);
 	$view->display();
     }
 

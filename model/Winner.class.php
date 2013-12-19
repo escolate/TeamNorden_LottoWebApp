@@ -1,6 +1,6 @@
 <?php
 
-class Winner extends Lotto{
+class Winner {
 
 private $win_id;
 private $use_id;
@@ -12,43 +12,45 @@ private $win_mod_dat;
 private $win_mod_id;
 private $win_del;
 private $win_prize;
-private $user;
-private $win_firstname;
-private $win_lastname;
-private $win_eventname;
 private $win_notificated;
+/**
+ *
+ * @var type \User
+ */
+private $user;
+/**
+ *
+ * @var type \Event
+ */
+private $event;
+/**
+ *
+ * @var type \Series
+ */
+private $series;
 
-public function getWin_notificated() {
-    return $this->win_notificated;
+public function getSeries() {
+    return $this->series;
 }
 
-public function setWin_notificated($win_notificated) {
-    $this->win_notificated = $win_notificated;
+public function setSeries($series) {
+    $this->series = $series;
 }
 
-
-public function getWin_firstname() {
-    return $this->win_firstname;
+public function getEvent() {
+    return $this->event;
 }
 
-public function setWin_firstname($win_firstname) {
-    $this->win_firstname = $win_firstname;
+public function setEvent($event) {
+    $this->event = $event;
 }
 
-public function getWin_lastname() {
-    return $this->win_lastname;
+public function getUser() {
+    return $this->user;
 }
 
-public function setWin_lastname($win_lastname) {
-    $this->win_lastname = $win_lastname;
-}
-
-public function getWin_eventname() {
-    return $this->win_eventname;
-}
-
-public function setWin_eventname($win_eventname) {
-    $this->win_eventname = $win_eventname;
+public function setUser($user) {
+    $this->user = $user;
 }
 
 public function getWin_id() {
@@ -131,13 +133,14 @@ public function setWin_prize($win_prize) {
     $this->win_prize = $win_prize;
 }
 
-public function getUser() {
-    return $this->user;
+public function getWin_notificated() {
+    return $this->win_notificated;
 }
 
-public function setUser(User $user) {
-    $this->user = $user;
+public function setWin_notificated($win_notificated) {
+    $this->win_notificated = $win_notificated;
 }
+
 
 }
 ?>

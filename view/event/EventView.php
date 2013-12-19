@@ -34,7 +34,7 @@ HTML;
 		echo '<td><input type="checkbox"></td>';
 		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_name()}</a></td>";
 		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$this->getDate($object->getEvt_datetime())}</a></td>";
-		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getUse_cre_firstname()} {$object->getUse_cre_lastname()}</a></td>";
+		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\"> </a></td>";
 		echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$this->getDateTime($object->getEvt_cre_dat())}</a></td>";
 		echo '</tr>';
 	    }
