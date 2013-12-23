@@ -24,6 +24,11 @@ a:hover{
 a, a:visited{
     color: black;
 }
+
+table th {
+    cursor: pointer;
+}
+
 /*dashboard*/
 .button-box{
     text-align: center;

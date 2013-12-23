@@ -42,5 +42,7 @@ $(document).ready(function(){ // Ready function start
             $('#password1').focus();
         }
     });
+    
+    $("table").tablesorter(); 
 
 });// Ready function end

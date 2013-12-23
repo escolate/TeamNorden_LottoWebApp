@@ -116,6 +116,10 @@ final class MysqlAdapter {
             $user->setUse_birth($row['use_birth']);
             $user->setUse_phone($row['use_phone']);
             $user->setUse_mobile($row['use_mobile']);
+            $user->setUse_lastlogin($row['use_lastlogin']);
+            $user->setUse_mod_dat($row['use_mod_dat']);
+            $user->setUse_cre_dat($row['use_cre_dat']);
+            $user->setUse_status($row['use_status']);
             return $user;
         }
         return null;
@@ -717,6 +721,21 @@ final class MysqlAdapter {
             }
         }
 
+        return $arr;
+    }
+    
+    /**
+     * 
+     * @return array
+     */
+    public function getStatusList() {
+        $arr = array();
+        $result = $this->con->query("SELECT DISTINCT use_status FROM lotto.user WHERE use_del is not true AND use_status != ''");
+        if($result->num_rows) {
+            while ($row = $result->fetch_assoc()) {
+                $arr[] = $row['use_status'];
+            }
+        }
         return $arr;
     }
 

@@ -52,12 +52,12 @@ HTML;
 
         foreach ($this->vars['winnerList'] as $object) {
             echo '<tr>';
-		echo "<td><a href=\"/winner/{$object->getWin_id()}-\"></a></td>";
-		echo "<td><a href=\"/winner/{$object->getWin_id()}-\">{$this->getDate($object->getWin_cre_dat())}</a></td>";
-		echo '</tr>';
-	    }
-	
-	echo <<<HTML
+            echo "<td><a href=\"/winner/{$object->getWin_id()}-\"></a></td>";
+            echo "<td><a href=\"/winner/{$object->getWin_id()}-\">{$this->getDate($object->getWin_cre_dat())}</a></td>";
+            echo '</tr>';
+        }
+
+        echo <<<HTML
 
 	    </tbody>
 	</table>
@@ -115,17 +115,17 @@ OUT;
 	    </thead>
 	    <tbody>
 HTML;
-	    foreach ($this->vars['cardList'] as $object) {
-		echo '<tr>';
-		echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$object->getCar_serialnumber()}</a></td>";
-		echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$object->getCar_row1_nr1()}, {$object->getCar_row1_nr2()}, {$object->getCar_row1_nr3()}, {$object->getCar_row1_nr4()}, {$object->getCar_row1_nr5()}</a></td>";
-		echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$object->getCar_row2_nr1()}, {$object->getCar_row2_nr2()}, {$object->getCar_row2_nr3()}, {$object->getCar_row2_nr4()}, {$object->getCar_row2_nr5()}</a></td>";
-		echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$object->getCar_row3_nr1()}, {$object->getCar_row3_nr2()}, {$object->getCar_row3_nr3()}, {$object->getCar_row3_nr4()}, {$object->getCar_row3_nr5()}</a></td>";
-		echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$this->getDate($object->getCar_cre_dat())}</a></td>";
-		echo '</tr>';
-	    }
-	
-	echo <<<HTML
+        foreach ($this->vars['cardList'] as $object) {
+            echo '<tr>';
+            echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$object->getCar_serialnumber()}</a></td>";
+            echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$object->getCar_row1_nr1()}, {$object->getCar_row1_nr2()}, {$object->getCar_row1_nr3()}, {$object->getCar_row1_nr4()}, {$object->getCar_row1_nr5()}</a></td>";
+            echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$object->getCar_row2_nr1()}, {$object->getCar_row2_nr2()}, {$object->getCar_row2_nr3()}, {$object->getCar_row2_nr4()}, {$object->getCar_row2_nr5()}</a></td>";
+            echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$object->getCar_row3_nr1()}, {$object->getCar_row3_nr2()}, {$object->getCar_row3_nr3()}, {$object->getCar_row3_nr4()}, {$object->getCar_row3_nr5()}</a></td>";
+            echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$this->getDate($object->getCar_cre_dat())}</a></td>";
+            echo '</tr>';
+        }
+
+        echo <<<HTML
 	    </tbody>
 	</table>
     </div>
@@ -142,17 +142,30 @@ HTML;
 		<tr>
 		    <th>Aktion</th>
 		    <th>Erstellt</th>
+                    <th></th>
 		</tr>
 	    </thead>
 	    <tbody>
 HTML;
         /* @var $val Log */
-        foreach ($this->vars['logList'] as $val)
-		echo'<tr>
-		    <td><a href="/log/'.$val->getLog_id ().'">'.$val->getLog_action ().'</a></td>
-		    <td><a href="/log/'.$val->getLog_id().'">'.$val->getLog_timestamp().'</a></td>
+        foreach ($this->vars['logList'] as $val) {
+            $icon = "";
+
+            if ($val->getLog_level() == Log::WARNING) {
+                $icon = '<img src="/images/icons/error.png">';
+            }
+
+            if ($val->getLog_level() <= Log::ERROR) {
+                $icon = '<img src="/images/icons/exclamation.png">';
+            }
+
+            echo'<tr>
+		    <td><a href="/log/' . $val->getLog_id() . '">' . $val->getLog_action() . '</a></td>
+		    <td><a href="/log/' . $val->getLog_id() . '">' . $val->getLog_timestamp() . '</a></td>
+                    <td><a href="/log/' . $val->getLog_id() . '">' . $icon . '</a></td>
 		</tr>';
-echo <<<HTML
+        }
+        echo <<<HTML
 	    </tbody>
 	</table>
     </div>
