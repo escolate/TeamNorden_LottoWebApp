@@ -56,11 +56,6 @@ HTML;
 		echo "<td><a href=\"/winner/{$object->getWin_id()}-\"></a></td>";
 		echo "<td><a href=\"/winner/{$object->getWin_id()}-\">{$this->getDate($object->getWin_cre_dat())}</a></td>";
 		echo '</tr>';
-	    }
-	echo <<<HTML
-            echo "<td><a href=\"/winner/{$object->getWin_id()}-\"></a></td>";
-            echo "<td><a href=\"/winner/{$object->getWin_id()}-\">{$this->getDate($object->getWin_cre_dat())}</a></td>";
-            echo '</tr>';
         }
 
         echo <<<HTML
