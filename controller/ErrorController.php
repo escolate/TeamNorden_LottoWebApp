@@ -12,7 +12,7 @@
  */
 class ErrorController extends Controller {
     protected function create() {
-        
+        $this->index();
     }
 
     protected function index() {
@@ -22,11 +22,11 @@ class ErrorController extends Controller {
     }
 
     protected function init() {
-        
+        $this->index();
     }
 
     protected function show() {
-        
+        $this->index();
     }    
 }
 

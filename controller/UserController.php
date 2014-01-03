@@ -64,8 +64,8 @@ class UserController extends Controller {
     }
 
     protected function show() {
-        include_once $_SERVER['DOCUMENT_ROOT'] . '/view/user/UserInitView.php';
-        $view = new UserInitView();
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/view/user/UserShowView.php';
+        $view = new UserShowView();
         $view->assign('user', MysqlAdapter::getInstance()->getUser_($this->resourceId));
         $view->assign('notify', $this->notify);
         $view->display();

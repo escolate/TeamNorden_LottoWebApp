@@ -17,6 +17,7 @@ class HomeController extends Controller {
         $view->assign('userlist', MysqlAdapter::getInstance()->getUserList(5));
 	$cardList = MysqlAdapter::getInstance()->getCardList(5);
 	$view->assign('cardList', $cardList);
+        $view->assign('logList', MysqlAdapter::getInstance()->getLogList(5));
 	$view->display();
     }
 

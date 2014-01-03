@@ -21,4 +21,7 @@ define("MAIL_TITLE","Musikverein Lotto");
 define("MAIL_ORGANIZATION","Musikverein Hannigalp");
 define("MAIL_ADDRESS","SomeStreet");
 define("MAIL_CITY","3925 Gr&auml;chen");
+
+define("LOG_MAILADDR","tobias.scheurer@libosan.ch");
+define("LOG_NOTIFICATIONLEVEL","2");
 ?>

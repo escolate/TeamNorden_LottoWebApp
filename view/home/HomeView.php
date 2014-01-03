@@ -58,6 +58,12 @@ HTML;
 		echo '</tr>';
 	    }
 	echo <<<HTML
+            echo "<td><a href=\"/winner/{$object->getWin_id()}-\"></a></td>";
+            echo "<td><a href=\"/winner/{$object->getWin_id()}-\">{$this->getDate($object->getWin_cre_dat())}</a></td>";
+            echo '</tr>';
+        }
+
+        echo <<<HTML
 
 	    </tbody>
 	</table>
@@ -115,6 +121,7 @@ OUT;
 	    </thead>
 	    <tbody>
 HTML;
+
 	foreach ($this->vars['cardList'] as $object) {
 	    echo '<tr>';
 	    echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$object->getCar_serialnumber()}</a></td>";
@@ -142,18 +149,34 @@ HTML;
 		<tr>
 		    <th>Aktion</th>
 		    <th>Erstellt</th>
+                    <th></th>
 		</tr>
 	    </thead>
 	    <tbody>
-		<tr>
-		    <td><a href="#"></a></td>
-		    <td><a href="#"></a></td>
-		</tr>
+HTML;
+        /* @var $val Log */
+        foreach ($this->vars['logList'] as $val) {
+            $icon = "";
+
+            if ($val->getLog_level() == Log::WARNING) {
+                $icon = '<img src="/images/icons/error.png">';
+            }
+
+            if ($val->getLog_level() <= Log::ERROR) {
+                $icon = '<img src="/images/icons/exclamation.png">';
+            }
+
+            echo'<tr>
+		    <td><a href="/log/' . $val->getLog_id() . '">' . $val->getLog_action() . '</a></td>
+		    <td><a href="/log/' . $val->getLog_id() . '">' . $val->getLog_timestamp() . '</a></td>
+                    <td><a href="/log/' . $val->getLog_id() . '">' . $icon . '</a></td>
+		</tr>';
+        }
+        echo <<<HTML
 	    </tbody>
 	</table>
     </div>
-</div>
-        
+</div>        
 HTML;
     }
 

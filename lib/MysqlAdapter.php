@@ -8,6 +8,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Eventmember.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Series.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Number.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Card.class.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Log.class.php';
 
 final class MysqlAdapter {
 
@@ -118,6 +119,10 @@ final class MysqlAdapter {
             $user->setUse_birth($row['use_birth']);
             $user->setUse_phone($row['use_phone']);
             $user->setUse_mobile($row['use_mobile']);
+            $user->setUse_lastlogin($row['use_lastlogin']);
+            $user->setUse_mod_dat($row['use_mod_dat']);
+            $user->setUse_cre_dat($row['use_cre_dat']);
+            $user->setUse_status($row['use_status']);
             return $user;
         }
         return null;
@@ -232,6 +237,13 @@ final class MysqlAdapter {
         if (!$this->con->affected_rows) {
             return FALSE;
         }
+        
+        $log = new Log();
+        $log->setLog_action("Das Passwort für $emaile würde geändert.");
+        $log->setLog_level(Log::NOTICE);
+        $log->send();
+        $this->saveLog($log);
+        
         return true;
 
 	$ide = $this->con->real_escape_string($id);
@@ -690,6 +702,97 @@ final class MysqlAdapter {
         }
 
         return "";
+    }
+
+    /**
+     * 
+     * @param \Log $log
+     * @return boolean true on success, false on error
+     */
+    public function saveLog(Log $log) {
+        //Save Message
+        $query = "INSERT INTO log (use_id, log_action, log_ip, log_level) VALUES ('{$log->getUse_id()}','{$log->getLog_action()}','{$log->getLog_ip()}',{$log->getLog_level()})";
+        
+        if (!$this->con->query($query)) {
+            $this->error($query);
+            return FALSE;
+        }
+        
+        return true;
+    }
+
+    /**
+     * 
+     * @param type $id
+     * @return \Log|null
+     */
+    public function getLog($id) {
+        $query = "SELECT * FROM lotto.log WHERE log_id = " . $id;
+        $result = $this->con->query($query);
+
+        if ($result->num_rows) {
+            $row = mysqli_fetch_assoc($result);
+            $log = new Log();
+            $log->setLog_id($row['log_id']);
+            $log->setUse_id($row['use_id']);
+            $log->setLog_action($row['log_action']);
+            $log->setLog_level($row['log_level']);
+            $log->setLog_timestamp($row['log_timestamp']);
+            $log->setLog_ip($row['log_ip']);
+
+            return $log;
+        }
+
+        return NULL;
+    }
+
+    /**
+     * 
+     * @param int $limit
+     * @return array\Log
+     */
+    public function getLogList($limit = 0) {
+        $arr = array();
+        $order = '';
+        $lim = '';
+
+        if ($limit) {
+            $order = 'ORDER BY log_timestamp DESC';
+            $lim = 'LIMIT ' . $limit;
+        }
+
+        $query = "SELECT * FROM lotto.log {$order} " . $lim;
+        $result = $this->con->query($query);
+
+        if ($result->num_rows) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $log = new Log();
+                $log->setLog_id($row['log_id']);
+                $log->setUse_id($row['use_id']);
+                $log->setLog_action($row['log_action']);
+                $log->setLog_level($row['log_level']);
+                $log->setLog_timestamp($row['log_timestamp']);
+                $log->setLog_ip($row['log_ip']);
+                $arr[] = $log;
+            }
+        }
+
+        return $arr;
+    }
+    
+    /**
+     * 
+     * @return array
+     */
+    public function getStatusList() {
+        $arr = array();
+        $result = $this->con->query("SELECT DISTINCT use_status FROM lotto.user WHERE use_del is not true AND use_status != ''");
+        if($result->num_rows) {
+            while ($row = $result->fetch_assoc()) {
+                $arr[] = $row['use_status'];
+            }
+        }
+        return $arr;
     }
 
     public function setLimit($limit) {

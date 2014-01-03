@@ -17,8 +17,10 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/lib/MysqlAdapter.php';
         <meta charset="UTF-8">
         <link rel="stylesheet" type="text/css" href="/css/normalize.css">
         <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="icon" type="image/png" href="/images/icons/sport_8ball.png">
         <title>Musikverein Lotto</title>
         <script src="/js/vendor/jquery-1.10.2.min.js"></script>
+        <script src="/js/jquery.tablesorter.min.js"></script>
         <script src="/js/application.js"></script>
     </head>
     <body lang="de">
