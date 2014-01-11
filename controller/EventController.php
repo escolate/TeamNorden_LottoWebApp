@@ -3,10 +3,19 @@
 include_once './view/event/EventView.php';
 include_once './view/event/EventShowView.php';
 
+
 class EventController extends Controller {
 
     protected function create() {
-	
+	$num_num = trim($_POST['number']);
+	$eventId = trim($_POST['eventId']);
+	$seriesId = trim($_POST['seriesId']);
+	$number = new Number();
+	$number->setNum_num($num_num);
+	if(MysqlAdapter::getInstance()->saveNumber($number->getNum_num(),$seriesId,1)){
+	    header("Location: /event/$eventId", TRUE, 303);
+	    exit();
+	}
     }
 
     protected function index() {
@@ -56,9 +65,11 @@ class EventController extends Controller {
 	$numberList = NULL;
 	$newestSeries = MysqlAdapter::getInstance()->getNewestSeries($this->resourceId);
 	if ($newestSeries) {
-	    $numberList = MysqlAdapter::getInstance()->getNumberList($newestSeries->getSer_id()); // Muss noch angepasst werden
+	    $numberList = MysqlAdapter::getInstance()->getNumberList($newestSeries->getSer_id());
 	}
 	$view->assign('numberList', $numberList);
+	//Also give the newest series id to the view
+	$view->assign('newestSeries', $newestSeries);
 	// Display the event
 	$view->display();
     }
