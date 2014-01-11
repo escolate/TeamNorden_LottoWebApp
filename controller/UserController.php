@@ -28,6 +28,7 @@ class UserController extends Controller {
         $user->setUse_city(trim($_POST['place']));
         $user->setUse_phone(trim($_POST['phone']));
         $user->setUse_mobile(trim($_POST['mobile']));
+        $user->setUse_status($_POST['status']);
 
         //Set password if values match
         if ($_POST['password1'] == $_POST['password2']) {
