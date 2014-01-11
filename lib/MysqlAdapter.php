@@ -770,7 +770,7 @@ final class MysqlAdapter {
         return $arr;
     }
 
-    public function getWinner($serie) {
+    public function findWinner($serie) {
         $arr = array();
         $query = "SELECT num_num FROM numbers WHERE ser_id = " . $serie;
         $result = $this->con->query($query);
