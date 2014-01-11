@@ -1,7 +1,7 @@
 <?php
 
 abstract class Controller {
-    
+
     /**
      * ID of the URL request
      * @var type 
@@ -36,7 +36,11 @@ abstract class Controller {
                 $matches = array();
                 if (preg_match("@^.*/([0-9]+)@", $_SERVER['REQUEST_URI'], $matches)) {
                     $this->resourceId = $matches[1];
-                    $this->show();
+                    if (preg_match("@/edit/([0-9]+)$@", $_SERVER['REQUEST_URI'])) {
+                        $this->init();
+                    } else {
+                        $this->show();
+                    }
                 } elseif (preg_match("@/new$@", $_SERVER['REQUEST_URI'])) {
                     $this->init();
                 } else {

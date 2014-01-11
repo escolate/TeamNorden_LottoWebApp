@@ -40,10 +40,9 @@ class UserShowView extends View {
 
         echo <<<OUT
         <div class="content-box">
-    <h1>Veranstaltung</h1>
+    <h1>Benutzer #{$this->user->getUse_id()}</h1>
     <div class="button-box">
-	<a href="#" class="button grey">Bearbeiten</a>
-	<a href="#" class="button red">Veranstaltung stoppen</a>
+	<a href="/user/edit/{$this->user->getUse_id()}" class="button grey">Bearbeiten</a>
     </div>
     <div class="event-card">
 	<table class="show-table">

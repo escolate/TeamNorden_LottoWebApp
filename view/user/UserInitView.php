@@ -35,6 +35,7 @@ class UserInitView extends View {
 
         $gebdat = $this->getBirthDateInput($this->user->getUse_birth());
         $isAdmin = ($this->user->getUse_administrator() ? 'checked' : '');
+        $autocomplete = $this->getStatusAutoComplete();
 
         echo <<<OUT
         <div class="content-box">
@@ -57,6 +58,8 @@ class UserInitView extends View {
                 <input type="text" id="firstname" placeholder="Vorname" name="firstname" value="{$this->user->getUse_firstname()}"/>
                 <input type="text" id="lastname" placeholder="Nachname" name="lastname" value="{$this->user->getUse_lastname()}"/>
                 {$gebdat}
+                <input type="text" id="status" placeholder="Status" name="status" list="statgroup" value="{$this->user->getUse_status()}"/>
+                {$autocomplete}
             </fieldset>
         
             <fieldset>
@@ -125,6 +128,16 @@ OUT;
         $out .= '</select>';
 
         return $out;
+    }
+    
+    private function getStatusAutoComplete() {
+        $temp = '<datalist id="statgroup">';
+        foreach (MysqlAdapter::getInstance()->getStatusList() as $val) {
+            $temp .= '<option value="'.$val.'" />';
+        }
+        $temp .= '</datalist>';
+        
+        return $temp;
     }
 
 }

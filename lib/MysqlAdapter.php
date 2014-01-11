@@ -181,7 +181,8 @@ final class MysqlAdapter {
                 use_phone = '{$this->con->real_escape_string($user->getUse_phone())}',
                 use_mobile = '{$this->con->real_escape_string($user->getUse_mobile())}',
                 use_administrator = {$this->con->real_escape_string($user->getUse_administrator())},
-                use_mod_id = '{$_SESSION['user']['id']}'
+                use_mod_id = '{$_SESSION['user']['id']}',
+                use_mod_dat = now()
                 WHERE use_id = " . $user->getUse_id() . " AND use_del is not true";
         }
 
@@ -786,7 +787,7 @@ final class MysqlAdapter {
      */
     public function getStatusList() {
         $arr = array();
-        $result = $this->con->query("SELECT DISTINCT use_status FROM lotto.user WHERE use_del is not true AND use_status != ''");
+        $result = $this->con->query("SELECT DISTINCT use_status FROM user WHERE use_del is not true AND use_status != ''");
         if($result->num_rows) {
             while ($row = $result->fetch_assoc()) {
                 $arr[] = $row['use_status'];

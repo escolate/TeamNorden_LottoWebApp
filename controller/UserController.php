@@ -60,6 +60,9 @@ class UserController extends Controller {
     protected function init() {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/view/user/UserInitView.php';
         $view = new UserInitView();
+        if (isset($this->resourceId)) {
+            $view->assign('user', MysqlAdapter::getInstance()->getUser_($this->resourceId));
+        }
         $view->display();
     }
 
