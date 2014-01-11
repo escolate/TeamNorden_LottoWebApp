@@ -124,15 +124,17 @@ HTML;
 	$sTitleCounter = $this->seriesCounter;
 	++$sTitleCounter;
 	echo "<h1>Serie $sTitleCounter</h1>";
-
+	
 	echo <<<HTML
     <div class="button-box">
 	<a href="#" class="button red">Serie $sTitleCounter abschliessen</a>
     </div>
-    <form >
+    <form id="saveNumber" action="/event/create" method="POST">
 	<fieldset id="save-number">
 	    <legend>Zahl ziehen!</legend>
-	    <input type="text" placeholder="Zahl" autocomplete="off">
+	    <input type="hidden" value="{$this->vars['event']->getEvt_id()}" id="eventId" name="eventId">
+	    <input type="hidden" value="{$this->vars['newestSeries']->getSer_id()}" id="seriesId" name="seriesId">
+	    <input type="text" placeholder="Zahl" autocomplete="off" id="number" name="number">
 	    <input type="submit" value="Ziehen!">
 	</fieldset>
     </form>
