@@ -13,7 +13,17 @@
 class UserCardController extends Controller {
     
     protected function create() {
-        
+        switch ($_POST['action']) {
+            case 'delete':
+                //Delete Card
+                echo 'delete';
+                break;
+            case 'add':
+                //Add Item
+                echo 'add';
+                break;
+        }
+        $this->show();
     }
 
     protected function index() {
@@ -25,7 +35,14 @@ class UserCardController extends Controller {
     }
 
     protected function show() {
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/view/usercard/UserCardShowView.php';
+        $view = new UserCardShowView();
         
+        $user = MysqlAdapter::getInstance()->getUser_($this->resourceId);
+        $view->assign('user', $user);
+        $view->assign('usercards', MysqlAdapter::getInstance()->getUserCards($user->getUse_id()));
+        
+        $view->display();
     }    //put your code here
 }
 

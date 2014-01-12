@@ -9,6 +9,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Series.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Number.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Card.class.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Log.class.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/model/Eventmembercard.class.php';
 
 final class MysqlAdapter {
 
@@ -147,16 +148,16 @@ final class MysqlAdapter {
 //	return null;
     }
 
-    // Saves a number in the database
+// Saves a number in the database
     public function saveNumber($number, $ser_id, $cre_id) {
-        // Duplicate numbers are not allowed but the user must know if he want do that
+// Duplicate numbers are not allowed but the user must know if he want do that
         $query = "
 	    INSERT INTO 
 		number (ser_id, num_num, num_cre_id) 
 	    VALUES 
 		('$ser_id', '$number', '$cre_id');
 	";
-        //Save
+//Save
         if (!$this->con->query($query)) {
             $this->error($query);
             return FALSE;
@@ -457,7 +458,7 @@ final class MysqlAdapter {
     public function getEvent($id) {
         $query = "
 	SELECT 
-		*
+		*,date_format(evt_datetime,'%d.%m.%Y') as date
 	FROM 
 		event 
 	WHERE 
@@ -478,6 +479,7 @@ final class MysqlAdapter {
             $event->setEvt_mod_date($row['evt_mod_date']);
             $event->setEvt_zip($row['evt_zip']);
             $event->setEvt_mod_id($row['evt_mod_id']);
+            $event->setDate($row['date']);
             return $event;
         }
         return NULL;
@@ -734,7 +736,7 @@ final class MysqlAdapter {
      */
     public function getUserCards($userid) {
         $arr = array();
-        $query = "SELECT date_format(c.evt_datetime,'%d.%m.%Y') date,c.evt_name,b.ser_id,d.car_serialnumber FROM eventmemberscard a
+        $query = "SELECT date_format(c.evt_datetime,'%d.%m.%Y') date,c.evt_name,b.ser_id,d.car_serialnumber,a.car_id FROM eventmemberscard a
 	LEFT JOIN series b ON a.ser_id = b.ser_id
 	LEFT JOIN event c ON b.eve_id = c.evt_id
 	LEFT JOIN card d ON a.car_id = d.car_id
@@ -742,15 +744,42 @@ final class MysqlAdapter {
         $result = $this->con->query($query);
 
         while ($row = mysqli_fetch_assoc($result)) {
-            $info = array();
-            $info[] = $row['date'];
-            $info[] = $row['evt_name'];
-            $info[] = $row['ser_id'];
-            $info[] = $row['car_serialnumber'];
-            $arr[] = $info;
+            $emc = new Eventmembercard();
+            $emc->setCard($this->getCard($row['car_id']));
+            $emc->setSeries($this->getSeries($row['ser_id']));
+
+            $arr[] = $emc;
         }
 
         return $arr;
+    }
+
+    public function getCard($id) {
+        $car = new Card();
+        $query = "SELECT * FROM card WHERE car_id =  " . $id;
+        $result = $this->con->query($query);
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $car->setCar_id($row['car_id']);
+            $car->setCar_serialnumber($row['car_serialnumber']);
+        }
+        return $car;
+    }
+    
+    public function getSeries($id) {
+        $ser = new Series();
+        $query = "SELECT * FROM series WHERE ser_id = " . $id;
+        $result = $this->con->query($query);
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $ser->setSer_id($row['ser_id']);
+            $ser->setEvent($this->getEvent($row['eve_id']));
+        }
+        return $ser;
+    }
+
+    public function deleteUserCard($car_id, $event_id) {
+        
     }
 
     public function getUserWins($userid) {
@@ -780,7 +809,7 @@ final class MysqlAdapter {
             $part2 = '';
             $part3 = '';
             $i = 0;
-            
+
             while ($row = mysqli_fetch_assoc($result)) {
                 if ($i++) {
                     $part1 .= ' AND';
@@ -791,13 +820,13 @@ final class MysqlAdapter {
                 $part2 .= ' ' . $row['num_num'] . ' IN (car_row2_nr1,car_row2_nr2,car_row2_nr3,car_row2_nr4,car_row2_nr5)';
                 $part3 .= ' ' . $row['num_num'] . ' IN (car_row3_nr1,car_row3_nr2,car_row3_nr3,car_row3_nr4,car_row3_nr5)';
             }
-            
+
             $query = 'DROP TABLE temp_winner;';
             $query .= 'CREATE TEMPORARY TABLE temp_winner (SELECT * FROM card WHERE (' . $part1 . ') OR (' . $part2 . ') OR (' . $part3 . '));';
 
             if ($this->con->multi_query($query)) {
                 $result = $this->con->query('SELECT b.use_id FROM temp_winner a JOIN eventmemberscard b ON a.car_id = b.car_id');
-                while($row = $result->fetch_assoc) {
+                while ($row = $result->fetch_assoc) {
                     $arr[] = $row['use_id'];
                 }
             }
@@ -811,7 +840,7 @@ final class MysqlAdapter {
      * @return boolean true on success, false on error
      */
     public function saveLog(Log $log) {
-        //Save Message
+//Save Message
         $query = "INSERT INTO log (use_id, log_action, log_ip, log_level) VALUES ('{$log->getUse_id()}','{$log->getLog_action()}','{$log->getLog_ip()}',{$log->getLog_level()})";
 
         if (!$this->con->query($query)) {

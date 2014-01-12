@@ -2,34 +2,56 @@
 
 class Eventmembercard {
 
-private $use_id;
-private $car_id;
-private $ser_id;
+    /**
+     *
+     * @var User
+     */
+    private $user;
 
-public function getUse_id() {
-    return $this->use_id;
+    /**
+     *
+     * @var Card
+     */
+    private $card;
+
+    /**
+     *
+     * @var Series
+     */
+    private $series;
+
+    public function getUser() {
+        return $this->user;
+    }
+
+    public function setUser(User $user) {
+        $this->user = $user;
+    }
+
+    /**
+     * 
+     * @return \Card
+     */
+    public function getCard() {
+        return $this->card;
+    }
+
+    public function setCard(Card $card) {
+        $this->card = $card;
+    }
+
+    /**
+     * 
+     * @return \Series
+     */
+    public function getSeries() {
+        return $this->series;
+    }
+
+    public function setSeries(Series $series) {
+        $this->series = $series;
+    }
+
 }
 
-public function setUse_id($use_id) {
-    $this->use_id = $use_id;
-}
-
-public function getCar_id() {
-    return $this->car_id;
-}
-
-public function setCar_id($car_id) {
-    $this->car_id = $car_id;
-}
-
-public function getSer_id() {
-    return $this->ser_id;
-}
-
-public function setSer_id($ser_id) {
-    $this->ser_id = $ser_id;
-}
-
-
-}
 ?>

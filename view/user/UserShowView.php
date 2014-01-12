@@ -141,12 +141,13 @@ class UserShowView extends View {
                     <th>Karte</th>
 		</tr>
 OUT;
-        foreach (MysqlAdapter::getInstance()->getUserCards($this->user->getUse_id()) as $arr) {
+        /* @var $val \Eventmembercard */
+        foreach (MysqlAdapter::getInstance()->getUserCards($this->user->getUse_id()) as $val) {
             echo "<tr>
-                <td>{$arr[0]}</td>
-                <td>{$arr[1]}</td>
-                <td>{$arr[2]}</td>
-                <td>{$arr[3]}</td>
+                <td>{$val->getSeries()->getEvent()->getDate()}</td>
+                <td>{$val->getSeries()->getEvent()->getEvt_name()}</td>
+                <td>{$val->getSeries()->getSer_id()}</td>
+                <td>{$val->getCard()->getCar_serialnumber()}</td>
                 </tr>";
         }
         echo <<<OUT

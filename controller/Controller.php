@@ -48,6 +48,10 @@ abstract class Controller {
                 }
                 break;
             case 'POST':
+                $matches = array();
+                if (preg_match("@^.*/([0-9]+)@", $_SERVER['REQUEST_URI'], $matches)) {
+                    $this->resourceId = $matches[1];
+                }
                 $this->create();
                 break;
             default:

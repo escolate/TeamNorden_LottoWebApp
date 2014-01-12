@@ -11,30 +11,61 @@
  * @author tscheurer
  */
 class UserCardShowView extends View {
+
+    /**
+     *
+     * @var User
+     */
+    private $user;
+    
     public function display() {
-    echo <<<OUT
+        $this->user = $this->vars['user'];
+        
+        echo <<<OUT
         <div class="content-box">
-    <h1>Benutzer #{$this->user->getUse_id()}</h1>
+    <h1>Eventkarten</h1>
     <div class="button-box">
-	<a href="/user/edit/{$this->user->getUse_id()}" class="button grey">Bearbeiten</a>
+        <a href="/usercard/edit/{$this->user->getUse_id()}" class="button grey">Hinzufügen</a>
     </div>
     <div class="event-card">
-	<table class="show-table">
-	    <tbody>
-		<tr>
-		<td>Name:</td>
-		<td>{$this->user->getUse_firstname()} {$this->user->getUse_lastname()}</td>
-		</tr>
-		<tr>
-		<td>Adresse:</td>
-		<td>{$this->user->getUse_address()}</td>
-		</tr>
-		
-	    </tbody>
-	</table>
+        <p><b>User:</b> {$this->user->getUse_firstname()} {$this->user->getUse_lastname()}</p>
+        <form name="events" method="post">
+        <input type="hidden" name="use_id" value="{$this->user->getUse_id()}">
+            <table class="show-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Datum</th>
+                        <th>Event</th>
+                        <th>Serie</th>
+                        <th>Karte</th>
+                    </tr>
+                </thead>
+                <tbody>
+OUT;
+        /* @var $card \Eventmembercard */
+        foreach ($this->vars['usercards'] as $card) {
+            echo '<tr>';
+            echo '<td><input type="checkbox" name="checkbox[]" value="'.$card->getCard()->getCar_id().','.$card->getSeries()->getSer_id().'"></td>';
+            echo '<td>'.$card->getSeries()->getEvent()->getDate().'</td>';
+            echo '<td>'.$card->getSeries()->getEvent()->getEvt_name().'</td>';
+            echo '<td>'.$card->getSeries()->getSer_id().'</td>';
+            echo '<td>'.$card->getCard()->getCar_serialnumber().'</td>';
+            echo '</tr>';
+        }
+        echo <<<OUT
+                </tbody>
+            </table>
+            <select name="action">
+                <option value="">[Aktion]</option> 
+                <option value="delete">Löschen</option> 
+            </select>
+            <input type="submit" value="Ausführen"></input>
+        </form>
     </div>
 OUT;
     }
+
 }
 
 ?>
