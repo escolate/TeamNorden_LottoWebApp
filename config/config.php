@@ -11,6 +11,7 @@ define("URI_WINNER", "/winner");
 define("URI_LOG", "/log");
 define("URI_API", "/api");
 define("URI_ADMIN", "/admin");
+define("URI_USERCARD", "/usercard");
 
 define("DB_SERVER", "127.0.0.1");
 define("DB_USER", "lotto");
