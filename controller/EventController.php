@@ -2,19 +2,44 @@
 
 include_once './view/event/EventView.php';
 include_once './view/event/EventShowView.php';
-
+include_once './view/event/EventAddUserView.php';
 
 class EventController extends Controller {
-
     protected function create() {
-	$num_num = trim($_POST['number']);
-	$eventId = trim($_POST['eventId']);
-	$seriesId = trim($_POST['seriesId']);
-	$number = new Number();
-	$number->setNum_num($num_num);
-	if(MysqlAdapter::getInstance()->saveNumber($number->getNum_num(),$seriesId,1)){
-	    header("Location: /event/$eventId", TRUE, 303);
-	    exit();
+	// add and remove user from event
+	if ($_POST['events-action'] != "action") { // action selected?
+	    $userIds = $_POST['userIds'];
+	    $eventId = $_POST['eventId'];
+	    switch ($_POST['form']) {
+		case "addUser":
+		    if (count($userIds)) {
+			foreach ($userIds as $userId) {
+			    MysqlAdapter::getInstance()->addUser($userId, $eventId);
+			}
+		    }
+		    header("Location: /event/$eventId", TRUE, 303);
+		    break;
+		case "removeUser":
+		    if (count($userIds)) {
+			foreach ($userIds as $userId) {
+			    MysqlAdapter::getInstance()->removeUser($userId, $eventId);
+			}
+		    }
+		    header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
+		    break;
+	    }
+	} else {
+	    header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
+	}
+	// create a number from event
+	if( $_POST['form'] == "saveNumber"){
+	    $number = trim($_POST['number']);
+	    if(preg_match("/^\d+$/", $number)){
+		$eventId = $_POST['eventId'];
+		$seriesId = $_POST['seriesId'];
+		MysqlAdapter::getInstance()->saveNumber($number, $seriesId, 4);
+	    }
+	    header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
 	}
     }
 
@@ -31,7 +56,14 @@ class EventController extends Controller {
     }
 
     protected function init() {
-	
+	$view = new EventAddUserView();
+	$userList = MysqlAdapter::getInstance()->getUserList();
+	$eventmemberList = MysqlAdapter::getInstance()->getEventmemberList($this->resourceId);
+	$event = MysqlAdapter::getInstance()->getEvent($this->resourceId);
+	$view->assign('user', $userList);
+	$view->assign('eventmember', $eventmemberList);
+	$view->assign('event', $event);
+	$view->display();
     }
 
     protected function show() {

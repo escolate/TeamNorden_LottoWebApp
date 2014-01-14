@@ -100,30 +100,30 @@ final class MysqlAdapter {
      * @return \User|null
      */
     public function getUser_($id) {
-        $ide = $this->con->real_escape_string($id);
-        $query = "SELECT * FROM lotto.user WHERE use_id = '{$ide}'";
-        $result = $this->con->query($query);
-        if ($result->num_rows) {
-            $row = $result->fetch_assoc();
-            $user = new User();
-            $user->setUse_id($row['use_id']);
-            $user->setUse_lastname($row['use_lastname']);
-            $user->setUse_firstname($row['use_firstname']);
-            $user->setUse_email($row['use_email']);
-            $user->setUse_address($row['use_address']);
-            $user->setUse_zip($row['use_zip']);
-            $user->setUse_city($row['use_city']);
-            $user->setUse_administrator($row['use_administrator']);
-            $user->setUse_birth($row['use_birth']);
-            $user->setUse_phone($row['use_phone']);
-            $user->setUse_mobile($row['use_mobile']);
-            $user->setUse_lastlogin($row['use_lastlogin']);
-            $user->setUse_mod_dat($row['use_mod_dat']);
-            $user->setUse_cre_dat($row['use_cre_dat']);
-            $user->setUse_status($row['use_status']);
-            return $user;
-        }
-        return null;
+	$ide = $this->con->real_escape_string($id);
+	$query = "SELECT * FROM lotto.user WHERE use_id = '{$ide}'";
+	$result = $this->con->query($query);
+	if ($result->num_rows) {
+	    $row = $result->fetch_assoc();
+	    $user = new User();
+	    $user->setUse_id($row['use_id']);
+	    $user->setUse_lastname($row['use_lastname']);
+	    $user->setUse_firstname($row['use_firstname']);
+	    $user->setUse_email($row['use_email']);
+	    $user->setUse_address($row['use_address']);
+	    $user->setUse_zip($row['use_zip']);
+	    $user->setUse_city($row['use_city']);
+	    $user->setUse_administrator($row['use_administrator']);
+	    $user->setUse_birth($row['use_birth']);
+	    $user->setUse_phone($row['use_phone']);
+	    $user->setUse_mobile($row['use_mobile']);
+	    $user->setUse_lastlogin($row['use_lastlogin']);
+	    $user->setUse_mod_dat($row['use_mod_dat']);
+	    $user->setUse_cre_dat($row['use_cre_dat']);
+	    $user->setUse_status($row['use_status']);
+	    return $user;
+	}
+	return null;
 //=======
 //	$ide = $this->con->real_escape_string($id);
 //	$query = "SELECT * FROM lotto.user WHERE use_id = '{$ide}'";
@@ -152,11 +152,44 @@ final class MysqlAdapter {
 	// Duplicate numbers are not allowed but the user must know if he want do that
 	$query = "
 	    INSERT INTO 
-		number (ser_id, num_num, num_cre_id) 
+		numbers (ser_id, num_num, num_cre_id) 
 	    VALUES 
 		('$ser_id', '$number', '$cre_id');
 	";
 	//Save
+	if (!$this->con->query($query)) {
+	    $this->error($query);
+	    return FALSE;
+	}
+	return TRUE;
+    }
+
+    // Adds a user to an event
+    public function addUser($user_id, $event_id) {
+	$query = "
+	    INSERT INTO 
+		eventmembers
+	    VALUES 
+		('$event_id', '$user_id');
+	";
+	if (!$this->con->query($query)) {
+	    $this->error($query);
+	    return FALSE;
+	}
+	return TRUE;
+    }
+
+    // Removes a user to an event
+    public function removeUser($user_id, $event_id) {
+	$query = "
+	    DELETE FROM 
+		eventmembers 
+	    WHERE 
+		eve_id='$event_id' 
+		    AND 
+		use_id='$user_id';
+	";
+//	exit($query);
 	if (!$this->con->query($query)) {
 	    $this->error($query);
 	    return FALSE;
@@ -265,24 +298,24 @@ final class MysqlAdapter {
      */
     public function setPassword($email, $pw) {
 
-        $pwe = $this->con->real_escape_string($pw);
-        $emaile = $this->con->real_escape_string($email);
-        $query = "UPDATE user SET use_password = password(concat(use_salt,'{$pwe}')) WHERE use_email = '{$emaile}' AND use_del is not true";
-        if (!$this->con->query($query)) {
-            $this->error($query);
-            return FALSE;
-        }
-        if (!$this->con->affected_rows) {
-            return FALSE;
-        }
-        
-        $log = new Log();
-        $log->setLog_action("Das Passwort für $emaile würde geändert.");
-        $log->setLog_level(Log::NOTICE);
-        $log->send();
-        $this->saveLog($log);
-        
-        return true;
+	$pwe = $this->con->real_escape_string($pw);
+	$emaile = $this->con->real_escape_string($email);
+	$query = "UPDATE user SET use_password = password(concat(use_salt,'{$pwe}')) WHERE use_email = '{$emaile}' AND use_del is not true";
+	if (!$this->con->query($query)) {
+	    $this->error($query);
+	    return FALSE;
+	}
+	if (!$this->con->affected_rows) {
+	    return FALSE;
+	}
+
+	$log = new Log();
+	$log->setLog_action("Das Passwort für $emaile würde geändert.");
+	$log->setLog_level(Log::NOTICE);
+	$log->send();
+	$this->saveLog($log);
+
+	return true;
 
 //	$ide = $this->con->real_escape_string($id);
 //	$query = "SELECT * FROM lotto.user WHERE use_id = '{$ide}'";
@@ -520,25 +553,11 @@ final class MysqlAdapter {
 	    SELECT 
 	     *
 	    FROM 
-	     eventmember
+	     eventmembers
 	    where 
 	     eve_id = $id
 	    LIMIT
 	     $limit;";
-//<<<<<<< HEAD
-//        $result = $this->con->query($query);
-//        $list = array();
-//        if ($result->num_rows) {
-//            while ($row = $result->fetch_assoc()) {
-//                $eventmembers = new Eventmembers();
-//                $eventmembers->setEve_id($row['eve_id']);
-//                $eventmembers->setUse_id($row['use_id']);
-//                $list[] = $eventmembers;
-//            }
-//            return $list;
-//        }
-//        return NULL;
-//=======
 	$result = $this->con->query($query);
 	$eventmemberList = array();
 	if ($result->num_rows) {
@@ -628,17 +647,17 @@ final class MysqlAdapter {
     public function getNumberList($id, $limit = "0,18446744073709551615") {
 	$query = "
 	    select 
-		number.* 
+		numbers.* 
 	    from 
-		number 
+		numbers 
 	    left join 
 		series s 
 	    on 
-		s.ser_id = number.ser_id 
+		s.ser_id = numbers.ser_id 
 	    where 
-		number.ser_id = $id
+		numbers.ser_id = $id
 	    ORDER BY
-		number.num_id 
+		numbers.num_id 
 	    DESC
 	    LIMIT
 		$limit;	    
@@ -733,15 +752,15 @@ final class MysqlAdapter {
      * @return boolean true on success, false on error
      */
     public function saveLog(Log $log) {
-        //Save Message
-        $query = "INSERT INTO log (use_id, log_action, log_ip, log_level) VALUES ('{$log->getUse_id()}','{$log->getLog_action()}','{$log->getLog_ip()}',{$log->getLog_level()})";
-        
-        if (!$this->con->query($query)) {
-            $this->error($query);
-            return FALSE;
-        }
-        
-        return true;
+	//Save Message
+	$query = "INSERT INTO log (use_id, log_action, log_ip, log_level) VALUES ('{$log->getUse_id()}','{$log->getLog_action()}','{$log->getLog_ip()}',{$log->getLog_level()})";
+
+	if (!$this->con->query($query)) {
+	    $this->error($query);
+	    return FALSE;
+	}
+
+	return true;
     }
 
     /**
@@ -750,23 +769,23 @@ final class MysqlAdapter {
      * @return \Log|null
      */
     public function getLog($id) {
-        $query = "SELECT * FROM lotto.log WHERE log_id = " . $id;
-        $result = $this->con->query($query);
+	$query = "SELECT * FROM lotto.log WHERE log_id = " . $id;
+	$result = $this->con->query($query);
 
-        if ($result->num_rows) {
-            $row = mysqli_fetch_assoc($result);
-            $log = new Log();
-            $log->setLog_id($row['log_id']);
-            $log->setUse_id($row['use_id']);
-            $log->setLog_action($row['log_action']);
-            $log->setLog_level($row['log_level']);
-            $log->setLog_timestamp($row['log_timestamp']);
-            $log->setLog_ip($row['log_ip']);
+	if ($result->num_rows) {
+	    $row = mysqli_fetch_assoc($result);
+	    $log = new Log();
+	    $log->setLog_id($row['log_id']);
+	    $log->setUse_id($row['use_id']);
+	    $log->setLog_action($row['log_action']);
+	    $log->setLog_level($row['log_level']);
+	    $log->setLog_timestamp($row['log_timestamp']);
+	    $log->setLog_ip($row['log_ip']);
 
-            return $log;
-        }
+	    return $log;
+	}
 
-        return NULL;
+	return NULL;
     }
 
     /**
@@ -775,47 +794,47 @@ final class MysqlAdapter {
      * @return array\Log
      */
     public function getLogList($limit = 0) {
-        $arr = array();
-        $order = '';
-        $lim = '';
+	$arr = array();
+	$order = '';
+	$lim = '';
 
-        if ($limit) {
-            $order = 'ORDER BY log_timestamp DESC';
-            $lim = 'LIMIT ' . $limit;
-        }
+	if ($limit) {
+	    $order = 'ORDER BY log_timestamp DESC';
+	    $lim = 'LIMIT ' . $limit;
+	}
 
-        $query = "SELECT * FROM lotto.log {$order} " . $lim;
-        $result = $this->con->query($query);
+	$query = "SELECT * FROM lotto.log {$order} " . $lim;
+	$result = $this->con->query($query);
 
-        if ($result->num_rows) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $log = new Log();
-                $log->setLog_id($row['log_id']);
-                $log->setUse_id($row['use_id']);
-                $log->setLog_action($row['log_action']);
-                $log->setLog_level($row['log_level']);
-                $log->setLog_timestamp($row['log_timestamp']);
-                $log->setLog_ip($row['log_ip']);
-                $arr[] = $log;
-            }
-        }
+	if ($result->num_rows) {
+	    while ($row = mysqli_fetch_assoc($result)) {
+		$log = new Log();
+		$log->setLog_id($row['log_id']);
+		$log->setUse_id($row['use_id']);
+		$log->setLog_action($row['log_action']);
+		$log->setLog_level($row['log_level']);
+		$log->setLog_timestamp($row['log_timestamp']);
+		$log->setLog_ip($row['log_ip']);
+		$arr[] = $log;
+	    }
+	}
 
-        return $arr;
+	return $arr;
     }
-    
+
     /**
      * 
      * @return array
      */
     public function getStatusList() {
-        $arr = array();
-        $result = $this->con->query("SELECT DISTINCT use_status FROM user WHERE use_del is not true AND use_status != ''");
-        if($result->num_rows) {
-            while ($row = $result->fetch_assoc()) {
-                $arr[] = $row['use_status'];
-            }
-        }
-        return $arr;
+	$arr = array();
+	$result = $this->con->query("SELECT DISTINCT use_status FROM user WHERE use_del is not true AND use_status != ''");
+	if ($result->num_rows) {
+	    while ($row = $result->fetch_assoc()) {
+		$arr[] = $row['use_status'];
+	    }
+	}
+	return $arr;
     }
 
     public function setLimit($limit) {
