@@ -62,10 +62,12 @@ class EventShowView extends View {
 <div class="content-box">
     <h1>Spieler</h1>
     <div class="button-box">
-	<a href="#" class="button yellow">Hinzufügen</a>
+	<a href="add/{$this->vars['event']->getEvt_id()}" class="button yellow">Hinzufügen</a>
     </div>	    
 <div class="list">
-	<form name="events">
+	<form action="/event/add" method="POST">
+	<input type="hidden" value="removeUser" name="form">
+	<input type="hidden" value="{$this->vars['event']->getEvt_id()}" name="eventId">
 	    <table>
 		<thead>
 		    <tr>
@@ -84,8 +86,10 @@ HTML;
 	if ($this->vars['eventmemberNameList']) {
 	    foreach ($this->vars['eventmemberNameList'] as $object) {
 		echo '<tr>';
-		echo '<td><input type="checkbox"></td>';
-		echo "<td><a href=\"/user/{$object->getUse_id()}\">{$object->getUse_firstname()} {$object->getUse_lastname()} ({$object->getUse_status()})</a></td>";
+		echo '<td><a href="/user/'.$object->getUse_id().'">
+		    <input type="checkbox" name="userIds[]" value="' . $object->getUse_id() . '">
+		      </td>';
+		echo "<td>{$object->getUse_firstname()} {$object->getUse_lastname()} </a></td>";
 		echo '</tr>';
 	    }
 	}
@@ -95,25 +99,10 @@ HTML;
 	    </table>
 	    <select name="events-action">
 		<option value="action">[Aktion]</option>
-		<option value="delete">Löschen</option>
+		<option value="remove">Entfernen</option>
 	    </select>
 	    <input type="submit" value="Ausführen">
 	</form>
-	<div class="pages">
-	    Seite
-	    <form>
-		<select name="events-action">
-		    <option value="delete">1</option>
-		    <option value="delete">2</option>
-		    <option value="delete">3</option>
-		    <option value="delete">4</option>
-		    <option value="action" selected>5</option>
-		    <option value="delete">6</option>
-		    <option value="delete">7</option>
-		</select>
-	    </form>
-	    von 7
-	</div>
     </div>
 
     </div>
@@ -124,22 +113,24 @@ HTML;
 	$sTitleCounter = $this->seriesCounter;
 	++$sTitleCounter;
 	echo "<h1>Serie $sTitleCounter</h1>";
-	
+
 	echo <<<HTML
     <div class="button-box">
-	<a href="#" class="button red">Serie $sTitleCounter abschliessen</a>
+	<a href="/event/add/{$this->vars['event']->getEvt_id()}" class="button red">Serie $sTitleCounter abschliessen</a>
     </div>
-    <form id="saveNumber" action="/event/create" method="POST">
+    <form action="/event/create" method="POST">
 	<fieldset id="save-number">
 	    <legend>Zahl ziehen!</legend>
-	    <input type="hidden" value="{$this->vars['event']->getEvt_id()}" id="eventId" name="eventId">
-	    <input type="hidden" value="{$this->vars['newestSeries']->getSer_id()}" id="seriesId" name="seriesId">
-	    <input type="text" placeholder="Zahl" autocomplete="off" id="number" name="number">
+	    <input type="hidden" name="form" value="saveNumber">
+	    <input type="hidden" value="{$this->vars['event']->getEvt_id()}" name="eventId">
+	    <input type="hidden" value="{$this->vars['newestSeries']->getSer_id()}" name="seriesId">
+	    <input type="text" placeholder="Zahl" autocomplete="off" name="number">
 	    <input type="submit" value="Ziehen!">
 	</fieldset>
     </form>
     <div class="list">
-	<form name="events">
+	<form action="/event/add" method="POST">
+	<input type="hidden" name="form" value="number">
 	    <table>
 		<thead>
 		    <tr>
@@ -161,7 +152,7 @@ HTML;
 	if ($this->vars['numberList']) {
 	    foreach ($this->vars['numberList'] as $object) {
 		echo '<tr>';
-		echo '<td><input type="checkbox"></td>';
+		echo '<td><input type="checkbox" name="numberIds[]" value="' . $object->getNum_id() . '"></td>';
 		echo "<td><a href=\"/number/{}\">Ziehung $drawCounter</a></td>";
 		echo "<td><a href=\"/number/{}\">{$object->getNum_num()}</a></td>";
 		echo '</tr>';
