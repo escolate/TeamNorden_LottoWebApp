@@ -44,5 +44,9 @@ $(document).ready(function(){ // Ready function start
     });
     
     $("table").tablesorter(); 
+    
+    $('form.filter select').on('change',function () {
+        $('form.filter').submit();
+    });
 
 });// Ready function end

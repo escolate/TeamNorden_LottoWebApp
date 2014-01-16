@@ -30,7 +30,7 @@ class UserCardShowView extends View {
     <div class="event-card">
         <p><b>User:</b> {$this->user->getUse_firstname()} {$this->user->getUse_lastname()}</p>
         <form name="events" method="post">
-        <input type="hidden" name="use_id" value="{$this->user->getUse_id()}">
+        <input type="hidden" name="user" value="{$this->user->getUse_id()}">
             <table class="show-table">
                 <thead>
                     <tr>
@@ -46,7 +46,7 @@ OUT;
         /* @var $card \Eventmembercard */
         foreach ($this->vars['usercards'] as $card) {
             echo '<tr>';
-            echo '<td><input type="checkbox" name="checkbox[]" value="'.$card->getCard()->getCar_id().','.$card->getSeries()->getSer_id().'"></td>';
+            echo '<td><input type="checkbox" name="car_ser[]" value="'.$card->getCard()->getCar_id().','.$card->getSeries()->getSer_id().'"></td>';
             echo '<td>'.$card->getSeries()->getEvent()->getDate().'</td>';
             echo '<td>'.$card->getSeries()->getEvent()->getEvt_name().'</td>';
             echo '<td>'.$card->getSeries()->getSer_id().'</td>';

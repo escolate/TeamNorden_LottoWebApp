@@ -20,6 +20,10 @@ class Eventmembercard {
      */
     private $series;
 
+    /**
+     * 
+     * @return \User
+     */
     public function getUser() {
         return $this->user;
     }

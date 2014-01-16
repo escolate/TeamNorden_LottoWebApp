@@ -102,7 +102,7 @@ final class MysqlAdapter {
      */
     public function getUser_($id) {
         $ide = $this->con->real_escape_string($id);
-        $query = "SELECT * FROM lotto.user WHERE use_id = '{$ide}'";
+        $query = "SELECT * FROM user WHERE use_id = '{$ide}'";
         $result = $this->con->query($query);
         if ($result->num_rows) {
             $row = $result->fetch_assoc();
@@ -377,7 +377,7 @@ final class MysqlAdapter {
 	SELECT 
 	    *
 	FROM 
-	    lotto.winner 
+	    winner 
 	WHERE
 	    win_id = $id;
 	";
@@ -408,25 +408,25 @@ final class MysqlAdapter {
 		u.use_lastname,
 		s.ser_id
 	FROM 
-		lotto.winner 
+		winner 
 	LEFT JOIN
-		lotto.user uc
+		user uc
 	ON 
 		win_cre_id = uc.use_id 
 	LEFT JOIN 
-		lotto.user um 
+		user um 
 	ON 
 		win_mod_id = um.use_id
 	LEFT JOIN
-		lotto.event e
+		event e
 	on
 		eve_id = e.evt_id
 	LEFT join
-		lotto.user u
+		user u
 	on
 		winner.use_id = u.use_id
 	LEFT JOIN
-		lotto.series s
+		series s
 	on
 		winner.ser_id = s.ser_id
 	ORDER BY
@@ -485,17 +485,25 @@ final class MysqlAdapter {
         return NULL;
     }
 
-    public function getEventList($limit = "0,18446744073709551615") {  // http://dev.mysql.com/doc/refman/5.0/en/select.html --> SELECT * FROM tbl LIMIT 95,18446744073709551615;
-        $query = "SELECT 
-		*
-	    FROM 
-		event
-	    ORDER BY
-		evt_datetime DESC
-	    LIMIT
-		$limit;";
-        $result = $this->con->query($query);
+    /**
+     * 
+     * @param type $limit
+     * @param type $upcoming
+     * @return array\Event
+     */
+    public function getEventList($limit = 0, $upcoming = false) {  // http://dev.mysql.com/doc/refman/5.0/en/select.html --> SELECT * FROM tbl LIMIT 95,18446744073709551615;
         $eventList = array();
+        $query = "SELECT *,date_format(evt_datetime,'%d.%m.%Y') as date FROM event";
+        if ($upcoming) {
+            $query .= " WHERE date(evt_datetime) >= date(now())";
+        }
+        $query .= " ORDER BY evt_datetime DESC";
+
+        if ($limit) {
+            $query .= ' LIMIT ' . $limit;
+        }
+
+        $result = $this->con->query($query);
         if ($result->num_rows) {
             while ($row = $result->fetch_assoc()) {
                 $event = new Event();
@@ -510,11 +518,15 @@ final class MysqlAdapter {
                 $event->setEvt_mod_date($row['evt_mod_date']);
                 $event->setEvt_zip($row['evt_zip']);
                 $event->setEvt_mod_id($row['evt_mod_id']);
+                $event->setDate($row['date']);
                 $eventList[] = $event;
             }
-            return $eventList;
         }
-        return NULL;
+        return $eventList;
+    }
+
+    public function getAvailableCards($eventid) {
+        $query = "";
     }
 
     public function getEventmemberList($id, $limit = "0,18446744073709551615") {
@@ -562,7 +574,7 @@ final class MysqlAdapter {
 	    FROM 
 		series 
 	    left join 
-		lotto.event e 
+		event e 
 	    on 
 		eve_id = e.evt_id
 	    WHERE 
@@ -599,7 +611,7 @@ final class MysqlAdapter {
 	    FROM 
 		series 
 	    left join 
-		lotto.event e 
+		event e 
 	    on 
 		eve_id = e.evt_id
 	    WHERE 
@@ -718,7 +730,7 @@ final class MysqlAdapter {
      * @return string Location to ZIP or ''
      */
     public function getLocation($zip) {
-        $query = "SELECT plz_ort FROM lotto.plz WHERE plz_plz = " . $this->con->real_escape_string($zip);
+        $query = "SELECT plz_ort FROM plz WHERE plz_plz = " . $this->con->real_escape_string($zip);
         $result = $this->con->query($query);
 
         if ($result->num_rows) {
@@ -759,13 +771,15 @@ final class MysqlAdapter {
         $query = "SELECT * FROM card WHERE car_id =  " . $id;
         $result = $this->con->query($query);
 
-        while ($row = mysqli_fetch_assoc($result)) {
-            $car->setCar_id($row['car_id']);
-            $car->setCar_serialnumber($row['car_serialnumber']);
+        if ($result->num_rows) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $car->setCar_id($row['car_id']);
+                $car->setCar_serialnumber($row['car_serialnumber']);
+            }
         }
         return $car;
     }
-    
+
     public function getSeries($id) {
         $ser = new Series();
         $query = "SELECT * FROM series WHERE ser_id = " . $id;
@@ -778,13 +792,29 @@ final class MysqlAdapter {
         return $ser;
     }
 
-    public function deleteUserCard($car_id, $event_id) {
-        
+    /**
+     * 
+     * @param Eventmembercard $emc
+     * @return boolean
+     */
+    public function deleteUserCard(Eventmembercard $emc) {
+        $query = "DELETE FROM eventmemberscard WHERE use_id = '{$emc->getUser()->getUse_id()}' AND car_id = '{$emc->getCard()->getCar_id()}' AND ser_id = '{$emc->getSeries()->getSer_id()}'";
+        return $this->con->query($query);
+    }
+
+    /**
+     * 
+     * @param Eventmembercard $emc
+     * @return boolean
+     */
+    public function saveUserCard(Eventmembercard $emc) {
+        $query = "INSERT INTO eventmemberscard VALUES ('{$emc->getUser()->getUse_id()}','{$emc->getCard()->getCar_id()}','{$emc->getSeries()->getSer_id()}')";
+        return $this->con->query($query);
     }
 
     public function getUserWins($userid) {
         $arr = array();
-        $query = "SELECT date_format(b.evt_datetime,'%d.%m.%Y') date,b.evt_name,a.win_prize FROM lotto.winner a LEFT JOIN event b ON a.eve_id = b.evt_id WHERE a.win_id = " . $userid;
+        $query = "SELECT date_format(b.evt_datetime,'%d.%m.%Y') date,b.evt_name,a.win_prize FROM winner a LEFT JOIN event b ON a.eve_id = b.evt_id WHERE a.win_id = " . $userid;
 
         $result = $this->con->query($query);
 
@@ -857,7 +887,7 @@ final class MysqlAdapter {
      * @return \Log|null
      */
     public function getLog($id) {
-        $query = "SELECT * FROM lotto.log WHERE log_id = " . $id;
+        $query = "SELECT * FROM log WHERE log_id = " . $id;
         $result = $this->con->query($query);
 
         if ($result->num_rows) {
@@ -891,7 +921,7 @@ final class MysqlAdapter {
             $lim = 'LIMIT ' . $limit;
         }
 
-        $query = "SELECT * FROM lotto.log {$order} " . $lim;
+        $query = "SELECT * FROM log {$order} " . $lim;
         $result = $this->con->query($query);
 
         if ($result->num_rows) {
@@ -923,6 +953,52 @@ final class MysqlAdapter {
             }
         }
         return $arr;
+    }
+
+    public function getEventCards($seriesid) {
+        $arr = array();
+        
+        $query = "SELECT a.car_id,b.use_id FROM card a LEFT JOIN eventmemberscard b ON a.car_id = b.car_id WHERE ser_id is null OR ser_id = " . $seriesid . " ORDER BY car_serialnumber";
+        $result = $this->con->query($query);
+        
+        if ($result->num_rows) {
+            $series = $this->getSeries($seriesid);
+            while ($row = $result->fetch_assoc()) {
+                $emc = new Eventmembercard();
+                $emc->setSeries($series);
+                $emc->setCard($this->getCard($row['car_id']));
+                if (!empty($row['use_id'])) {
+                    $emc->setUser($this->getUser_($row['use_id']));
+                }
+                $arr[] = $emc;
+            }
+        }
+        return $arr;
+    }
+
+    /**
+     * 
+     * @param type $eventid
+     * @return array \Series
+     */
+    public function getEventSeries($eventid) {
+        $arr = array();
+        $query = "SELECT * FROM series WHERE eve_id = {$eventid} ORDER BY ser_id";
+        $result = $this->con->query($query);
+        if ($result->num_rows) {
+            while ($row = $result->fetch_assoc()) {
+                $series = new Series();
+                $series->setEvent($this->getEvent($row['eve_id']));
+                $series->setSer_id($row['ser_id']);
+                $arr[] = $series;
+            }
+        }
+        return $arr;
+    }
+    
+    public function addUserCard(Eventmembercard $emc) {
+        $query = "INSERT INTO eventmemberscard VALUES ({$emc->getUser()->getUse_id()},{$emc->getCard()->getCar_id()},{$emc->getSeries()->getSer_id()})";
+        return $this->con->query($query);
     }
 
     public function setLimit($limit) {
