@@ -25,15 +25,15 @@ class EventShowView extends View {
 		<td>{$this->vars['event']->getEvt_name()}</td>
 		</tr>
 		<tr>
-		<td>Ort:</td>
+		<td>Strasse:</td>
 		<td>{$this->vars['event']->getEvt_location()}</td>
 		</tr>
 		<tr>
-		<td>Kanton:</td>
+		<td>Ort:</td>
 		<td>{$this->vars['event']->getEvt_city()}</td>
 		</tr>
 		<tr>
-		<td>Postleitzahl:</td>
+		<td>PLZ:</td>
 		<td>{$this->vars['event']->getEvt_zip()}</td>
 		</tr>
 		<tr>

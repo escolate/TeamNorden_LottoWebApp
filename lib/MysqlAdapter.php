@@ -541,7 +541,7 @@ final class MysqlAdapter {
 	    $event->setEvt_cre_id($row['evt_cre_id']);
 	    $event->setEvt_datetime($row['evt_datetime']);
 	    $event->setEvt_del($row['evt_del']);
-	    $event->setEvt_mod_date($row['evt_mod_date']);
+	    $event->setEvt_mod_date($row['evt_mod_dat']);
 	    $event->setEvt_zip($row['evt_zip']);
 	    $event->setEvt_mod_id($row['evt_mod_id']);
 	    $event->setDate($row['date']);
@@ -580,7 +580,7 @@ final class MysqlAdapter {
 		$event->setEvt_cre_id($row['evt_cre_id']);
 		$event->setEvt_datetime($row['evt_datetime']);
 		$event->setEvt_del($row['evt_del']);
-		$event->setEvt_mod_date($row['evt_mod_date']);
+		$event->setEvt_mod_date($row['evt_mod_dat']);
 		$event->setEvt_zip($row['evt_zip']);
 		$event->setEvt_mod_id($row['evt_mod_id']);
 		$event->setDate($row['date']);
@@ -1100,6 +1100,20 @@ final class MysqlAdapter {
 	if (DEBUG) {
 	    exit('Error ' . $this->con->errno . ': ' . $this->con->error . '\n<br>' . $query);
 	}
+    }
+    
+    public function saveEvent(Event $event){
+	$query="
+	    INSERT INTO event 
+	    (evt_name, evt_location, evt_city, evt_zip, evt_datetime, evt_cre_id, evt_mod_id, evt_cre_dat, evt_mod_dat) 
+	    VALUES 
+	    ('{$event->getEvt_name()}', '{$event->getEvt_location()}', '{$event->getEvt_city()}', '{$event->getEvt_zip()}', '{$event->getEvt_datetime()}', '{$_SESSION['user']['id']}', '{$_SESSION['user']['id']}', NOW(), NOW());";
+	//Save
+	if (!$this->con->query($query)) {
+	    $this->error($query);
+	    return FALSE;
+	}
+	return TRUE;
     }
 
 }

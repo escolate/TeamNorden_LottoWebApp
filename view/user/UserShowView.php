@@ -184,55 +184,58 @@ OUT;
 </div>
 OUT;
     }
-
-    private function getBirthDateInput($bd) {
-        $d = '';
-        $m = '';
-        $y = '';
-
-        if (!empty($bd)) {
-            $arr = explode(".", $bd);
-            $d = $arr[0];
-            $m = $arr[1];
-            $y = $arr[2];
-        }
-
-        $out = "";
-        $out .= '<select id="day" name="day"><option>Tag</option>';
-        for ($i = 1; $i <= 31; $i++) {
-            if ($i == $d) {
-                $checked = 'selected';
-            } else {
-                $checked = '';
-            }
-            $out .= '<option ' . $checked . ' value="' . $i . '">' . str_pad($i, 2, '0', STR_PAD_LEFT) . '</option>';
-        }
-        $out .= '</select>';
-
-        $out .= '<select id="month" name="month"><option>Monat</option>';
-        for ($i = 1; $i <= 12; $i++) {
-            if ($i == $m) {
-                $checked = 'selected';
-            } else {
-                $checked = '';
-            }
-            $out .= '<option ' . $checked . ' value="' . $i . '">' . str_pad($i, 2, '0', STR_PAD_LEFT) . '</option>';
-        }
-        $out .= '</select>';
-
-        $out .= '<select id="year" name="year"><option>Jahr</option>';
-        for ($i = date("Y"); $i >= date("Y") - 100; $i--) {
-            if ($i == $y) {
-                $checked = 'selected';
-            } else {
-                $checked = '';
-            }
-            $out .= '<option ' . $checked . ' value="' . $i . '">' . $i . '</option>';
-        }
-        $out .= '</select>';
-
-        return $out;
-    }
+//*****************************************************
+//******* Ausgelagert in view.php //*******
+//*****************************************************
+//
+//    private function getBirthDateInput($bd) {
+//        $d = '';
+//        $m = '';
+//        $y = '';
+//
+//        if (!empty($bd)) {
+//            $arr = explode(".", $bd);
+//            $d = $arr[0];
+//            $m = $arr[1];
+//            $y = $arr[2];
+//        }
+//
+//        $out = "";
+//        $out .= '<select id="day" name="day"><option>Tag</option>';
+//        for ($i = 1; $i <= 31; $i++) {
+//            if ($i == $d) {
+//                $checked = 'selected';
+//            } else {
+//                $checked = '';
+//            }
+//            $out .= '<option ' . $checked . ' value="' . $i . '">' . str_pad($i, 2, '0', STR_PAD_LEFT) . '</option>';
+//        }
+//        $out .= '</select>';
+//
+//        $out .= '<select id="month" name="month"><option>Monat</option>';
+//        for ($i = 1; $i <= 12; $i++) {
+//            if ($i == $m) {
+//                $checked = 'selected';
+//            } else {
+//                $checked = '';
+//            }
+//            $out .= '<option ' . $checked . ' value="' . $i . '">' . str_pad($i, 2, '0', STR_PAD_LEFT) . '</option>';
+//        }
+//        $out .= '</select>';
+//
+//        $out .= '<select id="year" name="year"><option>Jahr</option>';
+//        for ($i = date("Y"); $i >= date("Y") - 100; $i--) {
+//            if ($i == $y) {
+//                $checked = 'selected';
+//            } else {
+//                $checked = '';
+//            }
+//            $out .= '<option ' . $checked . ' value="' . $i . '">' . $i . '</option>';
+//        }
+//        $out .= '</select>';
+//
+//        return $out;
+//    }
 
     private function getStatusList() {
         $str = '';

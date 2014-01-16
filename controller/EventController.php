@@ -3,6 +3,7 @@
 include_once './view/event/EventView.php';
 include_once './view/event/EventShowView.php';
 include_once './view/event/EventAddUserView.php';
+include_once './view/event/EventInitView.php';
 
 class EventController extends Controller {
 
@@ -27,6 +28,28 @@ class EventController extends Controller {
 			}
 		    }
 		    header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
+		    break;
+		case "createEvent":
+		    // Get data from post form
+		    $evt_name = trim($_POST['evt_name']);
+		    $evt_day = $_POST['day'];
+		    $evt_month = $_POST['month'];
+		    $evt_year = $_POST['year'];
+		    $evt_location = trim($_POST['evt_location']);
+		    $evt_city = trim($_POST['evt_city']);
+		    $evt_zip = trim($_POST['evt_zip']);
+		    // Set data to event object
+		    $event = new Event();
+		    $event->setEvt_name($evt_name);
+		    $event->setEvt_datetime($evt_year."-".$evt_month."-".$evt_day);
+		    $event->setEvt_location($evt_location);
+		    $event->setEvt_city($evt_city);
+		    $event->setEvt_zip($evt_zip);
+		    // Give event object to database adapter
+		    MysqlAdapter::getInstance()->saveEvent($event);
+		    break;   
+		case "editEvent":
+		    
 		    break;
 	    }
 	    // create or delete a number from event
@@ -69,13 +92,7 @@ class EventController extends Controller {
     }
 
     protected function init() {
-	$view = new EventAddUserView();
-	$userList = MysqlAdapter::getInstance()->getUserList();
-	$eventmemberList = MysqlAdapter::getInstance()->getEventmemberList($this->resourceId);
-	$event = MysqlAdapter::getInstance()->getEvent($this->resourceId);
-	$view->assign('user', $userList);
-	$view->assign('eventmember', $eventmemberList);
-	$view->assign('event', $event);
+	$view = new EventInitView();
 	$view->display();
     }
 
