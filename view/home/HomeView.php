@@ -119,11 +119,11 @@ HTML;
 
 	foreach ($this->vars['cardList'] as $object) {
 	    echo '<tr>';
-	    echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$object->getCar_serialnumber()}</a></td>";
-	    echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$object->getCar_row1_nr1()}, {$object->getCar_row1_nr2()}, {$object->getCar_row1_nr3()}, {$object->getCar_row1_nr4()}, {$object->getCar_row1_nr5()}</a></td>";
-	    echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$object->getCar_row2_nr1()}, {$object->getCar_row2_nr2()}, {$object->getCar_row2_nr3()}, {$object->getCar_row2_nr4()}, {$object->getCar_row2_nr5()}</a></td>";
-	    echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$object->getCar_row3_nr1()}, {$object->getCar_row3_nr2()}, {$object->getCar_row3_nr3()}, {$object->getCar_row3_nr4()}, {$object->getCar_row3_nr5()}</a></td>";
-	    echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr. {$object->getCar_serialnumber()}\">{$this->getDate($object->getCar_cre_dat())}</a></td>";
+	    echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr_{$object->getCar_serialnumber()}\">{$object->getCar_serialnumber()}</a></td>";
+	    echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr_{$object->getCar_serialnumber()}\">{$object->getCar_row1_nr1()}, {$object->getCar_row1_nr2()}, {$object->getCar_row1_nr3()}, {$object->getCar_row1_nr4()}, {$object->getCar_row1_nr5()}</a></td>";
+	    echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr_{$object->getCar_serialnumber()}\">{$object->getCar_row2_nr1()}, {$object->getCar_row2_nr2()}, {$object->getCar_row2_nr3()}, {$object->getCar_row2_nr4()}, {$object->getCar_row2_nr5()}</a></td>";
+	    echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr_{$object->getCar_serialnumber()}\">{$object->getCar_row3_nr1()}, {$object->getCar_row3_nr2()}, {$object->getCar_row3_nr3()}, {$object->getCar_row3_nr4()}, {$object->getCar_row3_nr5()}</a></td>";
+	    echo "<td><a href=\"/card/{$object->getCar_id()}-Cardnr_{$object->getCar_serialnumber()}\">{$this->getDate($object->getCar_cre_dat())}</a></td>";
 	    echo '</tr>';
 	}
 

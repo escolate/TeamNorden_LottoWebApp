@@ -19,9 +19,6 @@ final class MysqlAdapter {
      */
     private static $MysqlAdapter;
     private $con;
-    private $limit = 0;
-    private $count = 0;
-    private $order = '';
 
     private function __construct() {
         $this->con = new mysqli(DB_SERVER, DB_USER, DB_PW, DB_DB);
@@ -42,26 +39,12 @@ final class MysqlAdapter {
         if (self::$MysqlAdapter == NULL) {
             self::$MysqlAdapter = new MysqlAdapter();
         }
-        self::$MysqlAdapter->setLimit('');
-        self::$MysqlAdapter->setCount('');
-        self::$MysqlAdapter->setOrder('');
 
         return self::$MysqlAdapter;
     }
 
     public function getCardList($limit = "0,18446744073709551615") {
-        $query = "
-	    SELECT 
-		* 
-	    FROM 
-		card 
-	    WHERE 
-		car_del 
-	    IS NULL ORDER BY 
-		car_cre_dat 
-	    DESC LIMIT 
-		$limit;
-";
+        $query = "SELECT * FROM card WHERE car_del IS NULL ORDER BY car_cre_dat DESC LIMIT $limit;";
         $result = $this->con->query($query);
         if ($result->num_rows) {
             while ($row = $result->fetch_assoc()) {
@@ -101,12 +84,12 @@ final class MysqlAdapter {
      * @return \User|null
      */
     public function getUser_($id) {
+        $user = new User();
         $ide = $this->con->real_escape_string($id);
         $query = "SELECT * FROM user WHERE use_id = '{$ide}'";
         $result = $this->con->query($query);
         if ($result->num_rows) {
             $row = $result->fetch_assoc();
-            $user = new User();
             $user->setUse_id($row['use_id']);
             $user->setUse_lastname($row['use_lastname']);
             $user->setUse_firstname($row['use_firstname']);
@@ -122,9 +105,9 @@ final class MysqlAdapter {
             $user->setUse_mod_dat($row['use_mod_dat']);
             $user->setUse_cre_dat($row['use_cre_dat']);
             $user->setUse_status($row['use_status']);
-            return $user;
+//            return $user;
         }
-        return null;
+        return $user;
     }
 
 // Saves a number in the database
@@ -807,7 +790,17 @@ final class MysqlAdapter {
         if ($result->num_rows) {
             while ($row = mysqli_fetch_assoc($result)) {
                 $car->setCar_id($row['car_id']);
+                $car->setCar_cre_id($row['car_cre_id']);
+                $car->setCar_cre_dat($row['car_cre_dat']);
+                $car->setCar_mod_id($row['car_mod_id']);
+                $car->setCar_mod_dat($row['car_mod_dat']);
                 $car->setCar_serialnumber($row['car_serialnumber']);
+
+                for ($i = 1; $i < 4; $i++) {
+                    for ($j = 1; $j < 6; $j++) {
+                        $car->{'setCar_row' . $i . '_nr' . $j}($row['car_row' . $i . '_nr' . $j]);
+                    }
+                }
             }
         }
         return $car;
@@ -862,39 +855,97 @@ final class MysqlAdapter {
         return $arr;
     }
 
-    public function findWinner($serie) {
+    /**
+     * Find winner of given series-id
+     * @param int $serieid
+     * @return array 
+     */
+    public function findWinner($serieid) {
         $arr = array();
-        $query = "SELECT num_num FROM numbers WHERE ser_id = " . $serie;
+        $numbers = "";
+        $i = 0;
+
+        $query = "SELECT num_num FROM numbers WHERE ser_id = " . $serieid;
         $result = $this->con->query($query);
 
-        if ($result->num_rows) {
-            $part1 = '';
-            $part2 = '';
-            $part3 = '';
-            $i = 0;
-
-            while ($row = mysqli_fetch_assoc($result)) {
+        if ($result->num_rows >= 5) {
+            while ($row = $result->fetch_assoc()) {
                 if ($i++) {
-                    $part1 .= ' AND';
-                    $part2 .= ' AND';
-                    $part3 .= ' AND';
+                    $numbers .= ',';
                 }
-                $part1 .= ' ' . $row['num_num'] . ' IN (car_row1_nr1,car_row1_nr2,car_row1_nr3,car_row1_nr4,car_row1_nr5)';
-                $part2 .= ' ' . $row['num_num'] . ' IN (car_row2_nr1,car_row2_nr2,car_row2_nr3,car_row2_nr4,car_row2_nr5)';
-                $part3 .= ' ' . $row['num_num'] . ' IN (car_row3_nr1,car_row3_nr2,car_row3_nr3,car_row3_nr4,car_row3_nr5)';
+                $numbers .= $row['num_num'];
             }
 
-            $query = 'DROP TABLE temp_winner;';
-            $query .= 'CREATE TEMPORARY TABLE temp_winner (SELECT * FROM card WHERE (' . $part1 . ') OR (' . $part2 . ') OR (' . $part3 . '));';
-
-            if ($this->con->multi_query($query)) {
-                $result = $this->con->query('SELECT b.use_id FROM temp_winner a JOIN eventmemberscard b ON a.car_id = b.car_id');
-                while ($row = $result->fetch_assoc) {
-                    $arr[] = $row['use_id'];
+            $query = "SELECT a.car_id,a.use_id FROM eventmemberscard a LEFT JOIN card b ON a.car_id = b.car_id LEFT JOIN winner c ON a.ser_id = c.ser_id WHERE win_id is null AND            
+            (
+                (
+                    car_row1_nr1 IN ({$numbers}) AND 
+                    car_row1_nr2 IN ({$numbers}) AND
+                    car_row1_nr3 IN ({$numbers}) AND 
+                    car_row1_nr4 IN ({$numbers}) AND
+                    car_row1_nr5 IN ({$numbers})
+                ) OR (
+                    car_row2_nr1 IN ({$numbers}) AND 
+                    car_row2_nr2 IN ({$numbers}) AND
+                    car_row2_nr3 IN ({$numbers}) AND 
+                    car_row2_nr4 IN ({$numbers}) AND 
+                    car_row2_nr5 IN ({$numbers})
+                ) OR (
+                    car_row3_nr1 IN ({$numbers}) AND 
+                    car_row3_nr2 IN ({$numbers}) AND
+                    car_row3_nr3 IN ({$numbers}) AND 
+                    car_row3_nr4 IN ({$numbers}) AND 
+                    car_row3_nr5 IN ({$numbers})
+                )
+            )";
+            $result = $this->con->query($query);
+            
+            //Put winner to arry
+            if ($result->num_rows) {
+                while ($row = $result->fetch_assoc()) {
+                    $arr[] = $row['car_id'];
+                    //Save Winner to Database
+                    $this->con->query("INSERT INTO winner (use_id,ser_id,win_cre_id) VALUES ({$row['use_id']},{$serieid},{$_SESSION['user']['id']})");
                 }
             }
+            $result->free();
         }
+
         return $arr;
+
+//        $arr = array();
+//        $query = "SELECT num_num FROM numbers WHERE ser_id = " . $serie;
+//        $result = $this->con->query($query);
+//
+//        if ($result->num_rows) {
+//            $part1 = '';
+//            $part2 = '';
+//            $part3 = '';
+//            $i = 0;
+//
+//            while ($row = mysqli_fetch_assoc($result)) {
+//                if ($i++) {
+//                    $part1 .= ' AND';
+//                    $part2 .= ' AND';
+//                    $part3 .= ' AND';
+//                }
+//                $part1 .= ' ' . $row['num_num'] . ' IN (car_row1_nr1,car_row1_nr2,car_row1_nr3,car_row1_nr4,car_row1_nr5)';
+//                $part2 .= ' ' . $row['num_num'] . ' IN (car_row2_nr1,car_row2_nr2,car_row2_nr3,car_row2_nr4,car_row2_nr5)';
+//                $part3 .= ' ' . $row['num_num'] . ' IN (car_row3_nr1,car_row3_nr2,car_row3_nr3,car_row3_nr4,car_row3_nr5)';
+//            }
+//
+//            $query = 'DROP TABLE temp_winner;';
+//            $query .= 'CREATE TEMPORARY TABLE temp_winner (SELECT * FROM card WHERE (' . $part1 . ') OR (' . $part2 . ') OR (' . $part3 . '));';
+//            echo $query;
+//
+//            if ($this->con->multi_query($query)) {
+//                $result = $this->con->query('SELECT b.use_id FROM temp_winner a JOIN eventmemberscard b ON a.car_id = b.car_id');
+//                while ($row = $result->fetch_assoc) {
+//                    $arr[] = $row['use_id'];
+//                }
+//            }
+//        }
+//        return $arr;
     }
 
     /**
@@ -978,14 +1029,14 @@ final class MysqlAdapter {
      * @return array
      */
     public function getStatusList() {
-	$arr = array();
-	$result = $this->con->query("SELECT DISTINCT use_status FROM user WHERE use_del is not true AND use_status != ''");
-	if ($result->num_rows) {
-	    while ($row = $result->fetch_assoc()) {
-		$arr[] = $row['use_status'];
-	    }
-	}
-	return $arr;
+        $arr = array();
+        $result = $this->con->query("SELECT DISTINCT use_status FROM user WHERE use_del is not true AND use_status != ''");
+        if ($result->num_rows) {
+            while ($row = $result->fetch_assoc()) {
+                $arr[] = $row['use_status'];
+            }
+        }
+        return $arr;
     }
 
     public function getEventCards($seriesid) {
@@ -1032,18 +1083,6 @@ final class MysqlAdapter {
     public function addUserCard(Eventmembercard $emc) {
         $query = "INSERT INTO eventmemberscard VALUES ({$emc->getUser()->getUse_id()},{$emc->getCard()->getCar_id()},{$emc->getSeries()->getSer_id()})";
         return $this->con->query($query);
-    }
-
-    public function setLimit($limit) {
-        $this->limit = $limit;
-    }
-
-    public function setCount($count) {
-        $this->count = $count;
-    }
-
-    public function setOrder($order) {
-        $this->order = $order;
     }
 
     private function error($query) {

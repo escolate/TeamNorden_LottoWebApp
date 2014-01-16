@@ -201,6 +201,19 @@ public function setCar_del($car_del) {
     $this->car_del = $car_del;
 }
 
+public function getRowList() {
+    $arr = array();
+    $row = 1;
+    $nr = 1;
+    while($row < 4) {
+        $arr[] = $this->{'getCar_row'.$row.'_nr'.$nr++}();
+        if($nr > 5) {
+            $nr = 1;
+            $row++;
+        }
+    }
+    return $arr;
+}
 
 }
 ?>
