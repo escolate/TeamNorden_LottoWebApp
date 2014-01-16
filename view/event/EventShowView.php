@@ -115,9 +115,11 @@ HTML;
 	echo "<h1>Serie $sTitleCounter</h1>";
 
 	echo <<<HTML
-    <div class="button-box">
-	<a href="/event/add/{$this->vars['event']->getEvt_id()}" class="button red">Serie $sTitleCounter abschliessen</a>
-    </div>
+    <form action="" method="POST">
+	<input type="hidden" name="form" value="closeSeries">
+	<input type="hidden" name="eventId" value="{$this->vars['event']->getEvt_id()}">
+	<input type="submit" value="Serie $sTitleCounter abschliessen" class="button red">
+    </form>
     <form action="/event/create" method="POST">
 	<fieldset id="save-number">
 	    <legend>Zahl ziehen!</legend>
@@ -129,8 +131,9 @@ HTML;
 	</fieldset>
     </form>
     <div class="list">
-	<form action="/event/add" method="POST">
+	<form action="/event/create" method="POST">
 	<input type="hidden" name="form" value="number">
+	<input type="hidden" value="{$this->vars['newestSeries']->getSer_id()}" name="seriesId">
 	    <table>
 		<thead>
 		    <tr>
@@ -153,8 +156,8 @@ HTML;
 	    foreach ($this->vars['numberList'] as $object) {
 		echo '<tr>';
 		echo '<td><input type="checkbox" name="numberIds[]" value="' . $object->getNum_id() . '"></td>';
-		echo "<td><a href=\"/number/{}\">Ziehung $drawCounter</a></td>";
-		echo "<td><a href=\"/number/{}\">{$object->getNum_num()}</a></td>";
+		echo "<td>Ziehung $drawCounter</td>";
+		echo "<td>{$object->getNum_num()}</td>";
 		echo '</tr>';
 		$drawCounter--;
 	    }
@@ -175,21 +178,6 @@ HTML;
 	    </select>
 	    <input type="submit" value="Ausführen">
 	</form>
-	<div class="pages">
-	    Seite
-	    <form>
-		<select name="events-action">
-		    <option value="delete">1</option>
-		    <option value="delete">2</option>
-		    <option value="delete">3</option>
-		    <option value="delete">4</option>
-		    <option value="action" selected>5</option>
-		    <option value="delete">6</option>
-		    <option value="delete">7</option>
-		</select>
-	    </form>
-	    von 7
-	</div>
     </div>
 </div>
 

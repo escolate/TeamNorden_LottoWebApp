@@ -10,44 +10,93 @@
  *
  * @author stinkpad
  */
-class SeriesShowView extends View{
-   
+class SeriesShowView extends View {
+    private $seriesCounter;
+    private $drawCounter;
+    
     public function display() {
+	// Counts the series
+	$this->seriesCounter = count($this->vars['seriesList']);
+	// Counts the numbers
+	$this->drawCounter = count($this->vars['numberList']);
+	echo $this->seriesCounter;
+	echo '<div class = "content-box">';
+	$sTitleCounter = $this->seriesCounter;
+	++$sTitleCounter;
+	echo "<h1>Serie $sTitleCounter</h1>";
 
-	echo <<<SERIES
-   <div class="content-box">
-    <h1>Serie</h1>
-    <div class="event-card">
-	<div class="column1">
-	    <p>Serie:</p>
-	    <p>Event:</p>
-	    <p>Serie abgeschlossen am:</p>
-	    <p>Gezogene Zahlen:</p>
-	</div> 
-	<div class="column2">
-	    <p>7</p>
-	    <p>Biergarten und Lotto</p>
-	    <p>21. Januar 2012, 17:47 Uhr</p>
-	</div> 
-	<div>
-	    <div class="ball">1</div> <div class="ball">3</div> <div class="ball">14</div>
-	    <div class="ball">45</div> <div class="ball">65</div> <div class="ball">14</div>
-	    <div class="ball">89</div> <div class="ball">41</div> <div class="ball">14</div>
-	    <div class="ball">44</div> <div class="ball">39</div> <div class="ball">14</div>
-	    <div class="ball">34</div> <div class="ball">42</div> <div class="ball">14</div>
-	    <div class="ball">78</div> <div class="ball">3</div> <div class="ball">14</div>
-	    <div class="ball">2</div> <div class="ball">76</div> <div class="ball">14</div>
-	    <div class="ball">4</div> <div class="ball">5</div> <div class="ball">14</div>
-	    <div class="ball">13</div> <div class="ball">56</div> <div class="ball">14</div>
-	</div>
-    </div>
-    	<form>
-	    <input type="submit" value="Bearbeiten">
+	echo <<<HTML
+	<form action="" method="POST">
+	    <input type="hidden" name="form" value="closeSeries">
+	    <input type="hidden" name="eventId" value="{$this->vars['event']->getEvt_id()}">
+	    <input type="submit" value="Serie $sTitleCounter abschliessen" class="button red">
 	</form>
-</div>
+	
+	<form action="/event/create" method="POST">
+	    <fieldset id="save-number">
+		<legend>Zahl ziehen!</legend>
+		<input type="hidden" name="form" value="saveNumber">
+		<input type="hidden" value="{$this->vars['event']->getEvt_id()}" name="eventId">
+		<input type="hidden" value="{$this->vars['newestSeries']->getSer_id()}" name="seriesId">
+		<input type="text" placeholder="Zahl" autocomplete="off" name="number">
+		<input type="submit" value="Ziehen!">
+	    </fieldset>
+	</form>
+	
+	<div class="list">
+	    <form action="/event/create" method="POST">
+	    <input type="hidden" name="form" value="number">
+	    <input type="hidden" value="{$this->vars['newestSeries']->getSer_id()}" name="seriesId">
+		<table>
+		    <thead>
+			<tr>
+			    <th></th>
+			    <th>Ziehung</th>
+			    <th>Gezogene Zahl</th>
+			</tr>
+		    </thead>
+		    <tfoot>
+			<tr>
+			    <td><input type="checkbox"></td>
+			    <td  id="events">Alle auswählen</td>
+			    <td></td>
+			</tr>
+		    </tfoot>
+		    <tbody>
+HTML;
+	$drawCounter = $this->drawCounter;
+	if ($this->vars['numberList']) {
+	    foreach ($this->vars['numberList'] as $object) {
+		echo '<tr>';
+		echo '<td><input type="checkbox" name="numberIds[]" value="' . $object->getNum_id() . '"></td>';
+		echo "<td>Ziehung $drawCounter</td>";
+		echo "<td>{$object->getNum_num()}</td>";
+		echo '</tr>';
+		$drawCounter--;
+	    }
+	} else {
+	    echo '<tr>';
+	    echo '<td></td>';
+	    echo "<td>leer</td>";
+	    echo "<td>leer</td>";
+	    echo '</tr>';
+	}
+	echo <<<HTML
 
-SERIES;
+			</tbody>
+		    </table>
+		    <select name="events-action">
+			<option value="action">[Aktion]</option>
+			<option value="delete">Löschen</option>
+		    </select>
+		    <input type="submit" value="Ausführen">
+		</form>
+	    </div>
+	</div>
+
+HTML;
     }
+
 }
 
 ?>
