@@ -5,6 +5,7 @@ include_once './view/event/EventShowView.php';
 include_once './view/event/EventAddUserView.php';
 
 class EventController extends Controller {
+
     protected function create() {
 	// add and remove user from event
 	if ($_POST['events-action'] != "action") { // action selected?
@@ -28,17 +29,29 @@ class EventController extends Controller {
 		    header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
 		    break;
 	    }
-	} else {
-	    header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
-	}
-	// create a number from event
-	if( $_POST['form'] == "saveNumber"){
-	    $number = trim($_POST['number']);
-	    if(preg_match("/^\d+$/", $number)){
-		$eventId = $_POST['eventId'];
+	    // create or delete a number from event
+	    if ($_POST['form'] == "saveNumber") {
+		$number = trim($_POST['number']);
+		if (preg_match("/^\d+$/", $number)) {
+		    $eventId = $_POST['eventId'];
+		    $seriesId = $_POST['seriesId'];
+		    MysqlAdapter::getInstance()->saveNumber($number, $seriesId, 4);
+		}
+		header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
+	    } elseif ($_POST['form'] == "number") {
 		$seriesId = $_POST['seriesId'];
-		MysqlAdapter::getInstance()->saveNumber($number, $seriesId, 4);
+		foreach ($_POST['numberIds'] as $numberId) {
+		    MysqlAdapter::getInstance()->deleteNumber($numberId, $seriesId, 5);
+		}
+	    header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
 	    }
+	    //Close Series
+	    if($_POST['form'] == "closeSeries"){
+		$eventId = $_POST['eventId'];
+		MysqlAdapter::getInstance()->setSeries($eventId);
+	    }
+	    header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
+	} else {
 	    header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
 	}
     }
