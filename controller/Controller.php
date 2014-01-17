@@ -36,11 +36,9 @@ abstract class Controller {
 		$matches = array();
 		if (preg_match("@^.*/([0-9]+)@", $_SERVER['REQUEST_URI'], $matches)) {
 		    $this->resourceId = $matches[1];
-		    if (preg_match("@/edit/([0-9]+)@", $_SERVER['REQUEST_URI'])) {
-			$this->init();
-		    } elseif (preg_match("@/add/([0-9]+)$@", $_SERVER['REQUEST_URI'])) {
-			$this->create();
-		    } else {
+		    if (preg_match("@/edit/([0-9]+)$@", $_SERVER['REQUEST_URI']) || preg_match("@/add/([0-9]+)$@", $_SERVER['REQUEST_URI'])) {
+                        $this->init();
+                    } else {
 			$this->show();
 		    }
 		} elseif (preg_match("@/new$@", $_SERVER['REQUEST_URI'])) {

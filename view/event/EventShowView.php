@@ -188,7 +188,7 @@ HTML;
 
 
 HTML;
-	if (!is_null($this->vars['seriesList'])) {
+	if (!is_null($this->vars['seriesList']) AND count($this->vars['seriesList']) != 1) {
 	    echo <<<HTML
 <div class="content-box">
     <h1>Gespielte Serien</h1>
@@ -228,21 +228,6 @@ HTML;
 	    </select>
 	    <input type="submit" value="Ausführen">
 	</form>
-	<div class="pages">
-	    Seite
-	    <form>
-		<select name="events-action">
-		    <option value="delete">1</option>
-		    <option value="delete">2</option>
-		    <option value="delete">3</option>
-		    <option value="delete">4</option>
-		    <option value="action" selected>5</option>
-		    <option value="delete">6</option>
-		    <option value="delete">7</option>
-		</select>
-	    </form>
-	    von 7
-	</div>
 	    </div>
 </div>
 HTML;

@@ -9,13 +9,12 @@ class EventController extends Controller {
 
     protected function create() {
 	if ($_POST['events-action'] != "action") { // action selected?
-	    
 	    switch ($_POST['events-action']) {
 		// Delete event
 		case "deleteEvent":
 		    $eventIds = $_POST['eventIds'];
-		    if(count($eventIds)){
-			foreach ($eventIds as $eventId){
+		    if (count($eventIds)) {
+			foreach ($eventIds as $eventId) {
 			    MysqlAdapter::getInstance()->deleteEvent($eventId);
 			}
 		    }
@@ -78,6 +77,9 @@ class EventController extends Controller {
 	    }
 	    // create or delete a number from event
 	    if ($_POST['form'] == "saveNumber") {
+		if($_POST['seriesId']){
+		    echo "leer";
+		}
 		$number = trim($_POST['number']);
 		if (preg_match("/^\d+$/", $number)) {
 		    $eventId = $_POST['eventId'];
@@ -116,8 +118,19 @@ class EventController extends Controller {
     }
 
     protected function init() {
-	$view = new EventInitView();
-	$view->display();
+	if (preg_match("@/add/([0-9]+)$@", $_SERVER['REQUEST_URI'])) {
+	    $view = new EventAddUserView();
+	    $userList = MysqlAdapter::getInstance()->getUserList();
+	    $eventmemberList = MysqlAdapter::getInstance()->getEventmemberList($this->resourceId);
+	    $event = MysqlAdapter::getInstance()->getEvent($this->resourceId);
+	    $view->assign('user', $userList);
+	    $view->assign('eventmember', $eventmemberList);
+	    $view->assign('event', $event);
+	    $view->display();
+	} else {
+	    $view = new EventInitView();
+	    $view->display();
+	}
     }
 
     protected function show() {
