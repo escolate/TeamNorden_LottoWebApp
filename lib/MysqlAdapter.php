@@ -48,6 +48,10 @@ final class MysqlAdapter {
 
 	return self::$MysqlAdapter;
     }
+    
+    public function getMysqliCon(){
+	return $this->con;
+    }
 
     public function getCardList($limit = "0,18446744073709551615") {
 	$query = "
@@ -558,9 +562,9 @@ final class MysqlAdapter {
      */
     public function getEventList($limit = 0, $upcoming = false) {  // http://dev.mysql.com/doc/refman/5.0/en/select.html --> SELECT * FROM tbl LIMIT 95,18446744073709551615;
 	$eventList = array();
-	$query = "SELECT *,date_format(evt_datetime,'%d.%m.%Y') as date FROM event";
+	$query = "SELECT *,date_format(evt_datetime,'%d.%m.%Y') as date FROM event WHERE evt_del IS NULL";
 	if ($upcoming) {
-	    $query .= " WHERE date(evt_datetime) >= date(now())";
+	    $query .= " AND date(evt_datetime) >= date(now())";
 	}
 	$query .= " ORDER BY evt_datetime DESC";
 
@@ -604,7 +608,7 @@ final class MysqlAdapter {
 	     eve_id = $id
 	    LIMIT
 	     $limit;";
-//<<<<<<< HEAD
+
 	$result = $this->con->query($query);
 	$eventmemberList = array();
 	if ($result->num_rows) {
@@ -617,20 +621,6 @@ final class MysqlAdapter {
 	    return $eventmemberList;
 	}
 	return NULL;
-//=======
-//	$result = $this->con->query($query);
-//	$eventmemberList = array();
-//	if ($result->num_rows) {
-//	    while ($row = $result->fetch_assoc()) {
-//		$eventmember = new Eventmember();
-//		$eventmember->setEve_id($row['eve_id']);
-//		$eventmember->setUse_id($row['use_id']);
-//		$eventmemberList[] = $eventmember;
-//	    }
-//	    return $eventmemberList;
-//	}
-//	return NULL;
-//>>>>>>> zaki2
     }
 
     public function getSeriesList($id, $limit = "0,18446744073709551615") {
@@ -1101,13 +1091,24 @@ final class MysqlAdapter {
 	    exit('Error ' . $this->con->errno . ': ' . $this->con->error . '\n<br>' . $query);
 	}
     }
-    
-    public function saveEvent(Event $event){
-	$query="
+
+    public function saveEvent(Event $event) {
+	$query = "
 	    INSERT INTO event 
 	    (evt_name, evt_location, evt_city, evt_zip, evt_datetime, evt_cre_id, evt_mod_id, evt_cre_dat, evt_mod_dat) 
 	    VALUES 
-	    ('{$event->getEvt_name()}', '{$event->getEvt_location()}', '{$event->getEvt_city()}', '{$event->getEvt_zip()}', '{$event->getEvt_datetime()}', '{$_SESSION['user']['id']}', '{$_SESSION['user']['id']}', NOW(), NOW());";
+	    ('{$this->con->escape_string($event->getEvt_name())}', '{$this->con->escape_string($event->getEvt_location())}', '{$this->con->escape_string($event->getEvt_city())}', '{$this->con->escape_string($event->getEvt_zip())}', '{$event->getEvt_datetime()}', '{$_SESSION['user']['id']}', '{$_SESSION['user']['id']}', NOW(), NOW());";
+	//Save
+	if (!$this->con->query($query)) {
+	    $this->error($query);
+	    return FALSE;
+	}
+	return TRUE;
+    }
+
+    // Delete event
+    public function deleteEvent($evt_id) {
+	$query = "UPDATE event SET evt_del='1' WHERE evt_id='$evt_id';";
 	//Save
 	if (!$this->con->query($query)) {
 	    $this->error($query);

@@ -6,7 +6,7 @@ class EventInitView extends View {
     private $formType = "createEvent";
     public function display() {
 
-	$gebdat = $this->getBirthDateInput();
+	$gebdat = $this->getBirthDateInput(null, true);
 	echo <<<HTML
 		<div class="content-box">
 		    <h1>LALA</h1>

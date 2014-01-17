@@ -62,7 +62,7 @@ class EventShowView extends View {
 <div class="content-box">
     <h1>Spieler</h1>
     <div class="button-box">
-	<a href="add/{$this->vars['event']->getEvt_id()}" class="button yellow">Hinzufügen</a>
+	<a href="/event/add/{$this->vars['event']->getEvt_id()}" class="button yellow">Hinzufügen</a>
     </div>	    
 <div class="list">
 	<form action="/event/add" method="POST">
@@ -86,7 +86,7 @@ HTML;
 	if ($this->vars['eventmemberNameList']) {
 	    foreach ($this->vars['eventmemberNameList'] as $object) {
 		echo '<tr>';
-		echo '<td><a href="/user/'.$object->getUse_id().'">
+		echo '<td><a href="/user/' . $object->getUse_id() . '">
 		    <input type="checkbox" name="userIds[]" value="' . $object->getUse_id() . '">
 		      </td>';
 		echo "<td>{$object->getUse_firstname()} {$object->getUse_lastname()} </a></td>";
@@ -113,7 +113,11 @@ HTML;
 	$sTitleCounter = $this->seriesCounter;
 	++$sTitleCounter;
 	echo "<h1>Serie $sTitleCounter</h1>";
-
+	if ($this->vars['newestSeries']) {
+	    $newestSerId = $this->vars['newestSeries']->getSer_id();
+	}else{
+	    $newestSerId = "";
+	}
 	echo <<<HTML
     <form action="" method="POST">
 	<input type="hidden" name="form" value="closeSeries">
@@ -125,7 +129,7 @@ HTML;
 	    <legend>Zahl ziehen!</legend>
 	    <input type="hidden" name="form" value="saveNumber">
 	    <input type="hidden" value="{$this->vars['event']->getEvt_id()}" name="eventId">
-	    <input type="hidden" value="{$this->vars['newestSeries']->getSer_id()}" name="seriesId">
+	    <input type="hidden" value="{$newestSerId}" name="seriesId">
 	    <input type="text" placeholder="Zahl" autocomplete="off" name="number">
 	    <input type="submit" value="Ziehen!">
 	</fieldset>
@@ -133,7 +137,7 @@ HTML;
     <div class="list">
 	<form action="/event/create" method="POST">
 	<input type="hidden" name="form" value="number">
-	<input type="hidden" value="{$this->vars['newestSeries']->getSer_id()}" name="seriesId">
+	<input type="hidden" value="{$newestSerId}" name="seriesId">
 	    <table>
 		<thead>
 		    <tr>
