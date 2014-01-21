@@ -100,8 +100,8 @@ OUT;
 <div class="content-box">
     <h1>Lottokarten</h1>
     <div class="button-box">
-	<a href="card" class="button blue">Alle anzeigen</a>
-	<a href="new" class="button green">Erstellen</a>
+	<a href="/card" class="button blue">Alle anzeigen</a>
+	<a href="/card/new" class="button green">Erstellen</a>
     </div>
     <div class="list">
 	<table>
