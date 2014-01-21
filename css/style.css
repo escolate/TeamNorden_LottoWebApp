@@ -381,3 +381,38 @@ form input[type="submit"]:hover{
 #error_404_msg {
     font-size: 20pt;
 }
+
+div.card {
+    background-color: rgb(250,200,211);
+    border: 1px solid lightgray;
+    padding: 4px;
+    margin: 5px 0;
+}
+
+div.card div {
+    border: 1px solid #222222;
+    padding: 1px;
+}
+
+div.card table {
+    text-align: center;
+}
+
+div.card table td {
+    border: 1px solid #222222;
+    width: 25px;
+    height: 25px;
+    font-size: 12pt;
+}
+
+div.card table td input {
+    width: 30px;
+    height: 30px;
+    border: 0;
+    margin: 2px;
+    text-align: center;
+}
+
+#csnf {
+    width: 30px;
+}
