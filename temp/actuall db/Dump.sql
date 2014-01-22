@@ -77,12 +77,12 @@ CREATE TABLE `event` (
   `evt_datetime` datetime DEFAULT NULL,
   `evt_cre_dat` datetime DEFAULT NULL,
   `evt_cre_id` smallint(6) DEFAULT NULL,
-  `evt_mod_date` datetime DEFAULT NULL,
+  `evt_mod_dat` datetime DEFAULT NULL,
   `evt_mod_id` smallint(6) DEFAULT NULL,
   `evt_del` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`evt_id`),
   UNIQUE KEY `evt_id_UNIQUE` (`evt_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,6 @@ CREATE TABLE `event` (
 
 LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
-INSERT INTO `event` VALUES (1,'Träume erfüllen mit Lotto','Bellagio','Las Vegas','89044','2014-04-09 20:01:00','2014-04-09 20:00:00',1,'2014-04-09 20:00:00',2,NULL),(2,'Mega Lotto','Bellagio','Las Vegas','89044','2014-06-09 20:00:00','2014-04-09 20:00:00',2,'2014-04-09 20:00:00',2,NULL),(3,'Fasnacht Lotto','Bellagio','Las Vegas','89044','2005-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',NULL,NULL),(4,'Swisslotto','Bellagio','Las Vegas','89044','2004-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',NULL,NULL),(5,'Weihnachts Special 2013','Bellagio','Las Vegas','89044','2001-04-09 20:00:00','2014-04-09 20:00:00',1,'2014-04-09 20:00:00',NULL,NULL),(6,'Deine Mutti spielt Lotto?','Bellagio','Las Vegas','89044','2007-04-09 20:00:00','2014-04-09 20:00:00',1,'2014-04-09 20:00:00',NULL,NULL),(7,'Million Dollar $$$ Dreams','Bellagio','Las Vegas','89044','2011-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',3,NULL),(8,'Wow!','Bellagio','Las Vegas','89044','2009-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',NULL,NULL),(9,'BAMM BAMM','Bellagio','Las Vegas','89044','2012-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',NULL,NULL),(10,'James Bond - Casino Royal','Bellagio','Las Vegas','89044','2013-04-09 20:00:00','2014-04-09 20:00:00',3,'2014-04-09 20:00:00',NULL,NULL),(11,'SheBang!','Bellagio','Las Vegas','89044','1999-04-09 20:00:00','2014-04-09 20:00:00',2,'2014-04-09 20:00:00',NULL,NULL);
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +114,6 @@ CREATE TABLE `eventmembers` (
 
 LOCK TABLES `eventmembers` WRITE;
 /*!40000 ALTER TABLE `eventmembers` DISABLE KEYS */;
-INSERT INTO `eventmembers` VALUES (1,2),(1,10),(2,3),(2,10);
 /*!40000 ALTER TABLE `eventmembers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,7 +160,7 @@ CREATE TABLE `log` (
   `log_ip` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`log_id`),
   UNIQUE KEY `log_id_UNIQUE` (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -171,7 +169,7 @@ CREATE TABLE `log` (
 
 LOCK TABLES `log` WRITE;
 /*!40000 ALTER TABLE `log` DISABLE KEYS */;
-INSERT INTO `log` VALUES (1,1,NULL,'2013-12-07 12:20:08',NULL,NULL),(2,2,NULL,'2013-12-07 12:20:37',NULL,NULL),(3,3,NULL,'2013-12-07 12:20:45',NULL,NULL),(4,0,'Das Passwort für tobias.scheurer@libosan.ch würde geändert.','2013-12-19 10:12:17',5,'127.0.0.1'),(6,0,'Das Passwort für tobias.scheurer@libosan.ch würde geändert.','2013-12-19 10:14:48',5,'127.0.0.1'),(7,0,'Das Passwort für tobias.scheurer@libosan.ch würde geändert.','2013-12-19 10:15:38',5,'127.0.0.1'),(8,0,'Das Passwort für tobias.scheurer@libosan.ch würde geändert.','2013-12-19 10:34:39',5,'127.0.0.1'),(9,0,'Das Passwort für tobias.scheurer@libosan.ch würde geändert.','2013-12-19 10:40:23',3,'127.0.0.1'),(10,0,'Das Passwort für tobias.scheurer@libosan.ch würde geändert.','2013-12-19 10:43:57',4,'127.0.0.1'),(11,2,'Das Passwort für tobias.scheurer@libosan.ch würde geändert.','2013-12-19 10:45:10',5,'127.0.0.1'),(12,2,'Das Passwort für info@example.com würde geändert.','2014-01-03 20:07:23',5,'127.0.0.1');
+INSERT INTO `log` VALUES (1,1,NULL,'2013-12-07 12:20:08',NULL,NULL),(2,2,NULL,'2013-12-07 12:20:37',NULL,NULL),(3,3,NULL,'2013-12-07 12:20:45',NULL,NULL),(4,0,'Das Passwort für tobias.scheurer@libosan.ch würde geändert.','2013-12-19 10:12:17',5,'127.0.0.1'),(6,0,'Das Passwort für tobias.scheurer@libosan.ch würde geändert.','2013-12-19 10:14:48',5,'127.0.0.1'),(7,0,'Das Passwort für tobias.scheurer@libosan.ch würde geändert.','2013-12-19 10:15:38',5,'127.0.0.1'),(8,0,'Das Passwort für tobias.scheurer@libosan.ch würde geändert.','2013-12-19 10:34:39',5,'127.0.0.1'),(9,0,'Das Passwort für tobias.scheurer@libosan.ch würde geändert.','2013-12-19 10:40:23',3,'127.0.0.1'),(10,0,'Das Passwort für tobias.scheurer@libosan.ch würde geändert.','2013-12-19 10:43:57',4,'127.0.0.1'),(11,2,'Das Passwort für tobias.scheurer@libosan.ch würde geändert.','2013-12-19 10:45:10',5,'127.0.0.1'),(12,2,'Das Passwort für info@example.com würde geändert.','2014-01-03 20:07:23',5,'127.0.0.1'),(13,3,'Das Passwort für ramona@gmx.ch wurde geändert.','2014-01-17 16:02:43',5,'127.0.0.1');
 /*!40000 ALTER TABLE `log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -221,7 +219,7 @@ CREATE TABLE `numbers` (
   `num_del` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`num_id`),
   UNIQUE KEY `num_id_UNIQUE` (`num_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -230,7 +228,6 @@ CREATE TABLE `numbers` (
 
 LOCK TABLES `numbers` WRITE;
 /*!40000 ALTER TABLE `numbers` DISABLE KEYS */;
-INSERT INTO `numbers` VALUES (1,2,76,NULL,NULL,NULL,NULL,NULL),(2,3,56,NULL,NULL,NULL,NULL,NULL),(3,1,34,NULL,NULL,NULL,NULL,NULL),(4,1,23,NULL,NULL,NULL,NULL,NULL),(5,5,34,NULL,NULL,NULL,5,1),(6,5,23,NULL,NULL,NULL,5,1),(7,5,44,NULL,4,NULL,5,1),(8,5,34,NULL,4,NULL,NULL,NULL),(9,5,4,NULL,4,NULL,NULL,NULL),(10,3,98,NULL,4,NULL,4,1),(11,5,43,NULL,4,NULL,NULL,1),(12,5,44,NULL,4,NULL,NULL,1),(13,5,123124214,NULL,4,NULL,NULL,1),(14,5,12,NULL,4,NULL,NULL,NULL),(15,6,23,NULL,4,NULL,NULL,NULL),(16,6,2,NULL,4,NULL,NULL,NULL),(17,14,2323,NULL,4,NULL,NULL,NULL),(18,15,2323232,NULL,4,NULL,NULL,NULL),(19,15,3,NULL,4,NULL,NULL,NULL),(20,15,2,NULL,4,NULL,NULL,NULL),(21,15,1,NULL,4,NULL,NULL,NULL),(22,17,3432,NULL,4,NULL,5,1);
 /*!40000 ALTER TABLE `numbers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -277,7 +274,7 @@ CREATE TABLE `series` (
   `ser_del` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`ser_id`),
   UNIQUE KEY `ser_id_UNIQUE` (`ser_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -286,7 +283,6 @@ CREATE TABLE `series` (
 
 LOCK TABLES `series` WRITE;
 /*!40000 ALTER TABLE `series` DISABLE KEYS */;
-INSERT INTO `series` VALUES (1,2,NULL,NULL,NULL,NULL,NULL),(2,3,NULL,NULL,NULL,NULL,NULL),(3,1,NULL,NULL,NULL,NULL,NULL),(4,2,NULL,NULL,NULL,NULL,NULL),(5,2,NULL,NULL,NULL,NULL,NULL),(6,2,NULL,NULL,NULL,4,NULL),(7,2,NULL,NULL,NULL,4,NULL),(8,2,NULL,NULL,NULL,4,NULL),(9,2,NULL,NULL,NULL,NULL,NULL),(10,2,NULL,NULL,NULL,NULL,NULL),(11,2,NULL,NULL,NULL,NULL,NULL),(12,2,NULL,NULL,NULL,NULL,NULL),(13,2,NULL,NULL,NULL,NULL,NULL),(14,2,NULL,NULL,NULL,NULL,NULL),(15,2,NULL,NULL,NULL,NULL,NULL),(16,2,NULL,NULL,NULL,NULL,NULL),(17,2,NULL,NULL,NULL,NULL,NULL),(18,2,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `series` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -298,7 +294,7 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `use_id` smallint(6) NOT NULL,
+  `use_id` smallint(6) NOT NULL AUTO_INCREMENT,
   `use_lastname` varchar(45) DEFAULT NULL,
   `use_firstname` varchar(45) DEFAULT NULL,
   `use_lastlogin` datetime DEFAULT NULL,
@@ -321,7 +317,7 @@ CREATE TABLE `user` (
   `use_del` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`use_id`),
   UNIQUE KEY `use_id_UNIQUE` (`use_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -330,7 +326,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Wiesner','Florian','2013-12-17 15:10:04','Gönner','Bachmatt 12','5073','Gipf-Oberfrick','23.08.1977','Switzerland',NULL,'+41798220207','f.wiesner@gmx.ch','*0E4A970F19FD5F25B14F4BA294938BDEAEBA0F12',1,'c76478070371017a10307351841bae5ccba3629f','2013-12-14 18:17:48',1,'2013-12-23 20:25:13',NULL,0),(2,'Scheurer','Tobias','2014-01-11 08:02:19','','Müntzbergstrasse 2','5400','Baden','22.10.1989','','','+41797319150','tobias.scheurer@libosan.ch','*59D00822BD12F3B66926A175C0D76CFC2B5285D0',1,'62d5bf2a502e80d15810ee1ec77e6e0f09235ab9','2013-12-14 18:17:48',NULL,'2014-01-11 07:50:08',2,0),(3,'Agoulif','Zakaria','2014-01-15 11:26:53','Gönner','Rötelstrasse 127','8037','Zurich','31.10.1986','','','+41793125292','zakaria.agoulif@gmail.com','*ECCA593ED93F82D30E2E28929DD8DA458DF03BC0',1,'46eedf3b8ea2abfaf3f101084db9e600d65a674b','2013-12-14 18:17:48',NULL,'2014-01-15 14:45:52',3,0),(9,'Tester','Tobi',NULL,'','Bahnhofstrasse 18','5504','Othmarsingen','1.1.1990','','','079 731 91 50','test@example.com','*BC11988CF18CAE186B1BC4B7D426F212812ECA93',1,'46361433c71110a67e27daf00e89677d3af40803','2013-12-17 17:57:20',2,'2014-01-03 20:31:12',2,0),(10,'One','Some','2014-01-03 21:15:13','','Müntzbergstrasse 2','5400','Baden','4.8.1993','','056 221 64 00','079 731 91 50','info@example.com','*07AC195F34A983244D11F4D23E775F23DC5B0621',0,'5c01e8a4a58b1b0a064346a77d582c817a0ec0a4','2013-12-17 18:54:44',2,'2014-01-03 20:15:36',10,0);
+INSERT INTO `user` VALUES (1,'Wiesner','Florian','2013-12-17 15:10:04','Gönner','Bachmatt 12','5073','Gipf-Oberfrick','23.08.1977','Switzerland',NULL,'+41798220207','f.wiesner@gmx.ch','*0E4A970F19FD5F25B14F4BA294938BDEAEBA0F12',1,'c76478070371017a10307351841bae5ccba3629f','2013-12-14 18:17:48',1,'2013-12-23 20:25:13',NULL,0),(2,'Scheurer','Tobias','2014-01-11 08:02:19','','Müntzbergstrasse 2','5400','Baden','22.10.1989','','','+41797319150','tobias.scheurer@libosan.ch','*59D00822BD12F3B66926A175C0D76CFC2B5285D0',1,'62d5bf2a502e80d15810ee1ec77e6e0f09235ab9','2013-12-14 18:17:48',NULL,'2014-01-11 07:50:08',2,0),(3,'Agoulif','Zakaria','2014-01-22 11:05:10','Gönner','Rötelstrasse 127','8037','Zurich','30.10.1986','','','+41793125292','zakaria.agoulif@gmail.com','*ECCA593ED93F82D30E2E28929DD8DA458DF03BC0',1,'46eedf3b8ea2abfaf3f101084db9e600d65a674b','2013-12-14 18:17:48',NULL,'2014-01-21 13:30:12',3,0),(9,'Tester','Tobi',NULL,'','Bahnhofstrasse 18','5504','Othmarsingen','1.1.1990','','','079 731 91 50','test@example.com','*BC11988CF18CAE186B1BC4B7D426F212812ECA93',1,'46361433c71110a67e27daf00e89677d3af40803','2013-12-17 17:57:20',2,'2014-01-03 20:31:12',2,0),(10,'One','Some','2014-01-03 21:15:13','','Müntzbergstrasse 2','5400','Baden','4.8.1993','','056 221 64 00','079 731 91 50','info@example.com','*07AC195F34A983244D11F4D23E775F23DC5B0621',0,'5c01e8a4a58b1b0a064346a77d582c817a0ec0a4','2013-12-17 18:54:44',2,'2014-01-03 20:15:36',10,0),(11,'meier','ramona',NULL,'1','Du strasse','123','sdfjsjf','8.2.1993','','453425234534','3453425345345','ramona@gmx.ch','*7CEF358C890A46E14ABDFCB46EEAACCF8379A273',1,'74e45c1f7e9c96f7736ba83c9347f3af8a74dd25','2014-01-17 17:02:43',3,'2014-01-22 10:06:36',3,0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -377,4 +373,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-16 12:48:51
+-- Dump completed on 2014-01-22 16:29:23

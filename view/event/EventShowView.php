@@ -213,7 +213,7 @@ HTML;
 	    foreach ($this->vars['seriesList'] as $object) {
 		echo '<tr>';
 		echo "<td><input type=\"checkbox\" name=\"seriesIds[]\" value=\"{$object->getSer_id()}\"></td>";
-		echo "<td>Serie $seriesCounter</td>";
+		echo "<td><input type=\"hidden\" name=\"seriesNames[]\" value=\"$seriesCounter\">Serie $seriesCounter</td>";
 		echo '</tr>';
 		$seriesCounter--;
 	    }

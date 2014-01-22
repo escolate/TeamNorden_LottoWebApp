@@ -103,7 +103,9 @@ class EventController extends Controller {
 	    case "editSeries": // go to SeriesController.php
 		$seriesIds = $_POST['seriesIds'];
 		if (count($seriesIds) == 1) {
-		    header("Location: /series/{$seriesIds[0]}", TRUE, 303);
+		    $eventId = $this->resourceId;
+		    $seriesNames = $_POST['seriesNames'];
+		    header("Location: /series/?seriesId={$seriesIds[0]}&eventId=$eventId&seriesName=$seriesNames[0]", TRUE, 303);
 		}else{
 		    header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
 		}
