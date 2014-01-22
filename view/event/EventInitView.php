@@ -9,11 +9,10 @@ class EventInitView extends View {
 	$gebdat = $this->getBirthDateInput(null, true);
 	echo <<<HTML
 		<div class="content-box">
-		    <h1>LALA</h1>
+		    <h1>Veranstaltung erstellen</h1>
 		    {$this->notification}
 		    <div class="list">
 		    <form id="userdata" action="/event/new" method="POST">
-			<input type="hidden" name="form" value="$this->formType"/>
 			<fieldset>
 			    <legend>Veranstaltung</legend>
 			    <input type="text" id="evt_name" placeholder="Name der Veranstaltung" name="evt_name" value=""/>
@@ -31,7 +30,8 @@ class EventInitView extends View {
 			    <input type="text" id="evt_zip" placeholder="PLZ" name="evt_zip" value=""/>
 			</fieldset>
 			
-			<button type="submit">speichern</button> <button>abbrechen</button>
+			<button name="submit" value="createEvent">Speichern</button> 
+			<button name="submit" value="backToEvents">Abbrechen</button>
 		    </form>
 		</div>
 	    </div>

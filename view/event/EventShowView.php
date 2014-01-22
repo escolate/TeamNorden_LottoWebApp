@@ -65,9 +65,7 @@ class EventShowView extends View {
 	<a href="/event/add/{$this->vars['event']->getEvt_id()}" class="button yellow">Hinzufügen</a>
     </div>	    
 <div class="list">
-	<form action="/event/add" method="POST">
-	<input type="hidden" value="removeUser" name="form">
-	<input type="hidden" value="{$this->vars['event']->getEvt_id()}" name="eventId">
+	<form action="/event/add/{$this->vars['event']->getEvt_id()}" method="POST">
 	    <table>
 		<thead>
 		    <tr>
@@ -97,11 +95,11 @@ HTML;
 	echo <<<HTML
 		</tbody>
 	    </table>
-	    <select name="events-action">
-		<option value="action">[Aktion]</option>
-		<option value="remove">Entfernen</option>
+	    <select name="submit">
+		<option>[Aktion]</option>"
+		<option value="removeUserFromEvent">Entfernen</option>
 	    </select>
-	    <input type="submit" value="Ausführen">
+	    <button> Ausführen </button>
 	</form>
     </div>
 
@@ -111,32 +109,32 @@ HTML;
 <div class="content-box">
 HTML;
 	$sTitleCounter = $this->seriesCounter;
-	++$sTitleCounter;
+	if (!$sTitleCounter) {
+	    $sTitleCounter = 1;
+	}
 	echo "<h1>Serie $sTitleCounter</h1>";
 	if ($this->vars['newestSeries']) {
 	    $newestSerId = $this->vars['newestSeries']->getSer_id();
-	}else{
+	} else {
 	    $newestSerId = "";
 	}
 	echo <<<HTML
-    <form action="" method="POST">
-	<input type="hidden" name="form" value="closeSeries">
-	<input type="hidden" name="eventId" value="{$this->vars['event']->getEvt_id()}">
-	<input type="submit" value="Serie $sTitleCounter abschliessen" class="button red">
+   
+    <form style="text-align: center;" action="/event/{$this->vars['event']->getEvt_id()}" method="POST">
+	<button name="submit" value="closeSeries" class="button red"> Serie $sTitleCounter abschliessen </button>
     </form>
-    <form action="/event/create" method="POST">
+    
+    <form action="/event/{$this->vars['event']->getEvt_id()}" method="POST">
 	<fieldset id="save-number">
 	    <legend>Zahl ziehen!</legend>
-	    <input type="hidden" name="form" value="saveNumber">
-	    <input type="hidden" value="{$this->vars['event']->getEvt_id()}" name="eventId">
 	    <input type="hidden" value="{$newestSerId}" name="seriesId">
 	    <input type="text" placeholder="Zahl" autocomplete="off" name="number">
-	    <input type="submit" value="Ziehen!">
+	    <button name="submit" name="submit" value="saveNumber"> Ziehen! </button>
 	</fieldset>
     </form>
+    
     <div class="list">
-	<form action="/event/create" method="POST">
-	<input type="hidden" name="form" value="number">
+	<form action="/event/{$this->vars['event']->getEvt_id()}" method="POST">
 	<input type="hidden" value="{$newestSerId}" name="seriesId">
 	    <table>
 		<thead>
@@ -176,11 +174,11 @@ HTML;
 
 		</tbody>
 	    </table>
-	    <select name="events-action">
-		<option value="action">[Aktion]</option>
-		<option value="delete">Löschen</option>
+	    <select name="submit">
+		<option>[Aktion]</option>"
+		<option value="deleteNumber">Löschen</option>
 	    </select>
-	    <input type="submit" value="Ausführen">
+	    <button> Ausführen </button>
 	</form>
     </div>
 </div>
@@ -193,7 +191,7 @@ HTML;
 <div class="content-box">
     <h1>Gespielte Serien</h1>
     <div class="list">
-	<form name="events">
+	<form action="/event/{$this->vars['event']->getEvt_id()}" method="POST">
 			    <table>
 		<thead>
 		    <tr>
@@ -210,11 +208,12 @@ HTML;
 		<tbody>
 HTML;
 
-	    $seriesCounter = $this->seriesCounter;
+	    $seriesCounter = $this->seriesCounter - 1;
+	    unset($this->vars['seriesList'][0]);
 	    foreach ($this->vars['seriesList'] as $object) {
 		echo '<tr>';
-		echo '<td><input type="checkbox"></td>';
-		echo "<td><a href=\"/series/{$object->getSer_id()}-Serie $seriesCounter ({$this->vars['event']->getEvt_name()})\">Serie $seriesCounter</a></td>";
+		echo "<td><input type=\"checkbox\" name=\"seriesIds[]\" value=\"{$object->getSer_id()}\"></td>";
+		echo "<td>Serie $seriesCounter</td>";
 		echo '</tr>';
 		$seriesCounter--;
 	    }
@@ -222,11 +221,12 @@ HTML;
 	    echo <<<HTML
 		</tbody>
 	    </table>
-	    <select name="events-action">
-		<option value="action">[Aktion]</option>
-		<option value="delete">Löschen</option>
+	    <select name="submit">
+		<option>[Aktion]</option>"
+		<option value="editSeries">Bearbeiten</option>
+		<option value="deleteSeries">Löschen</option>
 	    </select>
-	    <input type="submit" value="Ausführen">
+	    <button>Ausführen</button>
 	</form>
 	    </div>
 </div>

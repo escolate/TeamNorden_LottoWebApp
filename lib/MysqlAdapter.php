@@ -48,8 +48,8 @@ final class MysqlAdapter {
 
 	return self::$MysqlAdapter;
     }
-    
-    public function getMysqliCon(){
+
+    public function getMysqliCon() {
 	return $this->con;
     }
 
@@ -132,15 +132,15 @@ final class MysqlAdapter {
     }
 
 // Saves a number in the database
-    public function saveNumber($number, $ser_id, $cre_id) {
+    public function saveNumber($number, $ser_id) {
 
 // Duplicate numbers are not allowed but the user must know if he want do that
 	$query = "
 
 	    INSERT INTO 
-		numbers (ser_id, num_num, num_cre_id) 
+		numbers (ser_id, num_num, num_cre_dat, num_cre_id, num_mod_dat, num_mod_id) 
 	    VALUES 
-		('$ser_id', '$number', '$cre_id');
+		('$ser_id', '$number', NOW(), '{$_SESSION['user']['id']}', NOW(), {$_SESSION['user']['id']});
 	";
 
 	//Save
@@ -152,13 +152,14 @@ final class MysqlAdapter {
     }
 
     // Set the delete flag for numbers
-    public function deleteNumber($num_id, $ser_id, $mod_id) {
+    public function deleteNumber($num_id, $ser_id) {
 	$query = "
 	    UPDATE 
 		numbers 
 	    SET 
 		num_del = '1',
-		num_mod_id = '$mod_id'
+		num_mod_id = '{$_SESSION['user']['id']}',
+		num_mod_dat = NOW()
 	    WHERE 
 		num_id = '$num_id'
 	    AND
@@ -172,8 +173,8 @@ final class MysqlAdapter {
     }
 
     // Creates a new series
-    public function setSeries($eve_id) {
-	$query = "INSERT INTO series (eve_id) VALUES ('$eve_id');";
+    public function saveSeries($eve_id) {
+	$query = "INSERT INTO series (eve_id, ser_cre_dat, ser_cre_id, ser_mod_dat, ser_mod_id) VALUES ('$eve_id', NOW(), {$_SESSION['user']['id']}, NOW(), {$_SESSION['user']['id']});";
 	if (!$this->con->query($query)) {
 	    $this->error($query);
 	    return FALSE;
@@ -182,7 +183,7 @@ final class MysqlAdapter {
     }
 
     // Adds a user to an event
-    public function addUser($user_id, $event_id) {
+    public function addEventmember($user_id, $event_id) {
 	$query = "
 	    INSERT INTO 
 		eventmembers
@@ -635,6 +636,8 @@ final class MysqlAdapter {
 		eve_id = e.evt_id
 	    WHERE 
 		series.eve_id = $id
+	    AND
+		series.ser_del IS NULL
 	    ORDER by
 		ser_id
 	    DESC
@@ -824,7 +827,7 @@ final class MysqlAdapter {
 	while ($row = mysqli_fetch_assoc($result)) {
 	    $emc = new Eventmembercard();
 	    $emc->setCard($this->getCard($row['car_id']));
-	    $emc->setSeries($this->getSeries($row['ser_id']));
+	    $emc->saveSeries($this->getSeries($row['ser_id']));
 
 	    $arr[] = $emc;
 	}
@@ -867,6 +870,24 @@ final class MysqlAdapter {
     public function deleteUserCard(Eventmembercard $emc) {
 	$query = "DELETE FROM eventmemberscard WHERE use_id = '{$emc->getUser()->getUse_id()}' AND car_id = '{$emc->getCard()->getCar_id()}' AND ser_id = '{$emc->getSeries()->getSer_id()}'";
 	return $this->con->query($query);
+    }
+
+    public function deleteSeries($ser_id) {
+	$query = "
+	    UPDATE 
+		series 
+	    SET 
+		ser_del = '1',
+		ser_mod_id = '{$_SESSION['user']['id']}',
+		ser_mod_dat = NOW()
+	    WHERE 
+		ser_id = '$ser_id';
+	";
+	if (!$this->con->query($query)) {
+	    $this->error($query);
+	    return FALSE;
+	}
+	return TRUE;
     }
 
     /**
@@ -1038,7 +1059,7 @@ final class MysqlAdapter {
 	    $series = $this->getSeries($seriesid);
 	    while ($row = $result->fetch_assoc()) {
 		$emc = new Eventmembercard();
-		$emc->setSeries($series);
+		$emc->saveSeries($series);
 		$emc->setCard($this->getCard($row['car_id']));
 		if (!empty($row['use_id'])) {
 		    $emc->setUser($this->getUser_($row['use_id']));

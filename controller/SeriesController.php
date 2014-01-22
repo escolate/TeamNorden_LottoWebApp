@@ -29,6 +29,8 @@ class SeriesController extends Controller {
 	$view = new SeriesShowView();
 	// Event
 	$event = MysqlAdapter::getInstance()->getEvent($this->resourceId);
+	phpinfo();
+	exit();
 	$view->assign('event', $event);
 	// Series list
 	$seriesList = MysqlAdapter::getInstance()->getSeriesList($this->resourceId);

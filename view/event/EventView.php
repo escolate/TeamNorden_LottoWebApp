@@ -47,11 +47,11 @@ HTML;
 	echo <<<HTML
 		</tbody>
 	    </table>
-	    <select name="events-action">
-		<option value="action">[Aktion]</option>
+	    <select name="submit">
+		<option>[Aktion]</option>"
 		<option value="deleteEvent">Löschen</option>
 	    </select>
-	    <input type="submit" value="Ausführen">
+	    <button>Ausführen</button>
 	</form>
     </div>
 </div>

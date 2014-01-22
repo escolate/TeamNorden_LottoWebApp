@@ -8,100 +8,109 @@ include_once './view/event/EventInitView.php';
 class EventController extends Controller {
 
     protected function create() {
-	if ($_POST['events-action'] != "action") { // action selected?
-	    switch ($_POST['events-action']) {
-		// Delete event
-		case "deleteEvent":
-		    $eventIds = $_POST['eventIds'];
-		    if (count($eventIds)) {
-			foreach ($eventIds as $eventId) {
-			    MysqlAdapter::getInstance()->deleteEvent($eventId);
-			}
+	$submit = $_POST['submit'];
+	switch ($submit) {
+	    case "backToEvent": // back to event
+		header("Location: /event/$this->resourceId", TRUE, 303);
+		break;
+	    case "backToEvents": // back to all eventS!!!
+		header("Location: /event/", TRUE, 303);
+		break;
+	    case "createEvent": // create event
+		$evt_name = trim($_POST['evt_name']);
+		$evt_day = $_POST['day'];
+		$evt_month = $_POST['month'];
+		$evt_year = $_POST['year'];
+		$evt_location = trim($_POST['evt_location']);
+		$evt_city = trim($_POST['evt_city']);
+		$evt_zip = trim($_POST['evt_zip']);
+		// Set data to event object
+		$event = new Event();
+		$event->setEvt_name($evt_name);
+		$event->setEvt_datetime($evt_year . "-" . $evt_month . "-" . $evt_day);
+		$event->setEvt_location($evt_location);
+		$event->setEvt_city($evt_city);
+		$event->setEvt_zip($evt_zip);
+		// Give event object to database adapter
+		MysqlAdapter::getInstance()->saveEvent($event);
+		header("Location: /event/", TRUE, 303);
+		break;
+	    case "deleteEvent": // delete event
+		$eventIds = $_POST['eventIds'];
+		if (count($eventIds)) {
+		    foreach ($eventIds as $eventId) {
+			MysqlAdapter::getInstance()->deleteEvent($eventId);
 		    }
-		    header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
-		    break;
-	    }
-
-	    switch ($_POST['form']) {
-		// Add user
-		case "addUser":
-		    $userIds = $_POST['userIds'];
-		    $eventId = $_POST['eventId'];
-		    if (count($userIds)) {
-			foreach ($userIds as $userId) {
-			    MysqlAdapter::getInstance()->addUser($userId, $eventId);
-			}
-		    }
-		    header("Location: /event/$eventId", TRUE, 303);
-		    break;
-		// Remove user
-		case "removeUser":
-		    $userIds = $_POST['userIds'];
-		    $eventId = $_POST['eventId'];
-		    if (count($userIds)) {
-			foreach ($userIds as $userId) {
-			    MysqlAdapter::getInstance()->removeUser($userId, $eventId);
-			}
-		    }
-		    header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
-		    break;
-		// Create event
-		case "createEvent":
-		    // Get data from post form
-		    $evt_name = trim($_POST['evt_name']);
-		    $evt_day = $_POST['day'];
-		    $evt_month = $_POST['month'];
-		    $evt_year = $_POST['year'];
-		    $evt_location = trim($_POST['evt_location']);
-		    $evt_city = trim($_POST['evt_city']);
-		    $evt_zip = trim($_POST['evt_zip']);
-		    // Set data to event object
-		    $event = new Event();
-		    $event->setEvt_name($evt_name);
-		    $event->setEvt_datetime($evt_year . "-" . $evt_month . "-" . $evt_day);
-		    $event->setEvt_location($evt_location);
-		    $event->setEvt_city($evt_city);
-		    $event->setEvt_zip($evt_zip);
-		    // Give event object to database adapter
-		    MysqlAdapter::getInstance()->saveEvent($event);
-		    break;
-		// Delete event
-		case "deleteEvent":
-		    echo "lalala";
-		    exit();
-		    break;
-		// Edit event
-		case "editEvent":
-
-		    break;
-	    }
-	    // create or delete a number from event
-	    if ($_POST['form'] == "saveNumber") {
-		if($_POST['seriesId']){
-		    echo "leer";
 		}
+		header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
+		break;
+	    case "addUserToEvent": // add user to event
+		$userIds = $_POST['userIds'];
+		if (count($userIds)) {
+		    foreach ($userIds as $userId) {
+			MysqlAdapter::getInstance()->addEventmember($userId, $this->resourceId);
+		    }
+		}
+		header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
+		break;
+	    case "removeUserFromEvent": // remove user from event
+		$userIds = $_POST['userIds'];
+		if (count($userIds)) {
+		    foreach ($userIds as $userId) {
+			MysqlAdapter::getInstance()->removeUser($userId, $this->resourceId);
+		    }
+		}
+		header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
+		break;
+	    case "saveNumber"; // save number for a series
 		$number = trim($_POST['number']);
+		if ($_POST['seriesId'] == "") {
+		    MysqlAdapter::getInstance()->saveSeries($this->resourceId);
+		    $series = MysqlAdapter::getInstance()->getNewestSeries($this->resourceId);
+		    $seriesId = $series->getSer_id();
+		}
 		if (preg_match("/^\d+$/", $number)) {
-		    $eventId = $_POST['eventId'];
-		    $seriesId = $_POST['seriesId'];
-		    MysqlAdapter::getInstance()->saveNumber($number, $seriesId, 4);
+		    if (!isset($seriesId)) {
+			$seriesId = $_POST['seriesId'];
+		    }
+		    MysqlAdapter::getInstance()->saveNumber($number, $seriesId);
 		}
 		header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
-	    } elseif ($_POST['form'] == "number") {
+		break;
+	    case "deleteNumber": // delete number from series
 		$seriesId = $_POST['seriesId'];
-		foreach ($_POST['numberIds'] as $numberId) {
-		    MysqlAdapter::getInstance()->deleteNumber($numberId, $seriesId, 5);
+		$numberIds = $_POST['numberIds'];
+		if (count($numberIds)) {
+		    foreach ($numberIds as $numberId) {
+			MysqlAdapter::getInstance()->deleteNumber($numberId, $seriesId);
+		    }
 		}
 		header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
-	    }
-	    //Close Series
-	    if ($_POST['form'] == "closeSeries") {
-		$eventId = $_POST['eventId'];
-		MysqlAdapter::getInstance()->setSeries($eventId);
-	    }
-	    header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
-	} else {
-	    header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
+		break;
+	    case "closeSeries":
+		MysqlAdapter::getInstance()->saveSeries($this->resourceId);
+		header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
+		break;
+	    case "deleteSeries": // delete series from event
+		$seriesIds = $_POST['seriesIds'];
+		if (count($seriesIds)) {
+		    foreach ($seriesIds as $seriesId) {
+			MysqlAdapter::getInstance()->deleteSeries($seriesId);
+		    }
+		}
+		header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
+		break;
+	    case "editSeries": // go to SeriesController.php
+		$seriesIds = $_POST['seriesIds'];
+		if (count($seriesIds) == 1) {
+		    header("Location: /series/{$seriesIds[0]}", TRUE, 303);
+		}else{
+		    header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
+		}
+		break;
+	    default: // when nothing is clicked
+		header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
+		break;
 	}
     }
 
@@ -134,7 +143,7 @@ class EventController extends Controller {
     }
 
     protected function show() {
-	// Event shown
+	// Event show
 	$view = new EventShowView();
 	$event = MysqlAdapter::getInstance()->getEvent($this->resourceId);
 	$view->assign('event', $event);

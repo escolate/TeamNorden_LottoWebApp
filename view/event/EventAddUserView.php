@@ -7,9 +7,7 @@ class EventAddUserView extends View {
     <div class="content-box">
     <h1>Spieler hinzufügen für Event "{$this->vars['event']->getEvt_name()}"</h1>
     <div class="list">
-	<form action="/event/create" method="POST">
-	<input type="hidden" value="addUser" name="form">
-	<input type="hidden" value="{$this->vars['event']->getEvt_id()}" name="eventId">
+	<form action="/event/create/{$this->vars['event']->getEvt_id()}" method="POST">
 	    <table>
 		<thead>
 		    <tr>
@@ -71,11 +69,12 @@ HTML;
 	echo <<<HTML
               </tbody>
 	    </table>
-	    <select name="events-action">
-		<option value="action">[Aktion]</option>
-		<option value="add">Hinzufügen</option>
+	    <select name="submit">
+		<option>[Aktion]</option>
+		<option value="addUserToEvent">Hinzufügen</option>
 	    </select>
-	    <input type="submit" value="Ausführen">
+	    <button> Ausführen </button>
+	    <button name="submit" value="backToEvent"> Zurück</button>	
 	</form>
     </div>
 </div>   

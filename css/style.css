@@ -381,3 +381,6 @@ form input[type="submit"]:hover{
 #error_404_msg {
     font-size: 20pt;
 }
+button{
+    margin-right: 20px;
+}
