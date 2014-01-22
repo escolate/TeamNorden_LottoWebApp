@@ -1,68 +1,53 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of SeriesView
- *
- * @author stinkpad
- */
 class SeriesShowView extends View {
+
     private $seriesCounter;
     private $drawCounter;
-    
-    public function display() {
-	// Counts the series
-	$this->seriesCounter = count($this->vars['seriesList']);
-	// Counts the numbers
-	$this->drawCounter = count($this->vars['numberList']);
-	echo $this->seriesCounter;
-	echo '<div class = "content-box">';
-	$sTitleCounter = $this->seriesCounter;
-	++$sTitleCounter;
-	echo "<h1>Serie $sTitleCounter</h1>";
 
+    public function display() {
+	echo '<div class = "content-box">';
+
+	$sTitleCounter = $this->seriesCounter;
+	if (!$sTitleCounter) {
+	    $sTitleCounter = 1;
+	}
+	echo "<h1>{$this->vars['event']->getEvt_name()}	    Serie {$this->vars['seriesName']}</h1>";
+	if ($this->vars['newestSeries']) {
+	    $newestSerId = $this->vars['newestSeries'];
+	} else {
+	    $newestSerId = "";
+	}
 	echo <<<HTML
-	<form action="" method="POST">
-	    <input type="hidden" name="form" value="closeSeries">
-	    <input type="hidden" name="eventId" value="{$this->vars['event']->getEvt_id()}">
-	    <input type="submit" value="Serie $sTitleCounter abschliessen" class="button red">
-	</form>
-	
-	<form action="/event/create" method="POST">
-	    <fieldset id="save-number">
-		<legend>Zahl ziehen!</legend>
-		<input type="hidden" name="form" value="saveNumber">
-		<input type="hidden" value="{$this->vars['event']->getEvt_id()}" name="eventId">
-		<input type="hidden" value="{$this->vars['newestSeries']->getSer_id()}" name="seriesId">
-		<input type="text" placeholder="Zahl" autocomplete="off" name="number">
-		<input type="submit" value="Ziehen!">
-	    </fieldset>
-	</form>
-	
-	<div class="list">
-	    <form action="/event/create" method="POST">
-	    <input type="hidden" name="form" value="number">
-	    <input type="hidden" value="{$this->vars['newestSeries']->getSer_id()}" name="seriesId">
-		<table>
-		    <thead>
-			<tr>
-			    <th></th>
-			    <th>Ziehung</th>
-			    <th>Gezogene Zahl</th>
-			</tr>
-		    </thead>
-		    <tfoot>
-			<tr>
-			    <td><input type="checkbox"></td>
-			    <td  id="events">Alle auswählen</td>
-			    <td></td>
-			</tr>
-		    </tfoot>
-		    <tbody>
+    
+    <form action="/event/{$this->vars['event']->getEvt_id()}" method="POST">
+	<fieldset id="save-number">
+	    <legend>Zahl ziehen!</legend>
+	    <input type="hidden" value="{$newestSerId}" name="seriesId">
+	    <input type="text" placeholder="Zahl" autocomplete="off" name="number">
+	    <button name="submit" name="submit" value="saveNumber"> Ziehen! </button>
+	</fieldset>
+    </form>
+    
+    <div class="list">
+	<form action="/event/{$this->vars['event']->getEvt_id()}" method="POST">
+	<input type="hidden" value="{$newestSerId}" name="seriesId">
+	    <table>
+		<thead>
+		    <tr>
+			<th></th>
+			<th>Ziehung</th>
+			<th>Gezogene Zahl</th>
+		    </tr>
+		</thead>
+		<tfoot>
+		    <tr>
+			<td><input type="checkbox"></td>
+			<td  id="events">Alle auswählen</td>
+			<td></td>
+		    </tr>
+		</tfoot>
+		<tbody>
 HTML;
 	$drawCounter = $this->drawCounter;
 	if ($this->vars['numberList']) {
@@ -83,16 +68,17 @@ HTML;
 	}
 	echo <<<HTML
 
-			</tbody>
-		    </table>
-		    <select name="events-action">
-			<option value="action">[Aktion]</option>
-			<option value="delete">Löschen</option>
-		    </select>
-		    <input type="submit" value="Ausführen">
-		</form>
-	    </div>
-	</div>
+		</tbody>
+	    </table>
+	    <select name="submit">
+		<option>[Aktion]</option>"
+		<option value="deleteNumber">Löschen</option>
+	    </select>
+	    <button> Ausführen </button>
+	    <button name="submit" value="backToEvent"> Zurück </button>
+	</form>
+    </div>
+</div>
 
 HTML;
     }

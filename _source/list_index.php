@@ -91,7 +91,7 @@
 		</tbody>
 	    </table>
 	    <select name="events-action">
-		<option value="action">[Aktion]</option>
+		<option>[Aktion]</option>"
 		<option value="delete">Löschen</option>
 	    </select>
 	    <input type="submit" value="Ausführen">

@@ -33,7 +33,7 @@ public function getSeries() {
     return $this->series;
 }
 
-public function setSeries($series) {
+public function saveSeries($series) {
     $this->series = $series;
 }
 

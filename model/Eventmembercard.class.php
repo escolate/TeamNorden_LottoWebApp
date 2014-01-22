@@ -52,7 +52,7 @@ class Eventmembercard {
         return $this->series;
     }
 
-    public function setSeries(Series $series) {
+    public function saveSeries(Series $series) {
         $this->series = $series;
     }
 
