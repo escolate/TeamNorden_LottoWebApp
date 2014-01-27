@@ -55,6 +55,7 @@ abstract class Controller {
 		$this->create();
 		break;
 	    default:
+		$this->index();
 		break;
 	}
     }

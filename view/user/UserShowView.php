@@ -126,41 +126,9 @@ class UserShowView extends View {
 	</table>
     </div>
 </div>
-<div class="content-box">
-    <h1>Spielkarten</h1>
-                <div class="button-box">
-	<a href="/usercard/{$this->user->getUse_id()}" class="button grey">Bearbeiten</a>
-    </div>
-    <div class="event-card">
-	<table class="show-table">
-	    <tbody>
-		<tr>
-                    <th>Datum</th>
-                    <th>Event</th>
-                    <th>Serie</th>
-                    <th>Karte</th>
-		</tr>
-OUT;
-        /* @var $val \Eventmembercard */
-        foreach (MysqlAdapter::getInstance()->getUserCards($this->user->getUse_id()) as $val) {
-            echo "<tr>
-                <td>{$val->getSeries()->getEvent()->getDate()}</td>
-                <td>{$val->getSeries()->getEvent()->getEvt_name()}</td>
-                <td>{$val->getSeries()->getSer_id()}</td>
-                <td>{$val->getCard()->getCar_serialnumber()}</td>
-                </tr>";
-        }
-        echo <<<OUT
-	    </tbody>
-	</table>
-    </div>
-</div>
+
 <div class="content-box">
     <h1>Gewinne</h1>
-                <div class="button-box">
-	<a href="/user/edit/{$this->user->getUse_id()}" class="button grey">Bearbeiten</a>
-        <a href="/user/edit/{$this->user->getUse_id()}" class="button grey">Benachrichtigen</a>
-    </div>
     <div class="event-card">
 	<table class="show-table">
 	    <tbody>
@@ -183,59 +151,60 @@ OUT;
     </div>
 </div>
 OUT;
-    }
-//*****************************************************
-//******* Ausgelagert in view.php //*******
-//*****************************************************
-//
-//    private function getBirthDateInput($bd) {
-//        $d = '';
-//        $m = '';
-//        $y = '';
-//
-//        if (!empty($bd)) {
-//            $arr = explode(".", $bd);
-//            $d = $arr[0];
-//            $m = $arr[1];
-//            $y = $arr[2];
-//        }
-//
-//        $out = "";
-//        $out .= '<select id="day" name="day"><option>Tag</option>';
-//        for ($i = 1; $i <= 31; $i++) {
-//            if ($i == $d) {
-//                $checked = 'selected';
-//            } else {
-//                $checked = '';
-//            }
-//            $out .= '<option ' . $checked . ' value="' . $i . '">' . str_pad($i, 2, '0', STR_PAD_LEFT) . '</option>';
-//        }
-//        $out .= '</select>';
-//
-//        $out .= '<select id="month" name="month"><option>Monat</option>';
-//        for ($i = 1; $i <= 12; $i++) {
-//            if ($i == $m) {
-//                $checked = 'selected';
-//            } else {
-//                $checked = '';
-//            }
-//            $out .= '<option ' . $checked . ' value="' . $i . '">' . str_pad($i, 2, '0', STR_PAD_LEFT) . '</option>';
-//        }
-//        $out .= '</select>';
-//
-//        $out .= '<select id="year" name="year"><option>Jahr</option>';
-//        for ($i = date("Y"); $i >= date("Y") - 100; $i--) {
-//            if ($i == $y) {
-//                $checked = 'selected';
-//            } else {
-//                $checked = '';
-//            }
-//            $out .= '<option ' . $checked . ' value="' . $i . '">' . $i . '</option>';
-//        }
-//        $out .= '</select>';
-//
-//        return $out;
-//    }
+	    
+    echo <<<HTML
+<div class="content-box">
+    <h1>Spielkarten</h1>
+    <div class="button-box">
+	<a href="/usercard/{$this->user->getUse_id()}" class="button yellow">Hinzufügen</a>
+    </div>
+    <div class="list">
+	<form action="/event/create" method="post">
+	    <table>
+		<thead>
+		    <tr>
+		    <th></th>
+		    <th>Veranstaltungsdatum</th>
+		    <th>Name</th>  
+		    <th>Serie</th>
+		    <th>Kartennummer</th>
+		    </tr>
+		</thead>
+		<tfoot>
+		    <tr>
+			<td><input type="checkbox"></td>
+			<td>Alle auswählen</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		    </tr>
+		</tfoot>
+		<tbody>
+HTML;
+
+	foreach (MysqlAdapter::getInstance()->getUserCards($this->user->getUse_id()) as $val) {
+            echo "<tr>
+                <td>{$val->getSeries()->getEvent()->getDate()}</td>
+                <td>{$val->getSeries()->getEvent()->getEvt_name()}</td>
+                <td>{$val->getSeries()->getSer_id()}</td>
+                <td>{$val->getCard()->getCar_serialnumber()}</td>
+                </tr>";
+        }
+
+	echo <<<HTML
+		</tbody>
+	    </table>
+	    <select name="submit">
+		<option>[Aktion]</option>"
+		<option value="deleteEvent">Löschen</option>
+	    </select>
+	    <button>Ausführen</button>
+	</form>
+    </div>
+</div>
+HTML;
+}
+
 
     private function getStatusList() {
         $str = '';

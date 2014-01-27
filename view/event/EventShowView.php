@@ -62,8 +62,8 @@ class EventShowView extends View {
 <div class="content-box">
     <h1>Spieler</h1>
     <div class="button-box">
-	<a href="/event/add/{$this->vars['event']->getEvt_id()}" class="button yellow">Hinzufügen</a>
-    </div>	    
+	<a href="/event/add/{$this->vars['event']->getEvt_id()}" class="button yellow">Spieler hinzufügen</a>
+    </div>
 <div class="list">
 	<form action="/event/add/{$this->vars['event']->getEvt_id()}" method="POST">
 	    <table>
@@ -71,12 +71,14 @@ class EventShowView extends View {
 		    <tr>
 		    <th></th>
 		    <th>Name</th>
+		    <th> Anzahl Spielkarten </th>
 		    </tr>
 		</thead>
 		<tfoot>
 		    <tr>
 			<td><input type="checkbox"></td>
 			<td>Alle auswählen</td>
+			<td></td>
 		    </tr>
 		</tfoot>
 		<tbody>
@@ -84,10 +86,9 @@ HTML;
 	if ($this->vars['eventmemberNameList']) {
 	    foreach ($this->vars['eventmemberNameList'] as $object) {
 		echo '<tr>';
-		echo '<td><a href="/user/' . $object->getUse_id() . '">
-		    <input type="checkbox" name="userIds[]" value="' . $object->getUse_id() . '">
-		      </td>';
-		echo "<td>{$object->getUse_firstname()} {$object->getUse_lastname()} </a></td>";
+		echo '<td><input type="checkbox" name="userIds[]" value="' . $object->getUse_id() . '"></td>';
+		echo "<td><a href=\"/eventmemberscard/?user={$object->getUse_id()}&event={$this->vars['event']->getEvt_id()}\">{$object->getUse_firstname()} {$object->getUse_lastname()} </a></td>";
+		echo "<td> 0 </td>";
 		echo '</tr>';
 	    }
 	}
@@ -97,7 +98,8 @@ HTML;
 	    </table>
 	    <select name="submit">
 		<option>[Aktion]</option>"
-		<option value="removeUserFromEvent">Entfernen</option>
+		<option value="editCards">Spielkarten bearbeiten</option>
+		<option value="removeUserFromEvent">Spieler Entfernen</option>
 	    </select>
 	    <button> Ausführen </button>
 	</form>
@@ -113,11 +115,7 @@ HTML;
 	    $sTitleCounter = 1;
 	}
 	echo "<h1>Serie $sTitleCounter</h1>";
-	if ($this->vars['newestSeries']) {
-	    $newestSerId = $this->vars['newestSeries']->getSer_id();
-	} else {
-	    $newestSerId = "";
-	}
+	$newestSerId = $this->vars['newestSeries']->getSer_id();
 	echo <<<HTML
    
     <form style="text-align: center;" action="/event/{$this->vars['event']->getEvt_id()}" method="POST">

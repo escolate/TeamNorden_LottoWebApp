@@ -10,7 +10,7 @@ class Event {
     private $evt_datetime;
     private $evt_cre_dat;
     private $evt_cre_id;
-    private $evt_mod_date;
+    private $evt_mod_dat;
     private $evt_mod_id;
     private $evt_del;
     private $date;
@@ -93,12 +93,12 @@ class Event {
         $this->evt_cre_id = $evt_cre_id;
     }
 
-    public function getEvt_mod_date() {
-        return $this->evt_mod_date;
+    public function getevt_mod_dat() {
+        return $this->evt_mod_dat;
     }
 
-    public function setEvt_mod_date($evt_mod_date) {
-        $this->evt_mod_date = $evt_mod_date;
+    public function setevt_mod_dat($evt_mod_dat) {
+        $this->evt_mod_dat = $evt_mod_dat;
     }
 
     public function getEvt_mod_id() {

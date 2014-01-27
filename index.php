@@ -63,22 +63,26 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/lib/MysqlAdapter.php';
 		    include_once './controller/CardController.php';
 		    $controller = new CardController();
 		    break;
-                case URI_USER:
+		case URI_USER:
 		    include_once './controller/UserController.php';
 		    $controller = new UserController();
 		    break;
-                case URI_USERCARD:
+		case URI_EVENTMEMBERSCARD:
+		    include_once './controller/EventmemberscardController.php';
+		    $controller = new EventmemberscardController();
+		    break;
+		case URI_USERCARD:
 		    include_once './controller/UserCardController.php';
 		    $controller = new UserCardController();
 		    break;
 		case URI_HOME:
-                case '/':
+		case '/':
 		    include_once './controller/HomeController.php';
 		    $controller = new HomeController();
 		    break;
-                default :
-                    include_once './controller/ErrorController.php';
-                    $controller = new ErrorController();
+		default :
+		    include_once './controller/ErrorController.php';
+		    $controller = new ErrorController();
 	    }
 	    $controller->route();
 	    ?>

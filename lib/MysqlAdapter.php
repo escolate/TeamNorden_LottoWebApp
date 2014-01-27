@@ -534,7 +534,7 @@ final class MysqlAdapter {
 	    $event->setEvt_cre_id($row['evt_cre_id']);
 	    $event->setEvt_datetime($row['evt_datetime']);
 	    $event->setEvt_del($row['evt_del']);
-	    $event->setEvt_mod_date($row['evt_mod_date']);
+	    $event->setevt_mod_dat($row['evt_mod_dat']);
 	    $event->setEvt_zip($row['evt_zip']);
 	    $event->setEvt_mod_id($row['evt_mod_id']);
 	    $event->setDate($row['date']);
@@ -573,7 +573,7 @@ final class MysqlAdapter {
 		$event->setEvt_cre_id($row['evt_cre_id']);
 		$event->setEvt_datetime($row['evt_datetime']);
 		$event->setEvt_del($row['evt_del']);
-		$event->setEvt_mod_date($row['evt_mod_date']);
+		$event->setevt_mod_dat($row['evt_mod_dat']);
 		$event->setEvt_zip($row['evt_zip']);
 		$event->setEvt_mod_id($row['evt_mod_id']);
 		$event->setDate($row['date']);
@@ -685,6 +685,7 @@ final class MysqlAdapter {
 	}
 	return NULL;
     }
+    
 
     public function getNumberList($id, $limit = "0,18446744073709551615") {
 	$query = "
@@ -1087,7 +1088,7 @@ final class MysqlAdapter {
      */
     public function saveLog(Log $log) {
 
-//Save Message
+	//Save Message
 	$query = "INSERT INTO log (use_id, log_action, log_ip, log_level) VALUES ('{$log->getUse_id()}','{$log->getLog_action()}','{$log->getLog_ip()}',{$log->getLog_level()})";
 
 
@@ -1234,7 +1235,7 @@ final class MysqlAdapter {
     public function saveEvent(Event $event) {
 	$query = "
 	    INSERT INTO event 
-	    (evt_name, evt_location, evt_city, evt_zip, evt_datetime, evt_cre_id, evt_mod_id, evt_cre_dat, evt_mod_date) 
+	    (evt_name, evt_location, evt_city, evt_zip, evt_datetime, evt_cre_id, evt_mod_id, evt_cre_dat, evt_mod_dat) 
 	    VALUES 
 	    ('{$this->con->escape_string($event->getEvt_name())}', '{$this->con->escape_string($event->getEvt_location())}', '{$this->con->escape_string($event->getEvt_city())}', '{$this->con->escape_string($event->getEvt_zip())}', '{$event->getEvt_datetime()}', '{$_SESSION['user']['id']}', '{$_SESSION['user']['id']}', NOW(), NOW());";
 	//Save
@@ -1242,7 +1243,8 @@ final class MysqlAdapter {
 	    $this->error($query);
 	    return FALSE;
 	}
-	return TRUE;
+	$eventId = mysqli_insert_id($this->con);
+	return $eventId;
     }
 
     // Delete event

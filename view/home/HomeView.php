@@ -66,7 +66,7 @@ HTML;
 </div>
 
 <div class="content-box">
-    <h1>Neuste Spieler</h1>
+    <h1>Spieler</h1>
     <div class="button-box">
 	<a href="/user" class="button blue">Alle anzeigen</a>
 	<a href="/user/new" class="button green">Erstellen</a>

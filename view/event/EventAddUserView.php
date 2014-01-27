@@ -5,7 +5,17 @@ class EventAddUserView extends View {
     public function display() {
 	echo <<<HTML
     <div class="content-box">
-    <h1>Spieler hinzufügen für Event "{$this->vars['event']->getEvt_name()}"</h1>
+    <h1>Spieler hinzufügen</h1>
+    <div class="event-card">
+    <table class="show-table">
+	    <tbody>
+		<tr>
+		<td>Event:</td>
+		<td>{$this->vars['event']->getEvt_name()}</td>
+		</tr>
+	    </tbody>
+	</table>
+    </div>
     <div class="list">
 	<form action="/event/create/{$this->vars['event']->getEvt_id()}" method="POST">
 	    <table>

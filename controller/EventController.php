@@ -32,7 +32,10 @@ class EventController extends Controller {
 		$event->setEvt_city($evt_city);
 		$event->setEvt_zip($evt_zip);
 		// Give event object to database adapter
-		MysqlAdapter::getInstance()->saveEvent($event);
+		$eventId = MysqlAdapter::getInstance()->saveEvent($event);
+		// Also create the first series
+		MysqlAdapter::getInstance()->saveSeries($eventId);
+		// Jump to the event site
 		header("Location: /event/", TRUE, 303);
 		break;
 	    case "deleteEvent": // delete event
@@ -64,16 +67,15 @@ class EventController extends Controller {
 		break;
 	    case "saveNumber"; // save number for a series
 		$number = trim($_POST['number']);
-		if ($_POST['seriesId'] == "") {
-		    MysqlAdapter::getInstance()->saveSeries($this->resourceId);
-		    $series = MysqlAdapter::getInstance()->getNewestSeries($this->resourceId);
-		    $seriesId = $series->getSer_id();
-		}
+//		if ($_POST['seriesId'] == "") {
+//		    MysqlAdapter::getInstance()->saveSeries($this->resourceId);
+//		    $series = MysqlAdapter::getInstance()->getNewestSeries($this->resourceId);
+//		    $seriesId = $series->getSer_id();
+//		}
 		if (preg_match("/^\d+$/", $number)) {
-		    if (!isset($seriesId)) {
-			$seriesId = $_POST['seriesId'];
-		    }
+		    $seriesId = $_POST['seriesId'];
 		    MysqlAdapter::getInstance()->saveNumber($number, $seriesId);
+		    $winnerList = MysqlAdapter::getInstance()->findWinner($seriesId);
 		}
 		header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
 		break;
@@ -87,7 +89,7 @@ class EventController extends Controller {
 		}
 		header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
 		break;
-	    case "closeSeries":
+	    case "closeSeries": // close series
 		MysqlAdapter::getInstance()->saveSeries($this->resourceId);
 		header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
 		break;
@@ -106,7 +108,7 @@ class EventController extends Controller {
 		    $eventId = $this->resourceId;
 		    $seriesNames = $_POST['seriesNames'];
 		    header("Location: /series/?seriesId={$seriesIds[0]}&eventId=$eventId&seriesName=$seriesNames[0]", TRUE, 303);
-		}else{
+		} else {
 		    header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
 		}
 		break;
