@@ -1255,6 +1255,13 @@ final class MysqlAdapter {
 	}
 	return TRUE;
     }
+    
+    /*
+     * Set current eventusercards to new Series
+     */
+    public function recycleCards($seriesid) {
+        
+    }
 
 }
 
