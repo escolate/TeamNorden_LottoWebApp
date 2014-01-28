@@ -18,6 +18,11 @@ final class MysqlAdapter {
      * @var MysqlAdapter
      */
     private static $MysqlAdapter;
+    
+    /**
+     *
+     * @var \mysqli
+     */
     private $con;
 
     private function __construct() {
@@ -167,7 +172,7 @@ final class MysqlAdapter {
 	    $this->error($query);
 	    return FALSE;
 	}
-	return TRUE;
+        return mysqli_insert_id($this->con);
     }
 
     // Adds a user to an event
@@ -991,7 +996,7 @@ final class MysqlAdapter {
     /**
      * Find winner of given series-id
      * @param int $serieid
-     * @return array 
+     * @return array\Eventmembercard
      */
     public function findWinner($serieid) {
         $arr = array();
@@ -1009,7 +1014,7 @@ final class MysqlAdapter {
                 $numbers .= $row['num_num'];
             }
 
-            $query = "SELECT a.car_id,a.use_id FROM eventmemberscard a LEFT JOIN card b ON a.car_id = b.car_id LEFT JOIN winner c ON a.ser_id = c.ser_id WHERE win_id is null AND            
+            $query = "SELECT DISTINCT a.car_id,a.use_id FROM eventmemberscard a LEFT JOIN card b ON a.car_id = b.car_id LEFT JOIN winner c ON a.ser_id = c.ser_id WHERE win_id is null AND            
             (
                 (
                     car_row1_nr1 IN ({$numbers}) AND 
@@ -1038,7 +1043,7 @@ final class MysqlAdapter {
                 while ($row = $result->fetch_assoc()) {
                     $arr[] = $row['car_id'];
                     //Save Winner to Database
-                    $this->con->query("INSERT INTO winner (use_id,ser_id,win_cre_id) VALUES ({$row['use_id']},{$serieid},{$_SESSION['user']['id']})");
+//                    $this->con->query("INSERT INTO winner (use_id,ser_id,win_cre_id) VALUES ({$row['use_id']},{$serieid},{$_SESSION['user']['id']})");
                 }
             }
             $result->free();
@@ -1258,11 +1263,62 @@ final class MysqlAdapter {
 	return TRUE;
     }
     
-    /*
+    /**
      * Set current eventusercards to new Series
+     * @param type $seriesid NEUE SerienID
+     * @return boolean
      */
     public function recycleCards($seriesid) {
+        //Letzte gespielte Serie
+        $query = "SELECT ser_id FROM series WHERE eve_id = (SELECT eve_id FROM series WHERE ser_id = {$seriesid}) AND ser_id != {$seriesid} ORDER BY ser_id DESC LIMIT 1";
+        $result = $this->con->query($query);
         
+        /* @var $result \mysqli_result */
+        if($result !== false) {
+            $row = $result->fetch_assoc();
+            //Letzte Serie duplizieren
+            $query = "INSERT INTO eventmemberscard (SELECT use_id,car_id,{$seriesid} FROM eventmemberscard WHERE ser_id = {$row['ser_id']})";
+            $result->free();
+            return $this->con->query($query);
+        }
+        return false;
+    }
+    
+    /**
+     * 
+     * @param type $seriesid
+     * @return \Eventmembercard
+     */
+    public function getPlayingUsers($seriesid) {
+        $arr = array();
+        $query = "SELECT * FROM eventmemberscard WHERE ser_id = {$seriesid}";
+        $result = $this->con->query($query);
+        if($result !== false) {
+            while($row = $result->fetch_assoc()) {
+                $emc = new Eventmembercard();
+                $emc->setCard($this->getCard($row['car_id']));
+                $emc->setUser($this->getUser_($row['use_id']));
+                $arr[] = $emc;
+            }
+        }
+        return $arr;
+    }
+    
+    /**
+     * 
+     * @return \Eventmembercard|boolean
+     */
+    public function getEventMemberCard($car_id,$ser_id) {
+        $emc = new Eventmembercard();
+        $query = "SELECT * FROM lotto.eventmemberscard WHERE ser_id = {$ser_id} AND car_id = {$car_id}";
+        $result = $this->con->query($query);
+        if($result !== false) {
+            $row = $result->fetch_assoc();
+            $emc->setCard($this->getCard($row['car_id']));
+            $emc->setUser($this->getUser_($row['use_id']));
+            return $emc;
+        }
+        return false;
     }
 
 }

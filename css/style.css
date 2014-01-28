@@ -421,3 +421,20 @@ div.card table td input {
 button{
     margin-right: 20px;
 }
+
+div.win {
+    padding: 5px;
+    background-color: #ffc04d;
+    border: 1px solid orange;
+    margin: 0 25px;
+    margin-top: 10px;
+}
+
+div.win div {
+    display: table-cell;
+    width: 100%;
+}
+
+div.win div:first-child {
+    text-align: left;
+}
