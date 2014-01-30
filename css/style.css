@@ -239,7 +239,7 @@ form input[type="submit"]:hover{
     margin: 5px;
 }
 .lotto-row span{
-    margin-right: 25px;
+    margin-right: 20px;
     font-size: 19px;
 }
 .lotto-row span:first-child, label{
@@ -275,6 +275,7 @@ form input[type="submit"]:hover{
     padding: 3px;
 }
 .winning{
+    display: inline-block;
     background: #ffea00;
     color: black;
 }
@@ -430,6 +431,16 @@ div.win {
     margin-top: 10px;
 }
 
+div.win form input[type=submit]{
+    margin: 0;
+    color: #C09853;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    display: inline-block;
+    min-width: 110px;
+    padding: 2px;
+    text-decoration: none;
+}
+
 div.win div {
     display: table-cell;
     width: 100%;
@@ -437,4 +448,16 @@ div.win div {
 
 div.win div:first-child {
     text-align: left;
+}
+
+.lotto-row .num {
+    display: inline-block;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+}
+
+.lotto-row .winning {
+    border-radius: 15px;
+    /*border: 1px solid red;*/
 }

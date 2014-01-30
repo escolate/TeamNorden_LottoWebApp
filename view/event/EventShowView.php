@@ -22,8 +22,14 @@ class EventShowView extends View {
         if (isset($this->vars['winner'])) {
             foreach ($this->vars['winner'] as $emc) {
                 echo '<div class="win">
+                        <form method="post" action="/winner">
+                            <input type="hidden" name="action" value="add">
+                            <input type="hidden" name="ser_id" value="'.$emc->getSeries()->getSer_id().'">
+                            <input type="hidden" name="car_id" value="'.$emc->getCard()->getCar_id().'">
+                            <input type="hidden" name="use_id" value="'.$emc->getUser()->getUse_id().'">
                         <div>Gewonnen: <b>'.$emc->getUser()->getUse_firstname().' '.$emc->getUser()->getUse_lastname().'</b>, Karte: <b>'.$emc->getCard()->getCar_serialnumber().'</b></div>
-                        <div><a class="button yellow" href="">überprüfen</a></div>
+                        <div><input type="submit" value="überprüfen"></div>
+                        </form>
                     </div>';
             }
         }
