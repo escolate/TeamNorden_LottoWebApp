@@ -34,7 +34,7 @@ class Eventmembercard {
 
     /**
      * 
-     * @return \Card
+     * @return \Cards
      */
     public function getCard() {
         return $this->card;

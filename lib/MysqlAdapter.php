@@ -888,7 +888,7 @@ final class MysqlAdapter {
     }
 
     public function getCard($id) {
-        throw new Exception();
+//        throw new Exception();
         $car = new Card();
         $query = "SELECT * FROM card WHERE car_id =  " . $id;
         $result = $this->con->query($query);
@@ -1155,63 +1155,8 @@ final class MysqlAdapter {
 		$numbers .= $row['num_num'];
 	    }
 
-//	    $query = "SELECT DISTINCT a.car_id,a.use_id FROM eventmemberscard a LEFT JOIN card b ON a.car_id = b.car_id LEFT JOIN winner c ON a.ser_id = c.ser_id WHERE win_id is null AND            
-//=======
-//        $arr = array();
-//        $numbers = "";
-//        $i = 0;
-//
-//        $query = "SELECT num_num FROM numbers WHERE ser_id = " . $serieid;
-//        $result = $this->con->query($query);
-//
-//        if ($result->num_rows >= 5) {
-//            while ($row = $result->fetch_assoc()) {
-//                if ($i++) {
-//                    $numbers .= ',';
-//                }
-//                $numbers .= $row['num_num'];
-//            }
-//
-//            $query = "SELECT DISTINCT a.car_id,a.use_id FROM eventmemberscard a LEFT JOIN card b ON a.car_id = b.car_id LEFT JOIN winner c ON a.ser_id = c.ser_id AND a.car_id = c.car_id WHERE win_id is null AND a.ser_id = {$serieid} AND          
-//>>>>>>> tobi
-//            (
-//                (
-//                    car_row1_nr1 IN ({$numbers}) AND 
-//                    car_row1_nr2 IN ({$numbers}) AND
-//                    car_row1_nr3 IN ({$numbers}) AND 
-//                    car_row1_nr4 IN ({$numbers}) AND
-//                    car_row1_nr5 IN ({$numbers})
-//                ) OR (
-//                    car_row2_nr1 IN ({$numbers}) AND 
-//                    car_row2_nr2 IN ({$numbers}) AND
-//                    car_row2_nr3 IN ({$numbers}) AND 
-//                    car_row2_nr4 IN ({$numbers}) AND 
-//                    car_row2_nr5 IN ({$numbers})
-//                ) OR (
-//                    car_row3_nr1 IN ({$numbers}) AND 
-//                    car_row3_nr2 IN ({$numbers}) AND
-//                    car_row3_nr3 IN ({$numbers}) AND 
-//                    car_row3_nr4 IN ({$numbers}) AND 
-//                    car_row3_nr5 IN ({$numbers})
-//                )
-//            )";
-//<<<<<<< HEAD
-//	    $result = $this->con->query($query);
-//
-//	    //Put winner to arry
-//	    if ($result->num_rows) {
-//		while ($row = $result->fetch_assoc()) {
-//		    $arr[] = $row['car_id'];
-//		    //Save Winner to Database
-////                    $this->con->query("INSERT INTO winner (use_id,ser_id,win_cre_id) VALUES ({$row['use_id']},{$serieid},{$_SESSION['user']['id']})");
-//		}
-//	    }
-//	    $result->free();
-//	}
-//=======
-
             //NEW
-            $query = "SELECT b.car_id,a.use_id FROM eventmemberscard a JOIN rows b ON a.car_id = b.car_id LEFT JOIN winner c ON a.ser_id = c.ser_id AND b.row_id = c.row_id
+            $query = "SELECT b.car_id,b.row_id,a.use_id FROM eventmemberscard a JOIN rows b ON a.car_id = b.car_id LEFT JOIN winner c ON a.ser_id = c.ser_id AND b.row_id = c.row_id
                     WHERE a.ser_id = {$serieid} AND c.win_id is null AND
                     (
                         row_nr1 IN ({$numbers}) 
@@ -1224,10 +1169,12 @@ final class MysqlAdapter {
 
             //Put winner to arry
             if ($result != false) {
+                $out = array();
                 while ($row = $result->fetch_assoc()) {
-                    $arr[] = $row['car_id'];
+                    $out[] = $row;
                 }
                 $result->free();
+                return $out;
             }
         }
 
@@ -1492,7 +1439,7 @@ final class MysqlAdapter {
         if ($result !== false) {
             while ($row = $result->fetch_assoc()) {
                 $emc = new Eventmembercard();
-                $emc->setCard($this->getCard($row['car_id']));
+                $emc->setCard($this->getCards($row['car_id']));
                 $emc->setUser($this->getUser_($row['use_id']));
                 $arr[] = $emc;
             }
@@ -1539,7 +1486,7 @@ final class MysqlAdapter {
         $result = $this->con->query($query);
         if ($result !== false) {
             $row = $result->fetch_assoc();
-            $emc->setCard($this->getCard($row['car_id']));
+            $emc->setCard($this->getCards($row['car_id']));
             $emc->setUser($this->getUser_($row['use_id']));
             $emc->setSeries($this->getSeries($row['ser_id']));
             return $emc;
@@ -1552,13 +1499,13 @@ final class MysqlAdapter {
         if (isset($id)) {
             //update
             $query = "UPDATE winner SET
-                use_id = {$winner->getUser()->getUse_id()} ,ser_id = {$winner->getSeries()->getSer_id()} ,win_mod_dat = now(), car_id = {$winner->getCard()->getCar_id()}
+                use_id = {$winner->getUser()->getUse_id()} ,ser_id = {$winner->getSeries()->getSer_id()} ,win_mod_dat = now(), row_id = {$winner->getRow_id()}
                 ,win_mod_id = {$_SESSION['user']['id']} ,win_del = '{$winner->getWin_del()}' ,win_prize = '{$this->con->real_escape_string($winner->getWin_prize())}' ,win_notificated = '{$winner->getWin_prize()}'
                 WHERE win_id = {$winner->getWin_id()}";
         } else {
             //insert
-            $query = "INSERT INTO winner (use_id,ser_id,win_cre_dat,win_cre_id,win_prize,car_id) 
-                VALUES ({$winner->getUser()->getUse_id()},{$winner->getSeries()->getSer_id()},now(),{$_SESSION['user']['id']},'{$this->con->real_escape_string($winner->getWin_prize())}',{$winner->getCard()->getCar_id()})";
+            $query = "INSERT INTO winner (use_id,ser_id,win_cre_dat,win_cre_id,win_prize,row_id) 
+                VALUES ({$winner->getUser()->getUse_id()},{$winner->getSeries()->getSer_id()},now(),{$_SESSION['user']['id']},'{$this->con->real_escape_string($winner->getWin_prize())}',{$winner->getRow_id()})";
         }
 
         if ($this->con->query($query)) {

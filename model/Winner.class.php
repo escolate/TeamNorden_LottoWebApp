@@ -34,9 +34,11 @@ class Winner {
     
     /**
      *
-     * @var \Card
+     * @var \Rows
      */
-    private $card;
+    private $rows;
+    
+    private $row_id;
 
     /**
      * 
@@ -157,13 +159,32 @@ class Winner {
     public function setSeries(Series $series) {
         $this->series = $series;
     }
-    
+    /**
+     * 
+     * @return \Cards
+     */
     public function getCard() {
         return $this->card;
     }
 
     public function setCard(Card $card) {
         $this->card = $card;
+    }
+
+    public function getRows() {
+        return $this->rows;
+    }
+
+    public function setRows(\Rows $rows) {
+        $this->rows = $rows;
+    }
+
+    public function getRow_id() {
+        return $this->row_id;
+    }
+
+    public function setRow_id($row_id) {
+        $this->row_id = $row_id;
     }
 
 

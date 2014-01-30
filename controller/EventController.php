@@ -217,11 +217,16 @@ class EventController extends Controller {
 
 	$winner = MysqlAdapter::getInstance()->findWinner($newestSeries->getSer_id());
 	if (count($winner)) {
-	    $arr = array();
-	    foreach ($winner as $val) {
-		$arr[] = MysqlAdapter::getInstance()->getEventMemberCard($val, $newestSeries->getSer_id());
+	    $winarr = array();
+	    foreach ($winner as $arr) {
+                $winner = new Winner();
+                $winner->setUser(MysqlAdapter::getInstance()->getUser_($arr['use_id']));
+                $winner->setCard(MysqlAdapter::getInstance()->getCard($arr['car_id']));
+                $winner->setSeries(MysqlAdapter::getInstance()->getSeries($newestSeries->getSer_id()));
+                $winner->setRow_id($arr['row_id']);
+                $winarr[] = $winner;
 	    }
-	    $view->assign('winner', $arr);
+	    $view->assign('winner', $winarr);
 	}
 
 	// Display the event
