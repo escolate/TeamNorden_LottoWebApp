@@ -91,11 +91,6 @@ class EventController extends Controller {
 		break;
 	    case "saveNumber"; // save number for a series
 		$number = trim($_POST['number']);
-//		if ($_POST['seriesId'] == "") {
-//		    MysqlAdapter::getInstance()->saveSeries($this->resourceId);
-//		    $series = MysqlAdapter::getInstance()->getNewestSeries($this->resourceId);
-//		    $seriesId = $series->getSer_id();
-//		}
 		if (preg_match("/^\d+$/", $number)) {
 		    $seriesId = $_POST['seriesId'];
 		    MysqlAdapter::getInstance()->saveNumber($number, $seriesId);
