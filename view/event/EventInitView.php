@@ -17,7 +17,7 @@ class EventInitView extends View {
 		    <h1>Veranstaltung {$this->title}</h1>
 		    {$this->notification}
 		    <div class="list">
-		    <form id="userdata" action="/event/new/{$this->vars['event']->getEvt_id()}" method="POST">
+		    <form id="userdata" action="/event/new/{$this->vars['event']->getEvt_id()}-{$this->vars['event']->getEvt_name()}" method="POST">
 			<fieldset>
 			    <legend>Veranstaltung</legend>
 			    <input type="text" id="evt_name" placeholder="Name der Veranstaltung" name="evt_name" value="{$this->vars['event']->getEvt_name()}"/>
