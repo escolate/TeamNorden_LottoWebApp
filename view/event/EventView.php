@@ -18,7 +18,7 @@ class EventView extends View {
 		    <th>Name</th>
 		    <th>Veranstaltungsdatum</th>  
 		    <th>Ersteller</th>
-		    <th>Erstellungsdatum</th>
+		    <th>Erstellt am</th>
 		    </tr>
 		</thead>
 		<tfoot>
@@ -39,7 +39,7 @@ HTML;
 	    echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_name()}</a></td>";
 	    echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$this->getDate($object->getEvt_datetime())}</a></td>";
 	    echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\"> {$this->vars['eventCreatorList'][$i]->getUse_firstname()} {$this->vars['eventCreatorList'][$i]->getUse_lastname()}</a></td>";
-	    echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$this->getDateTime($object->getEvt_cre_dat())}</a></td>";
+	    echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$this->getDate($object->getEvt_cre_dat())} - {$this->getTime($object->getEvt_cre_dat())}</a></td>";
 	    echo '</tr>';
 	    $i++;
 	}

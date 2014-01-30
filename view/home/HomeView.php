@@ -23,7 +23,7 @@ HTML;
 	foreach ($this->vars['eventList'] as $object) {
 	    echo '<tr>';
 	    echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$object->getEvt_name()}</a></td>";
-	    echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$this->getDateTime($object->getEvt_datetime())}</a></td>";
+	    echo "<td><a href=\"/event/{$object->getEvt_id()}-{$object->getEvt_name()}\">{$this->getDate($object->getEvt_datetime())}</a></td>";
 	    echo '</tr>';
 	}
 	echo <<<HTML
@@ -43,18 +43,17 @@ HTML;
 	    <thead>
 		<tr>
 		    <th>Name</th>
-		    <th>Gewinndatum</th>  
+		    <th>Gewonnen am </th>  
 		</tr>
 	    </thead>
 	    <tbody>
 HTML;
 
-
-
+	/* @var $object \Winner */
         foreach ($this->vars['winnerList'] as $object) {
             echo '<tr>';
-		echo "<td><a href=\"/winner/{$object->getWin_id()}-\"></a></td>";
-		echo "<td><a href=\"/winner/{$object->getWin_id()}-\">{$this->getDate($object->getWin_cre_dat())}</a></td>";
+		echo "<td><a href=\"/winner/{$object->getWin_id()}-\">{$object->getUser()->getUse_firstname()} {$object->getUser()->getUse_lastname()}</a></td>";
+		echo "<td><a href=\"/winner/{$object->getWin_id()}-\">{$this->getDate($object->getWin_cre_dat())} - {$this->getTime($object->getWin_cre_dat())}</a></td>";
 		echo '</tr>';
         }
 
@@ -76,7 +75,7 @@ HTML;
 	    <thead>
 		<tr>
 		    <th>Name</th>
-		    <th>Erstellt</th>
+		    <th>Erstellt am</th>
 		</tr>
 	    </thead>
 	    <tbody>
@@ -86,7 +85,7 @@ HTML;
 	    echo <<<OUT
         <tr>
         <td><a href = "/user/{$user->getUse_id()}">{$user->getUse_firstname()} {$user->getUse_lastname()}</a></td>
-        <td><a href = "/user/{$user->getUse_id()}">{$user->getUse_cre_dat()}</a></td>
+        <td><a href = "/user/{$user->getUse_id()}">{$this->getDate($user->getUse_cre_dat()) }</a></td>
         </tr>
 OUT;
 	}
@@ -111,7 +110,7 @@ OUT;
 		    <th>Reihe 1</th>
 		    <th>Reihe 2</th>
 		    <th>Reihe 3</th>
-		    <th>Erstellt</th>
+		    <th>Erstellt am</th>
 		</tr>
 	    </thead>
 	    <tbody>
@@ -143,7 +142,7 @@ HTML;
 	    <thead>
 		<tr>
 		    <th>Aktion</th>
-		    <th>Erstellt</th>
+		    <th>Erstellt am</th>
                     <th></th>
 		</tr>
 	    </thead>
@@ -163,7 +162,7 @@ HTML;
 
             echo'<tr>
 		    <td><a href="/log/' . $val->getLog_id() . '">' . $val->getLog_action() . '</a></td>
-		    <td><a href="/log/' . $val->getLog_id() . '">' . $val->getLog_timestamp() . '</a></td>
+		    <td><a href="/log/' . $val->getLog_id() . '">' . $this->getDate($val->getLog_timestamp()) ." - ".$this->getTime($val->getLog_timestamp()). '</a></td>
                     <td><a href="/log/' . $val->getLog_id() . '">' . $icon . '</a></td>
 		</tr>';
         }
