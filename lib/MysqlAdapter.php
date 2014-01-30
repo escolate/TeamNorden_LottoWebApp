@@ -1435,7 +1435,21 @@ final class MysqlAdapter {
 
 	return FALSE;
     }
-
+    public function updateEvent(Event $event) {
+	$query = "
+	    UPDATE lotto.event 
+	    SET evt_name='{$this->con->escape_string($event->getEvt_name())}', evt_location='{$this->con->escape_string($event->getEvt_location())}', evt_city='{$this->con->escape_string($event->getEvt_city())}', evt_zip='{$this->con->escape_string($event->getEvt_zip())}', evt_datetime='{$event->getEvt_datetime()}', evt_mod_dat= NOW() , evt_mod_id='{$_SESSION['user']['id']}' 
+	    WHERE evt_id='{$event->getEvt_id()}';
+	";
+	//Save
+	if (!$this->con->query($query)) {
+	    $this->error($query);
+	    return FALSE;
+	}
+	// return id
+	$eventId = mysqli_insert_id($this->con);
+	return $eventId;
+    }
 }
 
 ?>

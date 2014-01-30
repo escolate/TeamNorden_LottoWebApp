@@ -85,10 +85,13 @@ class EventShowView extends View {
 <div class="content-box">
     <h1>Spieler</h1>
     <div class="button-box">
-	<a href="/user" class="button yellow">Spieler hinzufügen</a>
+	<a href="/eventmemberscard/" class="button yellow">Jetzt zuweisen</a>
     </div>
 <div class="list">
 	<form action="/event/add/{$this->vars['event']->getEvt_id()}" method="POST">
+HTML;
+	if (count($this->emcs)) {
+	    echo <<<HTML
 	    <table>
 		<thead>
 		    <tr>
@@ -98,7 +101,7 @@ class EventShowView extends View {
 		</thead>
 		<tbody>
 HTML;
-	if (count($this->emcs)) {
+
 	    /* @var $emc \Eventmembercard */
 	    foreach ($this->emcs as $emc) {
 		echo '<tr>';
@@ -106,10 +109,14 @@ HTML;
 		echo "<td><a href=\"/usercard/{$emc->getUser()->getUse_id()}\">{$emc->getCard()->getCar_serialnumber()}</a></td>";
 		echo '</tr>';
 	    }
+
+
+	    echo "</tbody>
+	    </table>";
+	}else{
+	    echo "Weisen Sie den Spielern ihre Karten für Event <b>".$this->vars['event']->getEvt_name()."</b> zu!";
 	}
 	echo <<<HTML
-		</tbody>
-	    </table>
 	</form>
     </div>
 </div>
