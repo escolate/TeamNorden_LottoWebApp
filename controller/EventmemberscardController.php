@@ -10,7 +10,7 @@ class EventmemberscardController extends Controller {
 
     protected function index() {
         $view = new EventmemberscardView();
-        $view->assign('user', MysqlAdapter::getInstance()->getUser_($this->resourceId));
+        $view->assign('user', MysqlAdapter::getInstance()->getUserList());
         $view->display();
     }
 
