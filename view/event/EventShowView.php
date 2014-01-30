@@ -28,6 +28,7 @@ class EventShowView extends View {
                             <input type="hidden" name="ser_id" value="'.$winner->getSeries()->getSer_id().'">
                             <input type="hidden" name="row_id" value="'.$winner->getRow_id().'">
                             <input type="hidden" name="use_id" value="'.$winner->getUser()->getUse_id().'">
+                            <input type="hidden" name="win_id" value="'.$winner->getWin_id().'">
                         <div>Gewonnen: <b>'.$winner->getUser()->getUse_firstname().' '.$winner->getUser()->getUse_lastname().'</b>, Karte: <b>'.$winner->getCard()->getCar_serialnumber().'</b></div>
                         <div><input type="submit" value="überprüfen"></div>
                         </form>

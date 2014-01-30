@@ -53,14 +53,14 @@ class WinnerShowView extends View {
                 </tr>
 		<tr>
 		<td>Gezogene Zahlen:</td>
-		<td>
+		<td>\n
 HTML;
         $y = 7; // How many balls per line
         $i = $y;
         foreach ($this->vars['numberList'] as $object) {
-            echo '<div class="ball winning">';
+            echo "\t\t".'<div class="ball winning">';
             echo $object->getNum_num();
-            echo '</div>';
+            echo '</div>'."\n";
             $i--;
             if (!$i) {
                 echo '<br>';
@@ -72,10 +72,6 @@ HTML;
 		</tr>
 	    </tbody>
 	</table>
-
-	<div>
-
-	</div>
     </div>
 
     <div class="lotto-card">
@@ -96,7 +92,8 @@ HTML;
             echo '<div class="lotto-row">
 	    <span>Reihe ' . $i . '</span>';
             for ($j = 1; $j <= 5; $j++) {
-                $nr = $card->{'getCar_row' . $i . '_nr' . $j}();
+//                $nr = $card->{'getCar_row' . $i . '_nr' . $j}();
+                $nr = $card->{'getRow'.$i}()->{'getRow_nr'.$j}();
                 if (in_array($nr, $numarr)) {
                     echo '<span class="num winning">' . $nr . '</span>';
                 } else {

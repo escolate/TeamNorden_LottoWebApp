@@ -17,6 +17,7 @@ class WinnerController extends Controller {
             case 'save':
                 $win_id = $_POST['win_id'];
                 $winner = MysqlAdapter::getInstance()->getWinner($win_id);
+                $winner->setWin_del(0);
                 $winner->setWin_prize($_POST['win_prize']);
                 if ($winner->getWin_notificated() == '') {
                     //Send Mail
@@ -30,8 +31,12 @@ class WinnerController extends Controller {
                 $ser_id = $_POST['ser_id'];
                 $row_id = $_POST['row_id'];
                 $use_id = $_POST['use_id'];
+                $win_id = $_POST['win_id'];
                 if (is_numeric($row_id) && is_numeric($ser_id) && is_numeric($use_id)) {
                     $winner = new Winner();
+                    if(is_numeric($win_id)&& $win_id > 0) {
+                        $winner->setWin_id($win_id);
+                    }
                     $winner->setSeries(MysqlAdapter::getInstance()->getSeries($ser_id));
                     $winner->setUser(MysqlAdapter::getInstance()->getUser_($use_id));
                     $winner->setRow_id($row_id);

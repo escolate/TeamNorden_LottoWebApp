@@ -504,11 +504,23 @@ final class MysqlAdapter {
 
 	    $winner->setUser($this->getUser_($row['use_id']));
 	    $winner->setSeries($this->getSeries($row['ser_id']));
-	    $winner->setCard($this->getCard($row['car_id']));
+            $winner->setRow_id($row['row_id']);
+	    $winner->setCard($this->getCardsByRowId($row['row_id']));
 
 	    return $winner;
 	}
 	return NULL;
+    }
+    
+    private function getCardsByRowId($id) {
+        $query = "SELECT car_id FROM cards WHERE row1 = $id OR row2 = $id OR row3 = $id";
+	$result = $this->con->query($query);
+        if($result != false) {
+            $row = $result->fetch_assoc();
+            $result->free();
+            return $this->getCards($row['car_id']);
+        }
+        return new Cards();
     }
 
     public function getWinnerList($limit = 0) {
@@ -1115,9 +1127,9 @@ final class MysqlAdapter {
 	    }
 
             //NEW
-            $query = "SELECT b.car_id,b.row_id,a.use_id FROM eventmemberscard a JOIN rows b ON a.car_id = b.car_id LEFT JOIN winner c ON a.ser_id = c.ser_id AND b.row_id = c.row_id
+            $query = "SELECT b.car_id,b.row_id,a.use_id,c.win_id FROM eventmemberscard a JOIN rows b ON a.car_id = b.car_id LEFT JOIN winner c ON a.ser_id = c.ser_id AND b.row_id = c.row_id
 
-                    WHERE a.ser_id = {$serieid} AND c.win_id is null AND
+                    WHERE a.ser_id = {$serieid} AND c.win_notificated is null AND
                     (
                         row_nr1 IN ({$numbers}) 
                         AND row_nr2 IN ({$numbers}) 
@@ -1417,7 +1429,7 @@ final class MysqlAdapter {
             //update
             $query = "UPDATE winner SET
                 use_id = {$winner->getUser()->getUse_id()} ,ser_id = {$winner->getSeries()->getSer_id()} ,win_mod_dat = now(), row_id = {$winner->getRow_id()}
-                ,win_mod_id = {$_SESSION['user']['id']} ,win_del = '{$winner->getWin_del()}' ,win_prize = '{$this->con->real_escape_string($winner->getWin_prize())}' ,win_notificated = '{$winner->getWin_prize()}'
+                ,win_mod_id = {$_SESSION['user']['id']} ,win_del = '{$winner->getWin_del()}' ,win_prize = '{$this->con->real_escape_string($winner->getWin_prize())}' ,win_notificated = NULLIF('{$winner->getWin_notificated()}','')
                 WHERE win_id = {$winner->getWin_id()}";
         } else {
             //insert

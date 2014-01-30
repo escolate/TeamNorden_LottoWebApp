@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="icon" type="image/png" href="/images/icons/sport_8ball.png">
+        <title>Musikverein Lotto</title>
+        <script src="/js/vendor/jquery-1.10.2.min.js"></script>
+        <script src="/js/jquery.tablesorter.min.js"></script>
+        <script src="/js/application.js"></script>
+    </head>
+    <body lang="de">
+        <div id="header">
+            <noscript>
+            <div id="noscript" class="red">
+                Um die Applikation verwenden zu können müssen sie Javascript aktivieren!
+                <img alt="X" src="/images/icons/cancel_sw.png">
+            </div>
+            </noscript>
+            <img src="/images/logos/logo.png" id="logo">
+            <div id="breadcrumb"><a href="/" >Start</a> &gt;<a href="/winner/" >Winner</a> &gt;2</div>
+            <div id="account" title="Bearbeite dein Account."><a href="/user/2">Tobias Scheurer</a> | <form action="/login.php" method="post"> <input type="hidden" name="action" value="logout"><a id="logoutlink" href="#" title="Hier beendest du die Lotto Web App.">Logout</a></form></div> 
+        </div>
+        <div id="content">
+            <div id="debugg"></div>
+            <div class="content-box">
+                <h1>Gewinn</h1>
+                <div class="event-card">
+                    <form method="post" action="">
+                        <table class="show-table">
+                            <tbody>
+                                <tr>
+                                    <td>Gewinner:</td>
+                                    <td>Zakaria Agoulif</td>
+                                </tr>
+                                <tr>
+                                    <td>Event:</td>
+                                    <td>qwert</td>
+                                </tr>
+                                <tr>
+                                    <td>Serie:</td>
+                                    <td>48</td>
+                                </tr>
+                                <tr>
+                                    <td>Datum und Zeit:</td>
+                                    <td>30.01.2014 16.10</td>
+                                </tr>
+                                <tr>
+                                    <td>Bestätigung:</td>
+                                    <td>pendent</td>
+                                </tr>
+                                <tr>
+                                    <td>Gewinn:</td>
+                                    <td><input required type="text" name="win_prize" value=""></td>
+                                </tr>
+                                <tr>
+                                    <td>Gezogene Zahlen:</td>
+                                    <td>
+                                        <div class="ball winning">37</div>
+                                        <div class="ball winning">75</div>
+                                        <div class="ball winning">40</div>
+                                        <div class="ball winning">39</div>
+                                        <div class="ball winning">24</div>
+                                        <div class="ball winning">3</div>
+                                        <div class="ball winning">87</div>
+                                        <br>		<div class="ball winning">70</div>
+                                        <div class="ball winning">68</div>
+                                        <div class="ball winning">48</div>
+                                        <div class="ball winning">21</div>
+                                        <div class="ball winning">1</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                </div>
+
+                <div class="lotto-card">
+                    <div class="lotto-number">
+                        <span>Nr.</span>
+                        <span>27</span>
+                    </div>
+                    <div class="lotto-row">
+                        <span>Reihe 1</span><span class="num">2</span><span class="num">16</span><span class="num">32</span><span class="num">54</span><span class="num">69</span></div><div class="lotto-row">
+                        <span>Reihe 2</span><span class="num winning">21</span><span class="num winning">48</span><span class="num winning">68</span><span class="num winning">70</span><span class="num winning">87</span></div><div class="lotto-row">
+                        <span>Reihe 3</span><span class="num winning">3</span><span class="num winning">24</span><span class="num winning">39</span><span class="num winning">40</span><span class="num winning">75</span></div>    </div>
+                <div class="event-card">
+                    <input type="hidden" name="action" value="save">
+                    <input type="hidden" name="win_id" value="2">
+                    <input type="submit" value="speichern">
+                    </form>
+                    <form method="post" action="">
+                        <input type="hidden" name="action" value="cancel">
+                        <input type="hidden" name="win_id" value="2">
+                        <input type="submit" value="stornieren">
+                    </form>
+                </div>
+            </div>        </div>
+    </body>
+</html>

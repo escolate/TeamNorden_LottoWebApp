@@ -167,7 +167,7 @@ class Winner {
         return $this->card;
     }
 
-    public function setCard(Card $card) {
+    public function setCard(Cards $card) {
         $this->card = $card;
     }
 

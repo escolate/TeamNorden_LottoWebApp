@@ -224,6 +224,7 @@ class EventController extends Controller {
                 $winner->setCard(MysqlAdapter::getInstance()->getCard($arr['car_id']));
                 $winner->setSeries(MysqlAdapter::getInstance()->getSeries($newestSeries->getSer_id()));
                 $winner->setRow_id($arr['row_id']);
+                $winner->setWin_id($arr['win_id']);
                 $winarr[] = $winner;
 	    }
 	    $view->assign('winner', $winarr);
