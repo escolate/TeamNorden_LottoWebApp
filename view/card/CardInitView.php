@@ -20,7 +20,7 @@ class CardInitView extends View {
 
     /**
      *
-     * @var \Card
+     * @var \Cards
      */
     private $card;
 
@@ -44,7 +44,7 @@ OUT;
         while ($row++ < 3) {
             echo "<tr>";
             while ($cell++ < 5) {
-                echo '<td><input required x-moz-errormessage="Bitte füllen sie Zahlen in alle Felder!" name="row' . $row . 'nr' . $cell . '" type="number" value="' . $this->card->{'getCar_row' . $row . '_nr' . $cell}() . '"></td>';
+                echo '<td><input required x-moz-errormessage="Bitte füllen sie Zahlen in alle Felder!" name="row' . $row . 'nr' . $cell . '" type="number" value="' . $this->card->{'getRow'.$row}()->{'getRow_nr'.$cell}() . '"></td>';
             }
             echo "</tr>";
             $cell = 0;

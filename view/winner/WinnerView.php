@@ -1,9 +1,10 @@
 <?php
+
 class WinnerView extends View {
 
     public function display() {
-    
-	echo <<<HTML
+
+        echo <<<HTML
 <div class="content-box">
     <h1>Gewinner</h1>
     <div class="list">
@@ -27,17 +28,18 @@ class WinnerView extends View {
 		</tfoot>
 		<tbody>
 HTML;
-	
-	    foreach ($this->vars['list'] as $object) {
-		echo '<tr>';
-		echo '<td><input type="checkbox"></td>';
-		echo "<td><a href=\"/winner/{$object->getWin_id()}-\"></a></td>";
-		echo "<td><a href=\"/winner/{$object->getWin_id()}-\"></a></td>";
-		echo "<td><a href=\"/winner/{$object->getWin_id()}-\">". (!is_null($object->getWin_notificated()) ? $this->getDate($object->getWin_notificated()):"Ausstehend") ."</a></td>";
-		echo '</tr>';
-	    }
-	
-	echo <<<HTML
+
+        /* @var $winner \Winner */
+        foreach ($this->vars['list'] as $winner) {
+            echo '<tr>';
+            echo '<td><input type="checkbox"></td>';
+            echo "<td><a href=\"/winner/{$winner->getWin_id()}\">{$winner->getUser()->getUse_firstname()} {$winner->getUser()->getUse_lastname()}</a></td>";
+            echo "<td><a href=\"/winner/{$winner->getWin_id()}\">{$winner->getWin_cre_dat()}</a></td>";
+            echo "<td><a href=\"/winner/{$winner->getWin_id()}\">" . (!is_null($winner->getWin_notificated()) ? $this->getDate($winner->getWin_notificated()) : "Ausstehend") . "</a></td>";
+            echo '</tr>';
+        }
+
+        echo <<<HTML
 		</tbody>
 	    </table>
 	    <select name="events-action">
@@ -46,25 +48,11 @@ HTML;
 	    </select>
 	    <input type="submit" value="Ausführen">
 	</form>
-	<div class="pages">
-	    Seite
-	    <form>
-		<select name="events-action">
-		    <option value="delete">1</option>
-		    <option value="delete">2</option>
-		    <option value="delete">3</option>
-		    <option value="delete">4</option>
-		    <option value="action" selected>5</option>
-		    <option value="delete">6</option>
-		    <option value="delete">7</option>
-		</select>
-	    </form>
-	    von 7
-	</div>
     </div>
 </div>
 HTML;
     }
+
 }
 
 ?>

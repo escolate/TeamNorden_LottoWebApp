@@ -3,24 +3,35 @@
 class CardController extends Controller {
 
     protected function create() {
-        if ($_POST['action'] == 'delete') {
+        if (isset($_POST['action']) && $_POST['action'] == 'delete') {
             foreach ($_POST['carid'] as $id) {
-                MysqlAdapter::getInstance()->deleteCard($id);
+                $card = MysqlAdapter::getInstance()->getCards($id);
+                $card->setCar_del(1);
+                MysqlAdapter::getInstance()->saveCards($card);
             }
             header("Location: /card/", 301);
             exit();
         } else {
-            $card = new Card();
-            $card->setCar_id($_POST['id']);
+            if(isset($_POST['id']) && $_POST['id'] > 0) {
+                $card = MysqlAdapter::getInstance()->getCards($_POST['id']);
+            }
+            else {
+                $card = new Cards();
+                $card->setCar_id($_POST['id']);
+                $card->setRow1(new Rows());
+                $card->setRow2(new Rows());
+                $card->setRow3(new Rows());
+            }
             $card->setCar_serialnumber($_POST['serialnumber']);
+            
             foreach ($_POST as $key => $val) {
                 if (preg_match('/^row[0-9]+nr[0-9]+$/', $key) && is_numeric($val)) {
                     $str = str_replace('row', '', $key);
                     $arr = explode('nr', $str);
-                    $card->{'setCar_row' . $arr[0] . '_nr' . $arr[1]}($val);
+                    $card->{'getRow'.$arr[0]}()->{'setRow_nr'.$arr[1]}($val);
                 }
             }
-            $id = MysqlAdapter::getInstance()->saveCard($card);
+            $id = MysqlAdapter::getInstance()->saveCards($card);
 
             header("Location: /card/" . $id, 301);
             exit();
@@ -38,7 +49,7 @@ class CardController extends Controller {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/view/card/CardInitView.php';
         $view = new CardInitView();
 
-        $card = MysqlAdapter::getInstance()->getCard($this->resourceId);
+        $card = MysqlAdapter::getInstance()->getCards($this->resourceId);
         $view->assign('card', $card);
         $view->assign('id', $this->resourceId);
 
@@ -49,7 +60,7 @@ class CardController extends Controller {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/view/card/CardShowView.php';
         $view = new CardShowView();
 
-        $card = MysqlAdapter::getInstance()->getCard($this->resourceId);
+        $card = MysqlAdapter::getInstance()->getCards($this->resourceId);
         $view->assign('card', $card);
 
         $user = MysqlAdapter::getInstance()->getUser_($card->getCar_cre_id());

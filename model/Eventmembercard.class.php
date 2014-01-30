@@ -10,7 +10,7 @@ class Eventmembercard {
 
     /**
      *
-     * @var Card
+     * @var Cards
      */
     private $card;
 
@@ -40,7 +40,7 @@ class Eventmembercard {
         return $this->card;
     }
 
-    public function setCard(Card $card) {
+    public function setCard(Cards $card) {
         $this->card = $card;
     }
 
@@ -55,6 +55,11 @@ class Eventmembercard {
     public function saveSeries(Series $series) {
         $this->series = $series;
     }
+
+    public function setSeries(Series $series) {
+        $this->series = $series;
+    }
+
 
 }
 
