@@ -35,10 +35,32 @@ class EventController extends Controller {
 		$eventId = MysqlAdapter::getInstance()->saveEvent($event);
 		// Also create the first series
 		$seriesId = MysqlAdapter::getInstance()->saveSeries($eventId);
-                // Set old cards to the new series
+		// Set old cards to the new series
 //                MysqlAdapter::getInstance()->recycleCards($seriesId); --> Nichts zu recyceln da noch keine Runde gespielt
 		// Jump to the event site
 		header("Location: /event/", TRUE, 303);
+		break;
+	    case "editEvent":
+		$evt_id = trim($_POST['evt_id']);
+		$evt_name = trim($_POST['evt_name']);
+		$evt_day = $_POST['day'];
+		$evt_month = $_POST['month'];
+		$evt_year = $_POST['year'];
+		$evt_location = trim($_POST['evt_location']);
+		$evt_city = trim($_POST['evt_city']);
+		$evt_zip = trim($_POST['evt_zip']);
+		// Set data to event object
+		$event = new Event();
+		$event->setEvt_id($evt_id);
+		$event->setEvt_name($evt_name);
+		$event->setEvt_datetime($evt_year . "-" . $evt_month . "-" . $evt_day);
+		$event->setEvt_location($evt_location);
+		$event->setEvt_city($evt_city);
+		$event->setEvt_zip($evt_zip);
+		// Give event object to database adapter
+		$eventId = MysqlAdapter::getInstance()->updateEvent($event);
+		// Jump to the event site
+		header("Location: /event/$evt_id-$evt_name", TRUE, 303);
 		break;
 	    case "deleteEvent": // delete event
 		$eventIds = $_POST['eventIds'];
@@ -77,7 +99,7 @@ class EventController extends Controller {
 		if (preg_match("/^\d+$/", $number)) {
 		    $seriesId = $_POST['seriesId'];
 		    MysqlAdapter::getInstance()->saveNumber($number, $seriesId);
-		    $winnerList = MysqlAdapter::getInstance()->findWinner($seriesId);
+//		    $winnerList = MysqlAdapter::getInstance()->findWinner($seriesId);
 		}
 		header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
 		break;
@@ -93,10 +115,10 @@ class EventController extends Controller {
 		break;
 	    case "closeSeries": // close series
 		$seriesId = MysqlAdapter::getInstance()->saveSeries($this->resourceId);
-                // Set old cards to the new series
-                if(!MysqlAdapter::getInstance()->recycleCards($seriesId)) {
-                    exit("Error");
-                }
+		// Set old cards to the new series
+		if (!MysqlAdapter::getInstance()->recycleCards($seriesId)) {
+		    exit("Error");
+		}
 		header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
 		break;
 	    case "deleteSeries": // delete series from event
@@ -148,6 +170,8 @@ class EventController extends Controller {
 	    $view->display();
 	} else {
 	    $view = new EventInitView();
+	    $event = MysqlAdapter::getInstance()->getEvent($this->resourceId);
+	    $view->assign('event', $event);
 	    $view->display();
 	}
     }
@@ -188,18 +212,18 @@ class EventController extends Controller {
 	$view->assign('numberList', $numberList);
 	//Also give the newest series id to the view
 	$view->assign('newestSeries', $newestSeries);
-        
-        $view->assign('emcs', MysqlAdapter::getInstance()->getPlayingUsers($newestSeries->getSer_id()));
-        
-        $winner = MysqlAdapter::getInstance()->findWinner($newestSeries->getSer_id());
-        if(count($winner)) {
-            $arr = array();
-            foreach ($winner as $val) {
-                $arr[] = MysqlAdapter::getInstance()->getEventMemberCard($val, $newestSeries->getSer_id());
-            }
-            $view->assign('winner', $arr);
-        }
-        
+
+	$view->assign('emcs', MysqlAdapter::getInstance()->getPlayingUsers($newestSeries->getSer_id()));
+
+	$winner = MysqlAdapter::getInstance()->findWinner($newestSeries->getSer_id());
+	if (count($winner)) {
+	    $arr = array();
+	    foreach ($winner as $val) {
+		$arr[] = MysqlAdapter::getInstance()->getEventMemberCard($val, $newestSeries->getSer_id());
+	    }
+	    $view->assign('winner', $arr);
+	}
+
 	// Display the event
 	$view->display();
     }

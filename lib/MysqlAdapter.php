@@ -18,7 +18,7 @@ final class MysqlAdapter {
      * @var MysqlAdapter
      */
     private static $MysqlAdapter;
-    
+
     /**
      *
      * @var \mysqli
@@ -45,51 +45,49 @@ final class MysqlAdapter {
 	    self::$MysqlAdapter = new MysqlAdapter();
 	}
 
-        if (self::$MysqlAdapter == NULL) {
-            self::$MysqlAdapter = new MysqlAdapter();
-        }
+	if (self::$MysqlAdapter == NULL) {
+	    self::$MysqlAdapter = new MysqlAdapter();
+	}
 
 	return self::$MysqlAdapter;
     }
 
-
     public function getCardList($limit = 0) {
-        $query = "SELECT * FROM card WHERE car_del IS NULL ORDER BY car_cre_dat DESC";
-        if($limit != 0) {
-            $query .= " LIMIT ".$limit;
-        }
-        $result = $this->con->query($query);
-        if ($result->num_rows) {
-            while ($row = $result->fetch_assoc()) {
-                $card = new Card();
-                $card->setCar_cre_dat($row['car_cre_dat']);
-                $card->setCar_cre_id($row['car_cre_id']);
-                $card->setCar_del($row['car_del']);
-                $card->setCar_id($row['car_id']);
-                $card->setCar_mod_dat($row['car_mod_dat']);
-                $card->setCar_mod_id($row['car_mod_id']);
-                $card->setCar_row1_nr1($row['car_row1_nr1']);
-                $card->setCar_row1_nr2($row['car_row1_nr2']);
-                $card->setCar_row1_nr3($row['car_row1_nr3']);
-                $card->setCar_row1_nr4($row['car_row1_nr4']);
-                $card->setCar_row1_nr5($row['car_row1_nr5']);
-                $card->setCar_row2_nr1($row['car_row2_nr1']);
-                $card->setCar_row2_nr2($row['car_row2_nr2']);
-                $card->setCar_row2_nr3($row['car_row2_nr3']);
-                $card->setCar_row2_nr4($row['car_row2_nr4']);
-                $card->setCar_row2_nr5($row['car_row2_nr5']);
-                $card->setCar_row3_nr1($row['car_row3_nr1']);
-                $card->setCar_row3_nr2($row['car_row3_nr2']);
-                $card->setCar_row3_nr3($row['car_row3_nr3']);
-                $card->setCar_row3_nr4($row['car_row3_nr4']);
-                $card->setCar_row3_nr5($row['car_row3_nr5']);
-                $card->setCar_serialnumber($row['car_serialnumber']);
-                $arr[] = $card;
-            }
-            return $arr;
-        }
-        return NULL;
-
+	$query = "SELECT * FROM card WHERE car_del IS NULL ORDER BY car_cre_dat DESC";
+	if ($limit != 0) {
+	    $query .= " LIMIT " . $limit;
+	}
+	$result = $this->con->query($query);
+	if ($result->num_rows) {
+	    while ($row = $result->fetch_assoc()) {
+		$card = new Card();
+		$card->setCar_cre_dat($row['car_cre_dat']);
+		$card->setCar_cre_id($row['car_cre_id']);
+		$card->setCar_del($row['car_del']);
+		$card->setCar_id($row['car_id']);
+		$card->setCar_mod_dat($row['car_mod_dat']);
+		$card->setCar_mod_id($row['car_mod_id']);
+		$card->setCar_row1_nr1($row['car_row1_nr1']);
+		$card->setCar_row1_nr2($row['car_row1_nr2']);
+		$card->setCar_row1_nr3($row['car_row1_nr3']);
+		$card->setCar_row1_nr4($row['car_row1_nr4']);
+		$card->setCar_row1_nr5($row['car_row1_nr5']);
+		$card->setCar_row2_nr1($row['car_row2_nr1']);
+		$card->setCar_row2_nr2($row['car_row2_nr2']);
+		$card->setCar_row2_nr3($row['car_row2_nr3']);
+		$card->setCar_row2_nr4($row['car_row2_nr4']);
+		$card->setCar_row2_nr5($row['car_row2_nr5']);
+		$card->setCar_row3_nr1($row['car_row3_nr1']);
+		$card->setCar_row3_nr2($row['car_row3_nr2']);
+		$card->setCar_row3_nr3($row['car_row3_nr3']);
+		$card->setCar_row3_nr4($row['car_row3_nr4']);
+		$card->setCar_row3_nr5($row['car_row3_nr5']);
+		$card->setCar_serialnumber($row['car_serialnumber']);
+		$arr[] = $card;
+	    }
+	    return $arr;
+	}
+	return NULL;
     }
 
     /**
@@ -98,30 +96,29 @@ final class MysqlAdapter {
      * @return \User|null
      */
     public function getUser_($id) {
-        $user = new User();
-        $ide = $this->con->real_escape_string($id);
-        $query = "SELECT * FROM user WHERE use_id = '{$ide}'";
-        $result = $this->con->query($query);
-        if ($result->num_rows) {
-            $row = $result->fetch_assoc();
-            $user->setUse_id($row['use_id']);
-            $user->setUse_lastname($row['use_lastname']);
-            $user->setUse_firstname($row['use_firstname']);
-            $user->setUse_email($row['use_email']);
-            $user->setUse_address($row['use_address']);
-            $user->setUse_zip($row['use_zip']);
-            $user->setUse_city($row['use_city']);
-            $user->setUse_administrator($row['use_administrator']);
-            $user->setUse_birth($row['use_birth']);
-            $user->setUse_phone($row['use_phone']);
-            $user->setUse_mobile($row['use_mobile']);
-            $user->setUse_lastlogin($row['use_lastlogin']);
-            $user->setUse_mod_dat($row['use_mod_dat']);
-            $user->setUse_cre_dat($row['use_cre_dat']);
-            $user->setUse_status($row['use_status']);
-//            return $user;
-        }
-        return $user;
+	$user = new User();
+	$ide = $this->con->real_escape_string($id);
+	$query = "SELECT * FROM user WHERE use_id = '{$ide}'";
+	$result = $this->con->query($query);
+	if ($result->num_rows) {
+	    $row = $result->fetch_assoc();
+	    $user->setUse_id($row['use_id']);
+	    $user->setUse_lastname($row['use_lastname']);
+	    $user->setUse_firstname($row['use_firstname']);
+	    $user->setUse_email($row['use_email']);
+	    $user->setUse_address($row['use_address']);
+	    $user->setUse_zip($row['use_zip']);
+	    $user->setUse_city($row['use_city']);
+	    $user->setUse_administrator($row['use_administrator']);
+	    $user->setUse_birth($row['use_birth']);
+	    $user->setUse_phone($row['use_phone']);
+	    $user->setUse_mobile($row['use_mobile']);
+	    $user->setUse_lastlogin($row['use_lastlogin']);
+	    $user->setUse_mod_dat($row['use_mod_dat']);
+	    $user->setUse_cre_dat($row['use_cre_dat']);
+	    $user->setUse_status($row['use_status']);
+	}
+	return $user;
     }
 
 // Saves a number in the database
@@ -172,7 +169,7 @@ final class MysqlAdapter {
 	    $this->error($query);
 	    return FALSE;
 	}
-        return mysqli_insert_id($this->con);
+	return mysqli_insert_id($this->con);
     }
 
     // Adds a user to an event
@@ -528,9 +525,9 @@ final class MysqlAdapter {
 	    evt_id = $id;";
 
 	$result = $this->con->query($query);
-	if ($result->num_rows) {
+	$event = new Event();
+	if ($result) {
 	    $row = $result->fetch_assoc();
-	    $event = new Event();
 	    $event->setEvt_id($row['evt_id']);
 	    $event->setEvt_name($row['evt_name']);
 	    $event->setEvt_location($row['evt_location']);
@@ -543,9 +540,8 @@ final class MysqlAdapter {
 	    $event->setEvt_zip($row['evt_zip']);
 	    $event->setEvt_mod_id($row['evt_mod_id']);
 	    $event->setDate($row['date']);
-	    return $event;
 	}
-	return NULL;
+	return $event;
     }
 
     /**
@@ -690,7 +686,6 @@ final class MysqlAdapter {
 	}
 	return NULL;
     }
-    
 
     public function getNumberList($id, $limit = "0,18446744073709551615") {
 	$query = "
@@ -831,27 +826,27 @@ final class MysqlAdapter {
     }
 
     public function getCard($id) {
-        $car = new Card();
-        $query = "SELECT * FROM card WHERE car_id =  " . $id;
-        $result = $this->con->query($query);
+	$car = new Card();
+	$query = "SELECT * FROM card WHERE car_id =  " . $id;
+	$result = $this->con->query($query);
 
-        if ($result instanceof mysqli_result && $result->num_rows) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $car->setCar_id($row['car_id']);
-                $car->setCar_cre_id($row['car_cre_id']);
-                $car->setCar_cre_dat($row['car_cre_dat']);
-                $car->setCar_mod_id($row['car_mod_id']);
-                $car->setCar_mod_dat($row['car_mod_dat']);
-                $car->setCar_serialnumber($row['car_serialnumber']);
+	if ($result instanceof mysqli_result && $result->num_rows) {
+	    while ($row = mysqli_fetch_assoc($result)) {
+		$car->setCar_id($row['car_id']);
+		$car->setCar_cre_id($row['car_cre_id']);
+		$car->setCar_cre_dat($row['car_cre_dat']);
+		$car->setCar_mod_id($row['car_mod_id']);
+		$car->setCar_mod_dat($row['car_mod_dat']);
+		$car->setCar_serialnumber($row['car_serialnumber']);
 
-                for ($i = 1; $i < 4; $i++) {
-                    for ($j = 1; $j < 6; $j++) {
-                        $car->{'setCar_row' . $i . '_nr' . $j}($row['car_row' . $i . '_nr' . $j]);
-                    }
-                }
-            }
-        }
-        return $car;
+		for ($i = 1; $i < 4; $i++) {
+		    for ($j = 1; $j < 6; $j++) {
+			$car->{'setCar_row' . $i . '_nr' . $j}($row['car_row' . $i . '_nr' . $j]);
+		    }
+		}
+	    }
+	}
+	return $car;
     }
 
     public function getSeries($id) {
@@ -922,10 +917,10 @@ final class MysqlAdapter {
 
 	return $arr;
     }
-    
+
     public function saveCard(Card $card) {
-        if ($card->getCar_id() > 0) {
-            $query = "UPDATE card SET 
+	if ($card->getCar_id() > 0) {
+	    $query = "UPDATE card SET 
                 car_serialnumber = {$card->getCar_serialnumber()},
                 car_row1_nr1 = {$card->getCar_row1_nr1()},
                 car_row1_nr2 = {$card->getCar_row1_nr2()},
@@ -945,8 +940,8 @@ final class MysqlAdapter {
                 car_mod_dat = now(),
                 car_mod_id = {$_SESSION['user']['id']}
                 WHERE car_id = " . $card->getCar_id();
-        } else {
-            $query = "INSERT INTO card (
+	} else {
+	    $query = "INSERT INTO card (
                 car_serialnumber,
                 car_row1_nr1,
                 car_row1_nr2,
@@ -985,12 +980,12 @@ final class MysqlAdapter {
                 now(),
                 {$_SESSION['user']['id']}
                 )";
-        }
-        $this->con->query($query);
-        if ($this->con->insert_id > 0) {
-            return $this->con->insert_id;
-        }
-        return $card->getCar_id();
+	}
+	$this->con->query($query);
+	if ($this->con->insert_id > 0) {
+	    return $this->con->insert_id;
+	}
+	return $card->getCar_id();
     }
 
     /**
@@ -999,22 +994,22 @@ final class MysqlAdapter {
      * @return array\Eventmembercard
      */
     public function findWinner($serieid) {
-        $arr = array();
-        $numbers = "";
-        $i = 0;
+	$arr = array();
+	$numbers = "";
+	$i = 0;
 
-        $query = "SELECT num_num FROM numbers WHERE ser_id = " . $serieid;
-        $result = $this->con->query($query);
+	$query = "SELECT num_num FROM numbers WHERE ser_id = " . $serieid;
+	$result = $this->con->query($query);
 
-        if ($result->num_rows >= 5) {
-            while ($row = $result->fetch_assoc()) {
-                if ($i++) {
-                    $numbers .= ',';
-                }
-                $numbers .= $row['num_num'];
-            }
+	if ($result->num_rows >= 5) {
+	    while ($row = $result->fetch_assoc()) {
+		if ($i++) {
+		    $numbers .= ',';
+		}
+		$numbers .= $row['num_num'];
+	    }
 
-            $query = "SELECT DISTINCT a.car_id,a.use_id FROM eventmemberscard a LEFT JOIN card b ON a.car_id = b.car_id LEFT JOIN winner c ON a.ser_id = c.ser_id WHERE win_id is null AND            
+	    $query = "SELECT DISTINCT a.car_id,a.use_id FROM eventmemberscard a LEFT JOIN card b ON a.car_id = b.car_id LEFT JOIN winner c ON a.ser_id = c.ser_id WHERE win_id is null AND            
             (
                 (
                     car_row1_nr1 IN ({$numbers}) AND 
@@ -1036,20 +1031,20 @@ final class MysqlAdapter {
                     car_row3_nr5 IN ({$numbers})
                 )
             )";
-            $result = $this->con->query($query);
+	    $result = $this->con->query($query);
 
-            //Put winner to arry
-            if ($result->num_rows) {
-                while ($row = $result->fetch_assoc()) {
-                    $arr[] = $row['car_id'];
-                    //Save Winner to Database
+	    //Put winner to arry
+	    if ($result->num_rows) {
+		while ($row = $result->fetch_assoc()) {
+		    $arr[] = $row['car_id'];
+		    //Save Winner to Database
 //                    $this->con->query("INSERT INTO winner (use_id,ser_id,win_cre_id) VALUES ({$row['use_id']},{$serieid},{$_SESSION['user']['id']})");
-                }
-            }
-            $result->free();
-        }
+		}
+	    }
+	    $result->free();
+	}
 
-        return $arr;
+	return $arr;
 
 //        $arr = array();
 //        $query = "SELECT num_num FROM numbers WHERE ser_id = " . $serie;
@@ -1170,14 +1165,14 @@ final class MysqlAdapter {
      * @return array
      */
     public function getStatusList() {
-        $arr = array();
-        $result = $this->con->query("SELECT DISTINCT use_status FROM user WHERE use_del is not true AND use_status != ''");
-        if ($result->num_rows) {
-            while ($row = $result->fetch_assoc()) {
-                $arr[] = $row['use_status'];
-            }
-        }
-        return $arr;
+	$arr = array();
+	$result = $this->con->query("SELECT DISTINCT use_status FROM user WHERE use_del is not true AND use_status != ''");
+	if ($result->num_rows) {
+	    while ($row = $result->fetch_assoc()) {
+		$arr[] = $row['use_status'];
+	    }
+	}
+	return $arr;
     }
 
     public function getEventCards($seriesid) {
@@ -1220,10 +1215,10 @@ final class MysqlAdapter {
 	}
 	return $arr;
     }
-    
+
     public function deleteCard($carid) {
-        $query = "DELETE FROM card WHERE car_id = ".$carid;
-        return $this->con->query($query);
+	$query = "DELETE FROM card WHERE car_id = " . $carid;
+	return $this->con->query($query);
     }
 
     public function addUserCard(Eventmembercard $emc) {
@@ -1262,65 +1257,80 @@ final class MysqlAdapter {
 	}
 	return TRUE;
     }
-    
+
     /**
      * Set current eventusercards to new Series
      * @param type $seriesid NEUE SerienID
      * @return boolean
      */
     public function recycleCards($seriesid) {
-        //Letzte gespielte Serie
-        $query = "SELECT ser_id FROM series WHERE eve_id = (SELECT eve_id FROM series WHERE ser_id = {$seriesid}) AND ser_id != {$seriesid} ORDER BY ser_id DESC LIMIT 1";
-        $result = $this->con->query($query);
-        
-        /* @var $result \mysqli_result */
-        if($result !== false) {
-            $row = $result->fetch_assoc();
-            //Letzte Serie duplizieren
-            $query = "INSERT INTO eventmemberscard (SELECT use_id,car_id,{$seriesid} FROM eventmemberscard WHERE ser_id = {$row['ser_id']})";
-            $result->free();
-            return $this->con->query($query);
-        }
-        return false;
+	//Letzte gespielte Serie
+	$query = "SELECT ser_id FROM series WHERE eve_id = (SELECT eve_id FROM series WHERE ser_id = {$seriesid}) AND ser_id != {$seriesid} ORDER BY ser_id DESC LIMIT 1";
+	$result = $this->con->query($query);
+
+	/* @var $result \mysqli_result */
+	if ($result !== false) {
+	    $row = $result->fetch_assoc();
+	    //Letzte Serie duplizieren
+	    $query = "INSERT INTO eventmemberscard (SELECT use_id,car_id,{$seriesid} FROM eventmemberscard WHERE ser_id = {$row['ser_id']})";
+	    $result->free();
+	    return $this->con->query($query);
+	}
+	return false;
     }
-    
+
     /**
      * 
      * @param type $seriesid
      * @return \Eventmembercard
      */
     public function getPlayingUsers($seriesid) {
-        $arr = array();
-        $query = "SELECT * FROM eventmemberscard WHERE ser_id = {$seriesid}";
-        $result = $this->con->query($query);
-        if($result !== false) {
-            while($row = $result->fetch_assoc()) {
-                $emc = new Eventmembercard();
-                $emc->setCard($this->getCard($row['car_id']));
-                $emc->setUser($this->getUser_($row['use_id']));
-                $arr[] = $emc;
-            }
-        }
-        return $arr;
+	$arr = array();
+	$query = "SELECT * FROM eventmemberscard WHERE ser_id = {$seriesid}";
+	$result = $this->con->query($query);
+	if ($result !== false) {
+	    while ($row = $result->fetch_assoc()) {
+		$emc = new Eventmembercard();
+		$emc->setCard($this->getCard($row['car_id']));
+		$emc->setUser($this->getUser_($row['use_id']));
+		$arr[] = $emc;
+	    }
+	}
+	return $arr;
     }
-    
+
     /**
      * 
      * @return \Eventmembercard|boolean
      */
-    public function getEventMemberCard($car_id,$ser_id) {
-        $emc = new Eventmembercard();
-        $query = "SELECT * FROM lotto.eventmemberscard WHERE ser_id = {$ser_id} AND car_id = {$car_id}";
-        $result = $this->con->query($query);
-        if($result !== false) {
-            $row = $result->fetch_assoc();
-            $emc->setCard($this->getCard($row['car_id']));
-            $emc->setUser($this->getUser_($row['use_id']));
-            return $emc;
-        }
-        return false;
+    public function getEventMemberCard($car_id, $ser_id) {
+	$emc = new Eventmembercard();
+	$query = "SELECT * FROM lotto.eventmemberscard WHERE ser_id = {$ser_id} AND car_id = {$car_id}";
+	$result = $this->con->query($query);
+	if ($result !== false) {
+	    $row = $result->fetch_assoc();
+	    $emc->setCard($this->getCard($row['car_id']));
+	    $emc->setUser($this->getUser_($row['use_id']));
+	    return $emc;
+	}
+	return false;
     }
 
+    public function updateEvent(Event $event) {
+	$query = "
+	    UPDATE lotto.event 
+	    SET evt_name='{$this->con->escape_string($event->getEvt_name())}', evt_location='{$this->con->escape_string($event->getEvt_location())}', evt_city='{$this->con->escape_string($event->getEvt_city())}', evt_zip='{$this->con->escape_string($event->getEvt_zip())}', evt_datetime='{$event->getEvt_datetime()}', evt_mod_dat= NOW() , evt_mod_id='{$_SESSION['user']['id']}' 
+	    WHERE evt_id='{$event->getEvt_id()}';
+	";
+	//Save
+	if (!$this->con->query($query)) {
+	    $this->error($query);
+	    return FALSE;
+	}
+	// return id
+	$eventId = mysqli_insert_id($this->con);
+	return $eventId;
+    }
 }
 
 ?>

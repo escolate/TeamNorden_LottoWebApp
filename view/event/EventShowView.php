@@ -31,7 +31,7 @@ class EventShowView extends View {
 <div class="content-box">
     <h1>Veranstaltung</h1>
     <div class="button-box">
-	<a href="#" class="button grey">Bearbeiten</a>
+	<a href="/event/edit/{$this->vars['event']->getEvt_id()}" class="button grey">Bearbeiten</a>
     </div>
     <div class="event-card">
 	<table class="show-table">
@@ -54,7 +54,7 @@ class EventShowView extends View {
 		</tr>
 		<tr>
 		<td>Veranstaltungsdatum:</td>
-		<td>{$this->getDateTime($this->vars['event']->getEvt_datetime())}</td>
+		<td>{$this->getDate($this->vars['event']->getEvt_datetime())}</td>
 		</tr>
 	    </tbody>
 	</table>

@@ -97,7 +97,7 @@ abstract class View {
 		$out .= '<option ' . $checked . ' value="' . $i . '">' . $i . '</option>';
 	    }
 	} else {
-	    for ($i = date("Y") + 3; $i >= date("Y"); $i--) {
+	    for ($i = date("Y") + 5; $i >= date("Y") - 100; $i--) {
 		if ($i == $y) {
 		    $checked = 'selected';
 		} else {
