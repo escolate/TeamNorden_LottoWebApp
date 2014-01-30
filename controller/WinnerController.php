@@ -19,11 +19,12 @@ class WinnerController extends Controller {
                 $winner = MysqlAdapter::getInstance()->getWinner($win_id);
                 $winner->setWin_del(0);
                 $winner->setWin_prize($_POST['win_prize']);
+                MysqlAdapter::getInstance()->saveWinner($winner);
                 if ($winner->getWin_notificated() == '') {
                     //Send Mail
                     echo "mail";
+                    MysqlAdapter::getInstance()->setWinnerNotification($win_id);
                 }
-                MysqlAdapter::getInstance()->saveWinner($winner);
                 header("Location: /winner/" . $winner->getWin_id(), TRUE, 303);
                 exit();
                 break;

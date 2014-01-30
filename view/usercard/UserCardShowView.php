@@ -29,9 +29,11 @@ class UserCardShowView extends View {
     </div>
     <div class="event-card">
         <p><b>User:</b> {$this->user->getUse_firstname()} {$this->user->getUse_lastname()}</p>
+        </div>
         <form name="events" method="post">
         <input type="hidden" name="user" value="{$this->user->getUse_id()}">
-            <table class="show-table">
+        <div class="list">
+            <table>
                 <thead>
                     <tr>
                         <th></th>
@@ -41,6 +43,15 @@ class UserCardShowView extends View {
                         <th>Karte</th>
                     </tr>
                 </thead>
+        		<tfoot>
+		    <tr>
+			<td><input type="checkbox"></td>
+			<td>Alle auswählen</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		    </tr>
+		</tfoot>
                 <tbody>
 OUT;
         /* @var $card \Eventmembercard */

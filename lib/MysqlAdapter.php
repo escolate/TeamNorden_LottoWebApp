@@ -459,7 +459,7 @@ final class MysqlAdapter {
 
     public function getWinnerList($limit = 0) {
 
-	$query = "SELECT * FROM winner ORDER BY win_cre_dat DESC";
+	$query = "SELECT * FROM winner WHERE win_del is false ORDER BY win_cre_dat DESC";
 	if ($limit != 0) {
 	    $query .= " LIMIT " . $limit;
 	}
@@ -785,7 +785,7 @@ final class MysqlAdapter {
 
 	while ($row = mysqli_fetch_assoc($result)) {
 	    $emc = new Eventmembercard();
-	    $emc->setCard($this->getCard($row['car_id']));
+	    $emc->setCard($this->getCards($row['car_id']));
 	    $emc->saveSeries($this->getSeries($row['ser_id']));
 
 	    $arr[] = $emc;
@@ -951,16 +951,14 @@ final class MysqlAdapter {
     }
 
     public function getUserWins($userid) {
-
 	$arr = array();
-	$query = "SELECT date_format(b.evt_datetime,'%d.%m.%Y') date,b.evt_name,a.win_prize FROM winner a LEFT JOIN event b ON a.eve_id = b.evt_id WHERE a.win_id = " . $userid;
-
+	$query = "SELECT c.evt_datetime,c.evt_name,a.win_prize FROM winner a LEFT JOIN series b ON a.ser_id = b.ser_id LEFT JOIN event c ON b.eve_id = c.evt_id WHERE a.use_id = {$userid} AND a.win_del is false";
 
 	$result = $this->con->query($query);
-	if ($result) {
+	if ($result != false) {
 	    while ($row = mysqli_fetch_assoc($result)) {
 		$info = array();
-		$info[] = $row['date'];
+		$info[] = $row['evt_datetime'];
 		$info[] = $row['evt_name'];
 		$info[] = $row['win_prize'];
 		$arr[] = $info;
@@ -1062,7 +1060,7 @@ final class MysqlAdapter {
 	    }
 
             //NEW
-            $query = "SELECT b.car_id,b.row_id,a.use_id,c.win_id FROM eventmemberscard a JOIN rows b ON a.car_id = b.car_id LEFT JOIN winner c ON a.ser_id = c.ser_id AND b.row_id = c.row_id
+            $query = "SELECT b.car_id,b.row_id,a.use_id,c.win_id FROM eventmemberscard a JOIN rows b ON a.car_id = b.car_id LEFT JOIN (SELECT * FROM winner WHERE win_del is false) c ON a.ser_id = c.ser_id AND b.row_id = c.row_id
 
 
                     WHERE a.ser_id = {$serieid} AND c.win_notificated is null AND
@@ -1194,7 +1192,7 @@ final class MysqlAdapter {
 	    while ($row = $result->fetch_assoc()) {
 		$emc = new Eventmembercard();
 		$emc->saveSeries($series);
-		$emc->setCard($this->getCard($row['car_id']));
+		$emc->setCard($this->getCards($row['car_id']));
 		if (!empty($row['use_id'])) {
 		    $emc->setUser($this->getUser_($row['use_id']));
 		}
@@ -1348,6 +1346,12 @@ final class MysqlAdapter {
 
 	return FALSE;
     }
+    
+    public function setWinnerNotification($win_id) {
+        $query = "UPDATE winner SET win_notificated = now() WHERE win_id = ".$win_id;
+        return $this->con->query($query);
+    }
+
     public function updateEvent(Event $event) {
 	$query = "
 	    UPDATE lotto.event 

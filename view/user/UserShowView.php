@@ -139,9 +139,10 @@ class UserShowView extends View {
 		</tr>
 OUT;
 
-	foreach (MysqlAdapter::getInstance()->getUserWins($this->user->getUse_id()) as $arr) {
+	foreach ($this->vars['wins'] as $arr) {
+            $date = new DateTime($arr[0]);
 	    echo "<tr>
-                <td>{$arr[0]}</td>
+                <td>{$date->format('m.d.Y')}</td>
                 <td>{$arr[1]}</td>
                 <td>{$arr[2]}</td>
                 </tr>";
@@ -159,33 +160,22 @@ OUT;
 <div class="content-box">
     <h1>Spielkarten</h1>
     <div class="button-box">
-	<a href="/usercard/{$this->user->getUse_id()}" class="button yellow">Hinzufügen</a>
+	<a href="/usercard/{$this->user->getUse_id()}" class="button yellow">Alle anzeigen</a>
     </div>
     <div class="list">
-	<form action="/event/create" method="post">
 	    <table>
 		<thead>
 		    <tr>
-		    <th></th>
 		    <th>Veranstaltungsdatum</th>
 		    <th>Name</th>  
 		    <th>Serie</th>
 		    <th>Kartennummer</th>
 		    </tr>
 		</thead>
-		<tfoot>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td>Alle auswählen</td>
-			<td></td>
-			<td></td>
-			<td></td>
-		    </tr>
-		</tfoot>
 		<tbody>
 HTML;
 
-	foreach (MysqlAdapter::getInstance()->getUserCards($this->user->getUse_id()) as $val) {
+	foreach ($this->vars['cards'] as $val) {
 	    echo "<tr>
                 <td>{$val->getSeries()->getEvent()->getDate()}</td>
                 <td>{$val->getSeries()->getEvent()->getEvt_name()}</td>
@@ -197,12 +187,6 @@ HTML;
 	echo <<<HTML
 		</tbody>
 	    </table>
-	    <select name="submit">
-		<option>[Aktion]</option>"
-		<option value="deleteEvent">Löschen</option>
-	    </select>
-	    <button>Ausführen</button>
-	</form>
     </div>
 </div>
 HTML;

@@ -23,7 +23,7 @@ class UserCardController extends Controller {
                     $arr = explode(',', $id);
                     $emc = new Eventmembercard();
                     $emc->setUser($user);
-                    $emc->setCard(MysqlAdapter::getInstance()->getCard($arr[0]));
+                    $emc->setCard(MysqlAdapter::getInstance()->getCards($arr[0]));
                     $emc->saveSeries(MysqlAdapter::getInstance()->getSeries($arr[1]));
                     MysqlAdapter::getInstance()->deleteUserCard($emc);
                 }
@@ -34,7 +34,7 @@ class UserCardController extends Controller {
                 foreach ($_POST['card'] as $id) {
                     $emc = new Eventmembercard();
                     $emc->setUser($user);
-                    $emc->setCard(MysqlAdapter::getInstance()->getCard($id));
+                    $emc->setCard(MysqlAdapter::getInstance()->getCards($id));
                     $emc->saveSeries(MysqlAdapter::getInstance()->getSeries($_POST['series']));
                     MysqlAdapter::getInstance()->addUserCard($emc);
                 }

@@ -221,7 +221,7 @@ class EventController extends Controller {
 	    foreach ($winner as $arr) {
                 $winner = new Winner();
                 $winner->setUser(MysqlAdapter::getInstance()->getUser_($arr['use_id']));
-                $winner->setCard(MysqlAdapter::getInstance()->getCard($arr['car_id']));
+                $winner->setCard(MysqlAdapter::getInstance()->getCards($arr['car_id']));
                 $winner->setSeries(MysqlAdapter::getInstance()->getSeries($newestSeries->getSer_id()));
                 $winner->setRow_id($arr['row_id']);
                 $winner->setWin_id($arr['win_id']);

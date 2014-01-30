@@ -113,6 +113,7 @@ OUT;
 		    <th>Erstellt am</th>
 		</tr>
 	    </thead>
+
 	    <tbody>
 HTML;
 

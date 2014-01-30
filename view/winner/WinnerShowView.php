@@ -15,7 +15,7 @@ class WinnerShowView extends View {
 
         if ($this->winner->getWin_notificated() != '') {
             $confirmation = new DateTime($this->winner->getWin_notificated());
-            $confirmationtext = $confirmation->format('d.m.Y H.i');
+            $confirmationtext = $confirmation->format('d.m.Y H:i');
         } else {
             $confirmationtext = "pendent";
         }
@@ -41,7 +41,7 @@ class WinnerShowView extends View {
 		</tr>
 		<tr>
 		<td>Datum und Zeit:</td>
-		<td>{$credate->format('d.m.Y H.i')}</td>
+		<td>{$credate->format('d.m.Y H:i')}</td>
 		</tr>
                 <tr>
 		<td>Bestätigung:</td>
