@@ -38,7 +38,7 @@ OUT;
             $ten = 10;
             $row = 1;
             echo "<tr>\n";
-            while ($i <= (5 * $j)) {
+            while ($i <= 5) {
                 while ($this->card->{'getRow'.$j}()->{'getRow_nr'.$i}() >= $ten) {
                     echo "\t<td></td>\n";
                     $ten += 10;
@@ -50,6 +50,7 @@ OUT;
                 $ten += 10;
                 $i++;
             }
+            $i = 1;
             while ($row++ < 10) {
                 echo "\t<td></td>\n";
             }

@@ -938,7 +938,7 @@ final class MysqlAdapter {
     
     public function saveRows(\Rows $rows) {
         if($rows->getRow_id() != '') {
-            $query = "UPDATE rows SET car_id = '{$rows->getCar_id()}', car_serialnumber = '{$rows->getCar_serialnumber()}', row_nr = '{$rows->getRow_nr()}',row_nr1 = '{$rows->getRow_nr1()}', row_nr2 = '{$rows->getRow_nr2()}', row_nr3 = '{$rows->getRow_nr3()}', row_nr4 = '{$rows->getRow_nr4()}', row_nr5 = '{$rows->getRow_nr5()}' WHERE row_id = ".$rows;
+            $query = "UPDATE rows SET car_id = '{$rows->getCar_id()}', car_serialnumber = '{$rows->getCar_serialnumber()}', row_nr = '{$rows->getRow_nr()}',row_nr1 = '{$rows->getRow_nr1()}', row_nr2 = '{$rows->getRow_nr2()}', row_nr3 = '{$rows->getRow_nr3()}', row_nr4 = '{$rows->getRow_nr4()}', row_nr5 = '{$rows->getRow_nr5()}' WHERE row_id = ".$rows->getRow_id();
             $this->con->query($query);
         }
         else {
