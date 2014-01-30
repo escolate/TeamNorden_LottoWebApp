@@ -12,30 +12,37 @@ class EventShowView extends View {
     private $emcs;
 
     public function display() {
-        // Counts the series
-        $this->seriesCounter = count($this->vars['seriesList']);
-        // Counts the numbers
-        $this->drawCounter = count($this->vars['numberList']);
+	// Counts the series
+	$this->seriesCounter = count($this->vars['seriesList']);
+	// Counts the numbers
+	$this->drawCounter = count($this->vars['numberList']);
 
-        $this->emcs = $this->vars['emcs'];
+	$this->emcs = $this->vars['emcs'];
 
-        if (isset($this->vars['winner'])) {
-            /* @var $winner \Winner */
-            foreach ($this->vars['winner'] as $winner) {
-                echo '<div class="win">
+	if (isset($this->vars['winner'])) {
+	    /* @var $winner \Winner */
+	    foreach ($this->vars['winner'] as $winner) {
+		echo '<div class="win">
                         <form method="post" action="/winner">
                             <input type="hidden" name="action" value="add">
+<<<<<<< HEAD
                             <input type="hidden" name="ser_id" value="'.$winner->getSeries()->getSer_id().'">
                             <input type="hidden" name="row_id" value="'.$winner->getRow_id().'">
                             <input type="hidden" name="use_id" value="'.$winner->getUser()->getUse_id().'">
                             <input type="hidden" name="win_id" value="'.$winner->getWin_id().'">
                         <div>Gewonnen: <b>'.$winner->getUser()->getUse_firstname().' '.$winner->getUser()->getUse_lastname().'</b>, Karte: <b>'.$winner->getCard()->getCar_serialnumber().'</b></div>
+=======
+                            <input type="hidden" name="ser_id" value="' . $winner->getSeries()->getSer_id() . '">
+                            <input type="hidden" name="row_id" value="' . $winner->getRow_id() . '">
+                            <input type="hidden" name="use_id" value="' . $winner->getUser()->getUse_id() . '">
+                        <div>Gewonnen: <b>' . $winner->getUser()->getUse_firstname() . ' ' . $winner->getUser()->getUse_lastname() . '</b>, Karte: <b>' . $winner->getCard()->getCar_serialnumber() . '</b></div>
+>>>>>>> zacki
                         <div><input type="submit" value="überprüfen"></div>
                         </form>
                     </div>';
-            }
-        }
-        echo <<<HTML
+	    }
+	}
+	echo <<<HTML
 <div class="content-box">
     <h1>Veranstaltung</h1>
     <div class="button-box">
@@ -86,72 +93,55 @@ class EventShowView extends View {
 <div class="content-box">
     <h1>Spieler</h1>
     <div class="button-box">
-	<a href="/user" class="button yellow">Spieler hinzufügen</a>
+	<a href="/eventmemberscard/" class="button yellow">Jetzt zuweisen</a>
     </div>
 <div class="list">
 	<form action="/event/add/{$this->vars['event']->getEvt_id()}" method="POST">
+HTML;
+	if (count($this->emcs)) {
+	    echo <<<HTML
 	    <table>
 		<thead>
 		    <tr>
-		    <th></th>
 		    <th>Name</th>
 		    <th> Spielkarte </th>
 		    </tr>
 		</thead>
-		<tfoot>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td>Alle auswählen</td>
-			<td></td>
-		    </tr>
-		</tfoot>
 		<tbody>
 HTML;
-        if (count($this->emcs)) {
-            /* @var $emc \Eventmembercard */
-            foreach ($this->emcs as $emc) {
-                echo '<tr>';
-                echo '<td><input type="checkbox" name="userIds[]" value="' . $emc->getUser()->getUse_id() . '"></td>';
-                echo "<td><a href=\"/usercard/{$emc->getUser()->getUse_id()}\">{$emc->getUser()->getUse_firstname()} {$emc->getUser()->getUse_lastname()} </a></td>";
-                echo "<td><a href=\"/usercard/{$emc->getUser()->getUse_id()}\">{$emc->getCard()->getCar_serialnumber()}</a></td>";
-                echo '</tr>';
-            }
-        }
 
-//	if ($this->vars['eventmemberNameList']) {
-//	    foreach ($this->vars['eventmemberNameList'] as $object) {
-//		echo '<tr>';
-//		echo '<td><input type="checkbox" name="userIds[]" value="' . $object->getUse_id() . '"></td>';
-//		echo "<td><a href=\"/eventmemberscard/?user={$object->getUse_id()}&event={$this->vars['event']->getEvt_id()}\">{$object->getUse_firstname()} {$object->getUse_lastname()} </a></td>";
-//		echo "<td> 0 </td>";
-//		echo '</tr>';
-//	    }
-//	}
+	    /* @var $emc \Eventmembercard */
+	    foreach ($this->emcs as $emc) {
+		echo '<tr>';
+		echo "<td><a href=\"/usercard/{$emc->getUser()->getUse_id()}\">{$emc->getUser()->getUse_firstname()} {$emc->getUser()->getUse_lastname()} </a></td>";
+		echo "<td><a href=\"/usercard/{$emc->getUser()->getUse_id()}\">{$emc->getCard()->getCar_serialnumber()}</a></td>";
+		echo '</tr>';
+	    }
 
-        echo <<<HTML
-		</tbody>
-	    </table>
-	    <select name="submit">
-		<option>[Aktion]</option>"
-		<option value="editCards">Spielkarten bearbeiten</option>
-		<option value="removeUserFromEvent">Spieler Entfernen</option>
-	    </select>
-	    <button> Ausführen </button>
+
+	    echo "</tbody>
+	    </table>";
+	}else{
+	    echo "Weisen Sie den Spielern ihre Karten für Event <b>".$this->vars['event']->getEvt_name()."</b> zu!";
+	}
+	echo <<<HTML
 	</form>
     </div>
+</div>
 
-    </div>
-    
-
-<div class="content-box">
 HTML;
-        $sTitleCounter = $this->seriesCounter;
-        if (!$sTitleCounter) {
-            $sTitleCounter = 1;
-        }
-        echo "<h1>Serie $sTitleCounter</h1>";
-        $newestSerId = $this->vars['newestSeries']->getSer_id();
-        echo <<<HTML
+	if ($this->emcs) {
+
+
+	    echo '<div class="content-box">';
+
+	    $sTitleCounter = $this->seriesCounter;
+	    if (!$sTitleCounter) {
+		$sTitleCounter = 1;
+	    }
+	    echo "<h1>Serie $sTitleCounter</h1>";
+	    $newestSerId = $this->vars['newestSeries']->getSer_id();
+	    echo <<<HTML
    
     <form style="text-align: center;" action="/event/{$this->vars['event']->getEvt_id()}" method="POST">
 	<button name="submit" value="closeSeries" class="button red"> Serie $sTitleCounter abschliessen </button>
@@ -186,24 +176,24 @@ HTML;
 		</tfoot>
 		<tbody>
 HTML;
-        $drawCounter = $this->drawCounter;
-        if ($this->vars['numberList']) {
-            foreach ($this->vars['numberList'] as $object) {
-                echo '<tr>';
-                echo '<td><input type="checkbox" name="numberIds[]" value="' . $object->getNum_id() . '"></td>';
-                echo "<td>Ziehung $drawCounter</td>";
-                echo "<td>{$object->getNum_num()}</td>";
-                echo '</tr>';
-                $drawCounter--;
-            }
-        } else {
-            echo '<tr>';
-            echo '<td></td>';
-            echo "<td>leer</td>";
-            echo "<td>leer</td>";
-            echo '</tr>';
-        }
-        echo <<<HTML
+	    $drawCounter = $this->drawCounter;
+	    if ($this->vars['numberList']) {
+		foreach ($this->vars['numberList'] as $object) {
+		    echo '<tr>';
+		    echo '<td><input type="checkbox" name="numberIds[]" value="' . $object->getNum_id() . '"></td>';
+		    echo "<td>Ziehung $drawCounter</td>";
+		    echo "<td>{$object->getNum_num()}</td>";
+		    echo '</tr>';
+		    $drawCounter--;
+		}
+	    } else {
+		echo '<tr>';
+		echo '<td></td>';
+		echo "<td>leer</td>";
+		echo "<td>leer</td>";
+		echo '</tr>';
+	    }
+	    echo <<<HTML
 
 		</tbody>
 	    </table>
@@ -215,12 +205,10 @@ HTML;
 	</form>
     </div>
 </div>
-
-
-
 HTML;
-        if (!is_null($this->vars['seriesList']) AND count($this->vars['seriesList']) != 1) {
-            echo <<<HTML
+	}
+	if (!is_null($this->vars['seriesList']) AND count($this->vars['seriesList']) != 1) {
+	    echo <<<HTML
 <div class="content-box">
     <h1>Gespielte Serien</h1>
     <div class="list">
@@ -241,17 +229,17 @@ HTML;
 		<tbody>
 HTML;
 
-            $seriesCounter = $this->seriesCounter - 1;
-            unset($this->vars['seriesList'][0]);
-            foreach ($this->vars['seriesList'] as $object) {
-                echo '<tr>';
-                echo "<td><input type=\"checkbox\" name=\"seriesIds[]\" value=\"{$object->getSer_id()}\"></td>";
-                echo "<td><input type=\"hidden\" name=\"seriesNames[]\" value=\"$seriesCounter\">Serie $seriesCounter</td>";
-                echo '</tr>';
-                $seriesCounter--;
-            }
+	    $seriesCounter = $this->seriesCounter - 1;
+	    unset($this->vars['seriesList'][0]);
+	    foreach ($this->vars['seriesList'] as $object) {
+		echo '<tr>';
+		echo "<td><input type=\"checkbox\" name=\"seriesIds[]\" value=\"{$object->getSer_id()}\"></td>";
+		echo "<td><input type=\"hidden\" name=\"seriesNames[]\" value=\"$seriesCounter\">Serie $seriesCounter</td>";
+		echo '</tr>';
+		$seriesCounter--;
+	    }
 
-            echo <<<HTML
+	    echo <<<HTML
 		</tbody>
 	    </table>
 	    <select name="submit">
@@ -264,9 +252,9 @@ HTML;
 	    </div>
 </div>
 HTML;
-        }
+	}
 
-        echo <<<HTML
+	echo <<<HTML
 		
 
 HTML;

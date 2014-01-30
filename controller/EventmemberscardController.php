@@ -9,12 +9,9 @@ class EventmemberscardController extends Controller {
     }
 
     protected function index() {
-	$userId = $_GET['user'];
-	$eventId = $_GET['event'];
-
-	$view = new EventmemberscardView();
-
-	$view->display();
+        $view = new EventmemberscardView();
+        $view->assign('user', MysqlAdapter::getInstance()->getUser_($this->resourceId));
+        $view->display();
     }
 
     protected function init() {

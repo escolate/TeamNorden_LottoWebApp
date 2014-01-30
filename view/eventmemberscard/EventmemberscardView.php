@@ -1,78 +1,46 @@
 <?php
 
+class EventmemberscardView extends View {
 
-class EventmemberscardView extends View{
+    private $user;
+
     public function display() {
 	echo <<<OUT
-         <div class="content-box">
-    <h1>Spielerkarten</h1>
-    <div class="event-card">
-    <table class="show-table">
-	    <tbody>
-		<tr>
-		<td>Spieler:</td>
-		<td>Zakaria Agoulif</td>
-		</tr>
-		<tr>
-		<td>Event:</td>
-		<td>Lotto Spass für die ganze Familie</td>
-		</tr>
-	    </tbody>
-	</table>
-    </div>
+        <div class="content-box">
+    <h1>Spieler</h1>
     <div class="list">
-	<form name="events" method="post">
 	    <table>
 		<thead>
-                    <tr>
-                        <th></th>
-                        <th>Kartennr.</th>
-                        <th>Reihe 1</th>  
-                        <th>Reihe 2</th>  
-                        <th>Reihe 3</th>
-                        <th>Gültigkeitsbereich</th>
+		    <tr>
+		    <th>Name</th>
+		    <th>Strasse</th>  
+		    <th>Ort</th>
+		    <th>Geburtstag</th>
+                    <th>Admin</th>
 		    </tr>
 		</thead>
-		<tfoot>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td>Alle auswählen</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		    </tr>
-		</tfoot>
+
 		<tbody>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td>102</td>
-			<td>1,2,3,4,5</td>
-			<td>1,2,3,4,5</td>
-			<td>1,2,3,4,5</td>
-			<td>Für alle Serien!</td>
-		    </tr>
-		    <tr>
-			<td><input type="checkbox"></td>
-			<td>130</td>
-			<td>1,2,3,4,5</td>
-			<td>1,2,3,4,5</td>
-			<td>1,2,3,4,5</td>
-			<td>Serie: 1, 2, 5</td>
-		    </tr>
-                </tbody>
+OUT;
+	foreach ($this->vars['user'] as $user) {
+	    $this->user = $user;
+	    echo '
+                <tr>
+                    <td><a href="/user/' . $this->user->getUse_id() . '">' . $this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname() . '</a></td>
+                    <td><a href="/user/' . $this->user->getUse_id() . '">' . $this->user->getUse_address() . '</a></td>
+                    <td><a href="/user/' . $this->user->getUse_id() . '">' . $this->user->getUse_zip() . ' ' . $this->user->getUse_city() . '</a></td>
+                    <td><a href="/user/' . $this->user->getUse_id() . '">' . $this->user->getUse_birth() . '</a></td>
+                    <td><a href="/user/' . $this->user->getUse_id() . '">' . ($this->user->getUse_administrator() ? '<img alt="Ja" src="/images/icons/tick.png">' : '') . '</a></td>
+                </tr>';
+	}
+	echo <<<OUT
+                                    </tbody>
 	    </table>
-	    <select name="action">
-		<option value="action">[Aktion]</option>
-		<option value="delete">Bearbeiten</option>
-		<option value="delete">Löschen</option>
-	    </select>
-	    <input type="submit" value="Ausführen">
-	</form>
     </div>
-</div>
+</div>   
 OUT;
     }
+
 }
 
 ?>

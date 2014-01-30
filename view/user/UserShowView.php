@@ -20,24 +20,24 @@ class UserShowView extends View {
     private $notification = "";
 
     public function display() {
-        if (isset($this->vars['user']) && $this->vars['user'] instanceof User) {
-            $this->user = $this->vars['user'];
-            $boxtitle = "Benutzer bearbeiten";
-        } else {
-            $this->user = new User();
-            $boxtitle = "Neuer Benutzer anlegen";
-        }
+	if (isset($this->vars['user']) && $this->vars['user'] instanceof User) {
+	    $this->user = $this->vars['user'];
+	    $boxtitle = "Benutzer bearbeiten";
+	} else {
+	    $this->user = new User();
+	    $boxtitle = "Neuer Benutzer anlegen";
+	}
 
-        if (isset($this->vars['notify'])) {
-            $this->notification = '<div class="red">' . $this->vars['notify'] . '</div>';
-        }
+	if (isset($this->vars['notify'])) {
+	    $this->notification = '<div class="red">' . $this->vars['notify'] . '</div>';
+	}
 
-        $gebdat = $this->getBirthDateInput($this->user->getUse_birth());
-        $isAdmin = ($this->user->getUse_administrator() ? 'checked' : '');
-        $admin = $this->user->getUse_administrator() ? '<img alt="Ja" title="Ja" src="/images/icons/tick.png">' : '';
-        $statusList = $this->getStatusList();
+	$gebdat = $this->getBirthDateInput($this->user->getUse_birth());
+	$isAdmin = ($this->user->getUse_administrator() ? 'checked' : '');
+	$admin = $this->user->getUse_administrator() ? '<img alt="Ja" title="Ja" src="/images/icons/tick.png">' : '';
+	$statusList = $this->getStatusList();
 
-        echo <<<OUT
+	echo <<<OUT
         <div class="content-box">
     <h1>Benutzer #{$this->user->getUse_id()}</h1>
     <div class="button-box">
@@ -129,8 +129,8 @@ class UserShowView extends View {
 
 <div class="content-box">
     <h1>Gewinne</h1>
-    <div class="event-card">
-	<table class="show-table">
+    <div class="list">
+	<table>
 	    <tbody>
 		<tr>
                     <th>Datum</th>
@@ -138,21 +138,24 @@ class UserShowView extends View {
                     <th>Gewinn</th>
 		</tr>
 OUT;
-        foreach (MysqlAdapter::getInstance()->getUserWins($this->user->getUse_id()) as $arr) {
-            echo "<tr>
+
+	foreach (MysqlAdapter::getInstance()->getUserWins($this->user->getUse_id()) as $arr) {
+	    echo "<tr>
                 <td>{$arr[0]}</td>
                 <td>{$arr[1]}</td>
                 <td>{$arr[2]}</td>
                 </tr>";
-        }
-        echo <<<OUT
+	}
+
+
+	echo <<<OUT
 	    </tbody>
 	</table>
-    </div>
+   </div>
 </div>
 OUT;
-	    
-    echo <<<HTML
+
+	echo <<<HTML
 <div class="content-box">
     <h1>Spielkarten</h1>
     <div class="button-box">
@@ -183,13 +186,13 @@ OUT;
 HTML;
 
 	foreach (MysqlAdapter::getInstance()->getUserCards($this->user->getUse_id()) as $val) {
-            echo "<tr>
+	    echo "<tr>
                 <td>{$val->getSeries()->getEvent()->getDate()}</td>
                 <td>{$val->getSeries()->getEvent()->getEvt_name()}</td>
                 <td>{$val->getSeries()->getSer_id()}</td>
                 <td>{$val->getCard()->getCar_serialnumber()}</td>
                 </tr>";
-        }
+	}
 
 	echo <<<HTML
 		</tbody>
@@ -203,15 +206,14 @@ HTML;
     </div>
 </div>
 HTML;
-}
-
+    }
 
     private function getStatusList() {
-        $str = '';
-        foreach (MysqlAdapter::getInstance()->getStatusList() as $val) {
-            $str .= '<option value="' . $val . '" />';
-        }
-        return $str;
+	$str = '';
+	foreach (MysqlAdapter::getInstance()->getStatusList() as $val) {
+	    $str .= '<option value="' . $val . '" />';
+	}
+	return $str;
     }
 
 }

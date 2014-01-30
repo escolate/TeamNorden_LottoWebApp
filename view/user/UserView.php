@@ -1,15 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of UserView
- *
- * @author tscheurer
- */
 class UserView extends View {
 
     /**
@@ -68,27 +58,10 @@ OUT;
 	    </select>
 	    <input type="submit" value="Ausführen">
 	</form>
-	<div class="pages">
-	    Seite
-	    <form>
-		<select name="events-action">
-		    <option value="delete">1</option>
-		    <option value="delete">2</option>
-		    <option value="delete">3</option>
-		    <option value="delete">4</option>
-		    <option value="action" selected>5</option>
-		    <option value="delete">6</option>
-		    <option value="delete">7</option>
-		</select>
-	    </form>
-	    von 7
-	</div>
     </div>
 </div>   
 OUT;
     }
-
-//put your code here
 }
 
 ?>
