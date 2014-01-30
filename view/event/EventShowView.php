@@ -20,14 +20,15 @@ class EventShowView extends View {
         $this->emcs = $this->vars['emcs'];
 
         if (isset($this->vars['winner'])) {
-            foreach ($this->vars['winner'] as $emc) {
+            /* @var $winner \Winner */
+            foreach ($this->vars['winner'] as $winner) {
                 echo '<div class="win">
                         <form method="post" action="/winner">
                             <input type="hidden" name="action" value="add">
-                            <input type="hidden" name="ser_id" value="'.$emc->getSeries()->getSer_id().'">
-                            <input type="hidden" name="car_id" value="'.$emc->getCard()->getCar_id().'">
-                            <input type="hidden" name="use_id" value="'.$emc->getUser()->getUse_id().'">
-                        <div>Gewonnen: <b>'.$emc->getUser()->getUse_firstname().' '.$emc->getUser()->getUse_lastname().'</b>, Karte: <b>'.$emc->getCard()->getCar_serialnumber().'</b></div>
+                            <input type="hidden" name="ser_id" value="'.$winner->getSeries()->getSer_id().'">
+                            <input type="hidden" name="row_id" value="'.$winner->getRow_id().'">
+                            <input type="hidden" name="use_id" value="'.$winner->getUser()->getUse_id().'">
+                        <div>Gewonnen: <b>'.$winner->getUser()->getUse_firstname().' '.$winner->getUser()->getUse_lastname().'</b>, Karte: <b>'.$winner->getCard()->getCar_serialnumber().'</b></div>
                         <div><input type="submit" value="überprüfen"></div>
                         </form>
                     </div>';

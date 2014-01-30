@@ -28,13 +28,13 @@ class WinnerController extends Controller {
                 break;
             case 'add':
                 $ser_id = $_POST['ser_id'];
-                $car_id = $_POST['car_id'];
+                $row_id = $_POST['row_id'];
                 $use_id = $_POST['use_id'];
-                if (is_numeric($car_id) && is_numeric($ser_id) && is_numeric($use_id)) {
+                if (is_numeric($row_id) && is_numeric($ser_id) && is_numeric($use_id)) {
                     $winner = new Winner();
                     $winner->setSeries(MysqlAdapter::getInstance()->getSeries($ser_id));
-                    $winner->setCard(MysqlAdapter::getInstance()->getCard($car_id));
                     $winner->setUser(MysqlAdapter::getInstance()->getUser_($use_id));
+                    $winner->setRow_id($row_id);
                     MysqlAdapter::getInstance()->saveWinner($winner);
                 }
                 header("Location: /winner/" . $winner->getWin_id(), TRUE, 303);
