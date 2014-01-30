@@ -42,8 +42,9 @@ OUT;
         <select name="series">
 OUT;
         /* @var $ser \Series */
+        $i = count($this->vars['series']);
         foreach ($this->vars['series'] as $ser) {
-            echo '<option' . ($ser->getSer_id() == $_GET['series'] ? ' SELECTED' : '') . ' value="' . $ser->getSer_id() . '">' . $ser->getSer_id() . '</option>';
+            echo '<option' . ($ser->getSer_id() == $_GET['series'] ? ' SELECTED' : '') . ' value="' . $ser->getSer_id() . '">' . $i-- . '</option>';
         }
 
         echo <<<OUT

@@ -127,20 +127,10 @@ final class MysqlAdapter {
     public function saveNumber($number, $ser_id) {
 
 // Duplicate numbers are not allowed but the user must know if he want do that
-	$query = "
+	$query = "INSERT INTO numbers (ser_id, num_num, num_cre_dat, num_cre_id, num_mod_dat, num_mod_id) 
+            VALUES ('$ser_id', '$number', NOW(), '{$_SESSION['user']['id']}', NOW(), {$_SESSION['user']['id']})";
 
-	    INSERT INTO 
-		numbers (ser_id, num_num, num_cre_dat, num_cre_id, num_mod_dat, num_mod_id) 
-	    VALUES 
-		('$ser_id', '$number', NOW(), '{$_SESSION['user']['id']}', NOW(), {$_SESSION['user']['id']});
-	";
-
-	//Save
-	if (!$this->con->query($query)) {
-	    $this->error($query);
-	    return FALSE;
-	}
-	return TRUE;
+	return $this->con->query($query);
     }
 
     // Set the delete flag for numbers
@@ -1209,7 +1199,7 @@ final class MysqlAdapter {
      */
     public function getEventSeries($eventid) {
 	$arr = array();
-	$query = "SELECT * FROM series WHERE eve_id = {$eventid} ORDER BY ser_id";
+	$query = "SELECT * FROM series WHERE eve_id = {$eventid} ORDER BY ser_id DESC";
 	$result = $this->con->query($query);
 	if ($result->num_rows) {
 	    while ($row = $result->fetch_assoc()) {
