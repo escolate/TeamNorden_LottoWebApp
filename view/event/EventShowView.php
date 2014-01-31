@@ -12,6 +12,7 @@ class EventShowView extends View {
     private $emcs;
 
     public function display() {
+	
 	// Counts the series
 	$this->seriesCounter = count($this->vars['seriesList']);
 	// Counts the numbers
@@ -35,6 +36,10 @@ class EventShowView extends View {
                     </div>';
 	    }
 	}
+	if(isset($_GET['err'])){
+	    echo "<div class=\"alert red\">Ungültige oder doppelte Eingabe!</div>";
+	}
+	
 	echo <<<HTML
 <div class="content-box">
     <h1>Veranstaltung</h1>
@@ -144,7 +149,8 @@ HTML;
 	<fieldset id="save-number">
 	    <legend>Zahl ziehen!</legend>
 	    <input type="hidden" value="{$newestSerId}" name="seriesId">
-	    <input type="text" placeholder="Zahl" autocomplete="off" name="number">
+	    <input type="hidden" value="{$this->vars['event']->getEvt_id()}" name="eve_id">
+	    <input type="text" placeholder="Zahl" autocomplete="off" name="number" autofocus>
 	    <button name="submit" name="submit" value="saveNumber"> Ziehen! </button>
 	</fieldset>
     </form>

@@ -37,6 +37,7 @@ class EventController extends Controller {
                 $seriesId = MysqlAdapter::getInstance()->saveSeries($eventId);
                 // Set old cards to the new series
 //                MysqlAdapter::getInstance()->recycleCards($seriesId); --> Nichts zu recyceln da noch keine Runde gespielt
+
                 // Jump to the event site
                 header("Location: /event/", TRUE, 303);
                 break;
@@ -141,6 +142,7 @@ class EventController extends Controller {
                 header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
                 break;
         }
+
     }
 
     protected function index() {
