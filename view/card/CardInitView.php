@@ -34,7 +34,7 @@ class CardInitView extends View {
     <div class="event-card">
         <form action="/card" method="post">
         <input type="hidden" name="id" value="{$this->card->getCar_id()}">
-        Seriennummer: <input id="csnf" required name="serialnumber" type="number" value="{$this->card->getCar_serialnumber()}">
+        Karten-Nr. <input id="csnf" required name="serialnumber" type="number" value="{$this->card->getCar_serialnumber()}">
         <div class="card">
         <div> 
         <table>

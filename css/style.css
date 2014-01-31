@@ -394,10 +394,13 @@ div.card {
 div.card div {
     border: 1px solid #222222;
     padding: 1px;
+    
 }
 
 div.card table {
     text-align: center;
+    width: 100%;
+    min-width: 300px;
 }
 
 div.card table td {
@@ -408,7 +411,7 @@ div.card table td {
 }
 
 div.card table td input {
-    width: 30px;
+    width: 50px;
     height: 30px;
     border: 0;
     margin: 2px;
@@ -416,7 +419,7 @@ div.card table td input {
 }
 
 #csnf {
-    width: 30px;
+    width: 70px;
 }
 
 button{

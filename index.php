@@ -31,7 +31,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/lib/MysqlAdapter.php';
                 <img alt="X" src="/images/icons/cancel_sw.png">
             </div>
             </noscript>
-            <img src="/images/logos/logo.png" id="logo">
+            <a href="/"><img src="/images/logos/logo.png" id="logo"></a>
             <div id="breadcrumb"><?php echo getBreadCrumbs(); ?></div>
             <div id="account" title="Bearbeite dein Account."><a href="/user/<?php echo $_SESSION['user']['id']; ?>"><?php echo $_SESSION['user']['name']; ?></a> | <form action="/login.php" method="post"> <input type="hidden" name="action" value="logout"><a id="logoutlink" href="#" title="Hier beendest du die Lotto Web App.">Logout</a></form></div> 
         </div>
