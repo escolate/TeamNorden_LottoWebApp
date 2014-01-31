@@ -13,7 +13,6 @@
 class UserCardController extends Controller {
 
     protected function create() {
-        $cards = array();
         $user = MysqlAdapter::getInstance()->getUser_($_POST['user']);
 
         switch ($_POST['action']) {

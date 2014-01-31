@@ -52,9 +52,9 @@ var_dump($this->vars['adminList']);
 	    foreach ($this->vars['adminList'] as $object) {
 		echo '<tr>';
 		echo '<td><input type="checkbox"></td>';
-		echo "<td><a href=\"/event/{$object->getUse_id()}-{$object->getUse_firstname()}_{$object->getUse_lastname()}\">{$object->getUse_firstname()} {$object->getUse_lastname()}</a></td>";
-		echo "<td><a href=\"/event/{$object->getUse_id()}-{$object->getUse_firstname()}_{$object->getUse_lastname()}\">{$object->getUse_mod_dat()}, {$object->getUse_mod_id()}</a></td>";
-		echo "<td><a href=\"/event/{$object->getUse_id()}-{$object->getUse_firstname()}_{$object->getUse_lastname()}\">{$object->getUse_cre_dat()}, {$object->getUse_cre_id()}</a></td>";
+		echo "<td><a href=\"/veranstaltung/{$object->getUse_id()}-{$object->getUse_firstname()}_{$object->getUse_lastname()}\">{$object->getUse_firstname()} {$object->getUse_lastname()}</a></td>";
+		echo "<td><a href=\"/veranstaltung/{$object->getUse_id()}-{$object->getUse_firstname()}_{$object->getUse_lastname()}\">{$object->getUse_mod_dat()}, {$object->getUse_mod_id()}</a></td>";
+		echo "<td><a href=\"/veranstaltung/{$object->getUse_id()}-{$object->getUse_firstname()}_{$object->getUse_lastname()}\">{$object->getUse_cre_dat()}, {$object->getUse_cre_id()}</a></td>";
 		echo '</tr>';
 	    }
 	   

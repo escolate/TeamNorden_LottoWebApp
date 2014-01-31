@@ -42,7 +42,7 @@ class UserController extends Controller {
 
         $adapter = MysqlAdapter::getInstance();
         if ($adapter->saveUser($user)) {
-            header("Location: /user/" . $user->getUse_id(), TRUE, 303);
+            header("Location: /benutzer/" . $user->getUse_id(), TRUE, 303);
             exit();
         }
 

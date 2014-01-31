@@ -17,7 +17,7 @@ class EventAddUserView extends View {
 	</table>
     </div>
     <div class="list">
-	<form action="/event/create/{$this->vars['event']->getEvt_id()}" method="POST">
+	<form action="/veranstaltung/create/{$this->vars['event']->getEvt_id()}" method="POST">
 	    <table>
 		<thead>
 		    <tr>

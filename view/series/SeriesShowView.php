@@ -20,7 +20,7 @@ class SeriesShowView extends View {
 	}
 	echo <<<HTML
     
-    <form action="/event/{$this->vars['event']->getEvt_id()}" method="POST">
+    <form action="/veranstaltung/{$this->vars['event']->getEvt_id()}" method="POST">
 	<fieldset id="save-number">
 	    <legend>Zahl ziehen!</legend>
 	    <input type="hidden" value="{$newestSerId}" name="seriesId">
@@ -30,7 +30,7 @@ class SeriesShowView extends View {
     </form>
     
     <div class="list">
-	<form action="/event/{$this->vars['event']->getEvt_id()}" method="POST">
+	<form action="/veranstaltung/{$this->vars['event']->getEvt_id()}" method="POST">
 	<input type="hidden" value="{$newestSerId}" name="seriesId">
 	    <table>
 		<thead>

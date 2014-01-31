@@ -42,11 +42,11 @@ OUT;
             echo '
                 <tr>
                     <td><input type="checkbox"></td>
-                    <td><a href="/user/' . $this->user->getUse_id() . '">' . $this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname() . '</a></td>
-                    <td><a href="/user/' . $this->user->getUse_id() . '">' . $this->user->getUse_address() . '</a></td>
-                    <td><a href="/user/' . $this->user->getUse_id() . '">' . $this->user->getUse_zip() . ' ' . $this->user->getUse_city() . '</a></td>
-                    <td><a href="/user/' . $this->user->getUse_id() . '">' . $this->user->getUse_birth() . '</a></td>
-                    <td><a href="/user/' . $this->user->getUse_id() . '">' . ($this->user->getUse_administrator() ? '<img alt="Ja" src="/images/icons/tick.png">' : '') . '</a></td>
+                    <td><a href="/benutzer/' . $this->user->getUse_id() . "-".$this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname().'">' . $this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname() . '</a></td>
+                    <td><a href="/benutzer/' . $this->user->getUse_id() . "-".$this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname().'">' . $this->user->getUse_address() . '</a></td>
+                    <td><a href="/benutzer/' . $this->user->getUse_id() . "-".$this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname().'">' . $this->user->getUse_zip() . ' ' . $this->user->getUse_city() . '</a></td>
+                    <td><a href="/benutzer/' . $this->user->getUse_id() . "-".$this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname().'">' .$this->user->getUse_birth() . '</a></td>
+                    <td><a href="/benutzer/' . $this->user->getUse_id() . "-".$this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname().'">' . ($this->user->getUse_administrator() ? '<img alt="Ja" src="/images/icons/tick.png">' : '') . '</a></td>
                 </tr>';
         }
         echo <<<OUT

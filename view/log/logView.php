@@ -14,7 +14,9 @@ class logView extends View {
 	    <thead>
 		<tr>
 		    <th>Aktion</th>
-		    <th>Erstellt am</th>
+		    <th>Ausgelöst durch</th>
+		    <th>Ausgelöst am</th>
+		    <th>IP-Adresse</th>
                     <th></th>
 		</tr>
 	    </thead>
@@ -41,9 +43,11 @@ HTML;
 	    }
 
 	    echo'<tr>
-		    <td><a href="/log/' . $val->getLog_id() . '">' . $val->getLog_action() . '</a></td>
-		    <td><a href="/log/' . $val->getLog_id() . '">' . $this->getDate($val->getLog_timestamp()) . " - " . $this->getTime($val->getLog_timestamp()) . '</a></td>
-                    <td><a href="/log/' . $val->getLog_id() . '">' . $icon . '</a></td>
+		    <td>' . $val->getLog_action() . '</td>
+		    <td>'.$val->getUse_id().'</td>
+		    <td>' . $this->getDate($val->getLog_timestamp()) . " - " . $this->getTime($val->getLog_timestamp()) . '</td>
+		    <td>'.$val->getLog_ip().'</td>
+		    <td>' . $icon . '</td>
 		</tr>';
 	}
 	echo <<<HTML

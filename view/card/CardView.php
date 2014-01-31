@@ -14,7 +14,7 @@ class CardView extends View {
          <div class="content-box">
     <h1>Karten</h1>
     <div class="button-box">
-	<a href="/card/new" class="button green">Erstellen</a>
+	<a href="/karte/new" class="button green">Erstellen</a>
     </div>
     <div class="list">
 	<form name="events" method="post">
@@ -45,11 +45,11 @@ OUT;
         foreach ($this->list as $card) {
             echo "<tr>\r\n";
             echo '<td><input type="checkbox" name="carid[]" value="' . $card->getCar_id() . '"></td>
-                        <td><a href="/card/' . $card->getCar_id() . '">' . $card->getCar_serialnumber() . '</a></td>';
+                        <td><a href="/karte/' . $card->getCar_id() . '">' . $card->getCar_serialnumber() . '</a></td>';
 //                    $line = 1;
             $row = 1;
             for ($line = 1; $line < 4; $line++) {
-                echo '<td><a href="/card/' . $card->getCar_id() . '">';
+                echo '<td><a href="/karte/' . $card->getCar_id() . '">';
                 for ($row = 1; $row < 6; $row++) {
                     if ($row > 1) {
                         echo ',';
@@ -59,7 +59,7 @@ OUT;
                 echo "</a></td>";
             }
 
-            echo '<td><a href="/card/' . $card->getCar_id() . '">' . $card->getCar_cre_dat() . '</a></td>';
+            echo '<td><a href="/karte/' . $card->getCar_id() . '">' . $card->getCar_cre_dat() . '</a></td>';
             echo "</tr>\r\n";
         }
         echo <<<OUT

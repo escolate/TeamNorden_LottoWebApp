@@ -33,9 +33,9 @@ HTML;
         foreach ($this->vars['list'] as $winner) {
             echo '<tr>';
             echo '<td><input type="checkbox"></td>';
-            echo "<td><a href=\"/winner/{$winner->getWin_id()}\">{$winner->getUser()->getUse_firstname()} {$winner->getUser()->getUse_lastname()}</a></td>";
-            echo "<td><a href=\"/winner/{$winner->getWin_id()}\">{$winner->getWin_cre_dat()}</a></td>";
-            echo "<td><a href=\"/winner/{$winner->getWin_id()}\">" . (!is_null($winner->getWin_notificated()) ? $this->getDate($winner->getWin_notificated()) : "Ausstehend") . "</a></td>";
+            echo "<td><a href=\"/gewinner/{$winner->getWin_id()}\">{$winner->getUser()->getUse_firstname()} {$winner->getUser()->getUse_lastname()}</a></td>";
+            echo "<td><a href=\"/gewinner/{$winner->getWin_id()}\">{$winner->getWin_cre_dat()}</a></td>";
+            echo "<td><a href=\"/gewinner/{$winner->getWin_id()}\">" . (!is_null($winner->getWin_notificated()) ? $this->getDate($winner->getWin_notificated()) : "Ausstehend") . "</a></td>";
             echo '</tr>';
         }
 

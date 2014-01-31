@@ -1,1 +1,0 @@
-- die Lottkarte müssen(!!) stimmen, desshalb vor Abgabe einen sauberen Import von den bestehenden Daten machen

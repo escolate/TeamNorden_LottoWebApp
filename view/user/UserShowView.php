@@ -41,7 +41,7 @@ class UserShowView extends View {
         <div class="content-box">
     <h1>Benutzer #{$this->user->getUse_id()}</h1>
     <div class="button-box">
-	<a href="/user/edit/{$this->user->getUse_id()}" class="button grey">Bearbeiten</a>
+	<a href="/benutzer/edit/{$this->user->getUse_id()}-{$this->user->getUse_firstname()} {$this->user->getUse_lastname()}" class="button grey">Bearbeiten</a>
     </div>
     <div class="event-card">
 	<table class="show-table">
@@ -160,7 +160,7 @@ OUT;
 <div class="content-box">
     <h1>Spielkarten</h1>
     <div class="button-box">
-	<a href="/usercard/{$this->user->getUse_id()}" class="button yellow">Alle anzeigen</a>
+	<a href="/benutzerkarten/{$this->user->getUse_id()}" class="button yellow">Alle anzeigen</a>
     </div>
     <div class="list">
 	    <table>

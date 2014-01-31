@@ -25,7 +25,7 @@ class UserCardShowView extends View {
         <div class="content-box">
     <h1>Eventkarten</h1>
     <div class="button-box">
-        <a href="/usercard/edit/{$this->user->getUse_id()}" class="button grey">Hinzufügen</a>
+        <a href="/benutzerkarten/edit/{$this->user->getUse_id()}" class="button grey">Hinzufügen</a>
     </div>
     <div class="event-card">
         <p><b>User:</b> {$this->user->getUse_firstname()} {$this->user->getUse_lastname()}</p>

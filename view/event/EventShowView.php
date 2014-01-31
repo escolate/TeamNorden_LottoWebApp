@@ -24,7 +24,7 @@ class EventShowView extends View {
 	    /* @var $winner \Winner */
 	    foreach ($this->vars['winner'] as $winner) {
 		echo '<div class="win">
-                        <form method="post" action="/winner">
+                        <form method="post" action="/gewinner">
                             <input type="hidden" name="action" value="add">
                             <input type="hidden" name="ser_id" value="'.$winner->getSeries()->getSer_id().'">
                             <input type="hidden" name="row_id" value="'.$winner->getRow_id().'">
@@ -44,7 +44,7 @@ class EventShowView extends View {
 <div class="content-box">
     <h1>Veranstaltung</h1>
     <div class="button-box">
-	<a href="/event/edit/{$this->vars['event']->getEvt_id()}" class="button grey">Bearbeiten</a>
+	<a href="/veranstaltung/edit/{$this->vars['event']->getEvt_id()}" class="button grey">Bearbeiten</a>
     </div>
     <div class="event-card">
 	<table class="show-table">
@@ -91,10 +91,10 @@ class EventShowView extends View {
 <div class="content-box">
     <h1>Spieler</h1>
     <div class="button-box">
-	<a href="/eventmemberscard/" class="button yellow">Jetzt zuweisen</a>
+	<a href="/eventkarten/" class="button yellow">Jetzt zuweisen</a>
     </div>
 <div class="list">
-	<form action="/event/add/{$this->vars['event']->getEvt_id()}" method="POST">
+	<form action="/veranstaltung/add/{$this->vars['event']->getEvt_id()}" method="POST">
 HTML;
 	if (count($this->emcs)) {
 	    echo <<<HTML
@@ -111,8 +111,8 @@ HTML;
 	    /* @var $emc \Eventmembercard */
 	    foreach ($this->emcs as $emc) {
 		echo '<tr>';
-		echo "<td><a href=\"/usercard/{$emc->getUser()->getUse_id()}\">{$emc->getUser()->getUse_firstname()} {$emc->getUser()->getUse_lastname()} </a></td>";
-		echo "<td><a href=\"/usercard/{$emc->getUser()->getUse_id()}\">{$emc->getCard()->getCar_serialnumber()}</a></td>";
+		echo "<td><a href=\"/benutzerkarten/{$emc->getUser()->getUse_id()}\">{$emc->getUser()->getUse_firstname()} {$emc->getUser()->getUse_lastname()} </a></td>";
+		echo "<td><a href=\"/benutzerkarten/{$emc->getUser()->getUse_id()}\">{$emc->getCard()->getCar_serialnumber()}</a></td>";
 		echo '</tr>';
 	    }
 
@@ -141,11 +141,11 @@ HTML;
 	    $newestSerId = $this->vars['newestSeries']->getSer_id();
 	    echo <<<HTML
    
-    <form style="text-align: center;" action="/event/{$this->vars['event']->getEvt_id()}" method="POST">
+    <form style="text-align: center;" action="/veranstaltung/{$this->vars['event']->getEvt_id()}" method="POST">
 	<button name="submit" value="closeSeries" class="button red"> Serie $sTitleCounter abschliessen </button>
     </form>
     
-    <form action="/event/{$this->vars['event']->getEvt_id()}" method="POST">
+    <form action="/veranstaltung/{$this->vars['event']->getEvt_id()}" method="POST">
 	<fieldset id="save-number">
 	    <legend>Zahl ziehen!</legend>
 	    <input type="hidden" value="{$newestSerId}" name="seriesId">
@@ -156,7 +156,7 @@ HTML;
     </form>
     
     <div class="list">
-	<form action="/event/{$this->vars['event']->getEvt_id()}" method="POST">
+	<form action="/veranstaltung/{$this->vars['event']->getEvt_id()}" method="POST">
 	<input type="hidden" value="{$newestSerId}" name="seriesId">
 	    <table>
 		<thead>
@@ -211,7 +211,7 @@ HTML;
 <div class="content-box">
     <h1>Gespielte Serien</h1>
     <div class="list">
-	<form action="/event/{$this->vars['event']->getEvt_id()}" method="POST">
+	<form action="/veranstaltung/{$this->vars['event']->getEvt_id()}" method="POST">
 			    <table>
 		<thead>
 		    <tr>

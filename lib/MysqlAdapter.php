@@ -244,6 +244,13 @@ final class MysqlAdapter {
                 sha(rand()),
                 now(),
                 '{$_SESSION['user']['id']}')";
+
+	    // Write log
+	    $log = new Log();
+	    $log->setLog_action("Benutzer {$user->getUse_firstname()} {$user->getUse_lastname()} wurde erstellt.");
+	    $log->setLog_level(Log::INFORMATIONAL);
+	    $log->send();
+	    $this->saveLog($log);
 	} else {
 //Update
 	    $query = "UPDATE user SET 
@@ -261,6 +268,12 @@ final class MysqlAdapter {
                 use_mod_id = '{$_SESSION['user']['id']}',
                 use_mod_dat = now()
                 WHERE use_id = " . $user->getUse_id() . " AND use_del is not true";
+	    // Write log
+	    $log = new Log();
+	    $log->setLog_action("Benutzer {$user->getUse_firstname()} {$user->getUse_lastname()} wurde angepasst.");
+	    $log->setLog_level(Log::NOTICE);
+	    $log->send();
+	    $this->saveLog($log);
 	}
 
 //Save
@@ -1200,8 +1213,8 @@ final class MysqlAdapter {
 	}
 	// Write log
 	$log = new Log();
-	$log->setLog_action("Die Veranstaltung {$event->getEvt_name()} wurde erstellt.");
-	$log->setLog_level(Log::NOTICE);
+	$log->setLog_action("Veranstaltung {$event->getEvt_name()} wurde erstellt.");
+	$log->setLog_level(Log::INFORMATIONAL);
 	$log->send();
 	$this->saveLog($log);
 	// return id 
@@ -1219,7 +1232,7 @@ final class MysqlAdapter {
 	}
 	// Write log
 	$log = new Log();
-	$log->setLog_action("Die Veranstaltung ".$this->getEvent($evt_id)->getEvt_name()." wurde gelöscht.");
+	$log->setLog_action("Die Veranstaltung " . $this->getEvent($evt_id)->getEvt_name() . " wurde gelöscht.");
 	$log->setLog_level(Log::WARNING);
 	$log->send();
 	$this->saveLog($log);

@@ -11,10 +11,10 @@ class EventController extends Controller {
         $submit = $_POST['submit'];
         switch ($submit) {
             case "backToEvent": // back to event
-                header("Location: /event/$this->resourceId", TRUE, 303);
+                header("Location: /veranstaltung/$this->resourceId", TRUE, 303);
                 break;
             case "backToEvents": // back to all eventS!!!
-                header("Location: /event/", TRUE, 303);
+                header("Location: /veranstaltung/", TRUE, 303);
                 break;
             case "createEvent": // create event
                 $evt_name = trim($_POST['evt_name']);
@@ -39,7 +39,7 @@ class EventController extends Controller {
 //                MysqlAdapter::getInstance()->recycleCards($seriesId); --> Nichts zu recyceln da noch keine Runde gespielt
 
                 // Jump to the event site
-                header("Location: /event/", TRUE, 303);
+                header("Location: /veranstaltung/", TRUE, 303);
                 break;
             case "editEvent":
                 $evt_id = trim($_POST['evt_id']);
@@ -61,7 +61,7 @@ class EventController extends Controller {
                 // Give event object to database adapter
                 $eventId = MysqlAdapter::getInstance()->updateEvent($event);
                 // Jump to the event site
-                header("Location: /event/$evt_id-$evt_name", TRUE, 303);
+                header("Location: /veranstaltung/$evt_id-$evt_name", TRUE, 303);
                 break;
             case "deleteEvent": // delete event
                 $eventIds = $_POST['eventIds'];
@@ -99,7 +99,7 @@ class EventController extends Controller {
                     $stat = MysqlAdapter::getInstance()->saveNumber($number, $seriesId);
                 }
                 $err = ($stat) ? '' : '?err=1';
-                header("Location: /event/{$eve_id}{$err}", TRUE, 303);
+                header("Location: /veranstaltung/{$eve_id}{$err}", TRUE, 303);
                 break;
             case "deleteNumber": // delete number from series
                 $seriesId = $_POST['seriesId'];

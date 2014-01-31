@@ -25,7 +25,7 @@ class CardShowView extends View {
          <div class="content-box">
     <h1>Karten-Nr. {$this->card->getCar_serialnumber()}</h1>
     <div class="button-box">
-	<a href="/card/edit/{$this->card->getCar_id()}-Cardnr_{$this->card->getCar_serialnumber()}" class="button grey">Bearbeiten</a>
+	<a href="/karte/edit/{$this->card->getCar_id()}-Cardnr_{$this->card->getCar_serialnumber()}" class="button grey">Bearbeiten</a>
     </div>
     <div class="event-card">
       	<div class="lotto-number">
