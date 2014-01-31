@@ -23,11 +23,15 @@ class CardShowView extends View {
 
         echo <<<OUT
          <div class="content-box">
-    <h1>Karte Nr. {$this->card->getCar_serialnumber()}</h1>
+    <h1>Karten-Nr. {$this->card->getCar_serialnumber()}</h1>
     <div class="button-box">
 	<a href="/card/edit/{$this->card->getCar_id()}-Cardnr_{$this->card->getCar_serialnumber()}" class="button grey">Bearbeiten</a>
     </div>
     <div class="event-card">
+      	<div class="lotto-number">
+	    <span>Nr.</span>
+	    <span>{$this->card->getCar_serialnumber()}</span>
+	</div>
         <div class="card">
         <div> 
         <table>
@@ -68,11 +72,11 @@ OUT;
 	    <tbody>
 		<tr>
 		<td>Erstellt:</td>
-		<td>{$this->vars['create']}</td>
+		<td>{$this->card->getCar_cre_dat()}</td>
 		</tr>
                 <tr>
 		<td>Geändert:</td>
-		<td>{$this->vars['mod']}</td>
+		<td>{$this->card->getCar_mod_dat()}</td>
 		</tr>
 	    </tbody>
 	</table>

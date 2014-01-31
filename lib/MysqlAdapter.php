@@ -325,47 +325,6 @@ final class MysqlAdapter {
 	$this->saveLog($log);
 
 	return true;
-//=======
-//	$pwe = $this->con->real_escape_string($pw);
-//	$emaile = $this->con->real_escape_string($email);
-//	$query = "UPDATE user SET use_password = password(concat(use_salt,'{$pwe}')) WHERE use_email = '{$emaile}' AND use_del is not true";
-//	if (!$this->con->query($query)) {
-//	    $this->error($query);
-//	    return FALSE;
-//	}
-//	if (!$this->con->affected_rows) {
-//	    return FALSE;
-//	}
-//
-//	$log = new Log();
-//	$log->setLog_action("Das Passwort für $emaile würde geändert.");
-//	$log->setLog_level(Log::NOTICE);
-//	$log->send();
-//	$this->saveLog($log);
-//
-//	return true;
-//>>>>>>> zaki2
-//	$ide = $this->con->real_escape_string($id);
-//	$query = "SELECT * FROM lotto.user WHERE use_id = '{$ide}'";
-//	$result = $this->con->query($query);
-//	if ($result->num_rows) {
-//	    $row = $result->fetch_assoc();
-//	    $user = new User();
-//	    $user->setUse_id($row['use_id']);
-//	    $user->setUse_lastname($row['use_lastname']);
-//	    $user->setUse_firstname($row['use_firstname']);
-//	    $user->setUse_email($row['use_email']);
-//	    $user->setUse_address($row['use_address']);
-//	    $user->setUse_zip($row['use_zip']);
-//	    $user->setUse_city($row['use_city']);
-//	    $user->setUse_administrator($row['use_administrator']);
-//	    $user->setUse_birth($row['use_birth']);
-//	    $user->setUse_phone($row['use_phone']);
-//	    $user->setUse_mobile($row['use_mobile']);
-//	    $user->setUse_status($row['use_status']);
-//	    return $user;
-//	}
-//	return null;
     }
 
     /**
@@ -428,23 +387,23 @@ final class MysqlAdapter {
 
 	    $winner->setUser($this->getUser_($row['use_id']));
 	    $winner->setSeries($this->getSeries($row['ser_id']));
-            $winner->setRow_id($row['row_id']);
+	    $winner->setRow_id($row['row_id']);
 	    $winner->setCard($this->getCardsByRowId($row['row_id']));
 
 	    return $winner;
 	}
 	return NULL;
     }
-    
+
     private function getCardsByRowId($id) {
-        $query = "SELECT car_id FROM cards WHERE row1 = $id OR row2 = $id OR row3 = $id";
+	$query = "SELECT car_id FROM cards WHERE row1 = $id OR row2 = $id OR row3 = $id";
 	$result = $this->con->query($query);
-        if($result != false) {
-            $row = $result->fetch_assoc();
-            $result->free();
-            return $this->getCards($row['car_id']);
-        }
-        return new Cards();
+	if ($result != false) {
+	    $row = $result->fetch_assoc();
+	    $result->free();
+	    return $this->getCards($row['car_id']);
+	}
+	return new Cards();
     }
 
     public function getWinnerList($limit = 0) {
@@ -829,7 +788,7 @@ final class MysqlAdapter {
 
     public function saveCards(\Cards $cards) {
 	if ($cards->getCar_id() != '') {
-	    $query = "UPDATE cards SET car_serialnumber = '{$cards->getCar_serialnumber()}',row1 = '{$cards->getRow1()->getRow_id()}',row2 = '{$cards->getRow2()->getRow_id()}',row3 = '{$cards->getRow3()->getRow_id()}' WHERE car_id = " . $cards->getCar_id();
+	    $query = "UPDATE cards SET car_serialnumber = '{$cards->getCar_serialnumber()}',row1 = '{$cards->getRow1()->getRow_id()}',row2 = '{$cards->getRow2()->getRow_id()}',row3 = '{$cards->getRow3()->getRow_id()}',car_mod_dat = NOW(), car_mod_id ='{$_SESSION['user']['id']}' WHERE car_id = " . $cards->getCar_id();
 	    $this->con->query($query);
 
 	    $this->saveRows($cards->getRow1());
@@ -1049,8 +1008,8 @@ final class MysqlAdapter {
 		$numbers .= $row['num_num'];
 	    }
 
-            //NEW
-            $query = "SELECT b.car_id,b.row_id,a.use_id,c.win_id FROM eventmemberscard a JOIN rows b ON a.car_id = b.car_id LEFT JOIN (SELECT * FROM winner WHERE win_del is false) c ON a.ser_id = c.ser_id AND b.row_id = c.row_id
+	    //NEW
+	    $query = "SELECT b.car_id,b.row_id,a.use_id,c.win_id FROM eventmemberscard a JOIN rows b ON a.car_id = b.car_id LEFT JOIN (SELECT * FROM winner WHERE win_del is false) c ON a.ser_id = c.ser_id AND b.row_id = c.row_id
 
 
                     WHERE a.ser_id = {$serieid} AND c.win_notificated is null AND
@@ -1085,7 +1044,7 @@ final class MysqlAdapter {
     public function saveLog(Log $log) {
 
 	//Save Message
-	$query = "INSERT INTO log (use_id, log_action, log_ip, log_level) VALUES ('{$log->getUse_id()}','{$log->getLog_action()}','{$log->getLog_ip()}',{$log->getLog_level()})";
+	$query = "INSERT INTO log (use_id, log_action, log_ip, log_level) VALUES ('{$log->getUse_id()}','{$this->con->escape_string($log->getLog_action())}','{$this->con->escape_string($log->getLog_ip())}',{$log->getLog_level()})";
 
 
 	if (!$this->con->query($query)) {
@@ -1239,6 +1198,13 @@ final class MysqlAdapter {
 	    $this->error($query);
 	    return FALSE;
 	}
+	// Write log
+	$log = new Log();
+	$log->setLog_action("Die Veranstaltung {$event->getEvt_name()} wurde erstellt.");
+	$log->setLog_level(Log::NOTICE);
+	$log->send();
+	$this->saveLog($log);
+	// return id 
 	$eventId = mysqli_insert_id($this->con);
 	return $eventId;
     }
@@ -1251,6 +1217,12 @@ final class MysqlAdapter {
 	    $this->error($query);
 	    return FALSE;
 	}
+	// Write log
+	$log = new Log();
+	$log->setLog_action("Die Veranstaltung ".$this->getEvent($evt_id)->getEvt_name()." wurde gelöscht.");
+	$log->setLog_level(Log::WARNING);
+	$log->send();
+	$this->saveLog($log);
 	return TRUE;
     }
 
@@ -1336,10 +1308,10 @@ final class MysqlAdapter {
 
 	return FALSE;
     }
-    
+
     public function setWinnerNotification($win_id) {
-        $query = "UPDATE winner SET win_notificated = now() WHERE win_id = ".$win_id;
-        return $this->con->query($query);
+	$query = "UPDATE winner SET win_notificated = now() WHERE win_id = " . $win_id;
+	return $this->con->query($query);
     }
 
     public function updateEvent(Event $event) {
@@ -1357,6 +1329,7 @@ final class MysqlAdapter {
 	$eventId = mysqli_insert_id($this->con);
 	return $eventId;
     }
+
 }
 
 ?>

@@ -1,18 +1,18 @@
 <?php
 define("DEBUG", true);
 
-define("URI_HOME", "/home");
-define("URI_EVENT", "/event");
-define("URI_USER", "/user");
-define("URI_PLAY", "/play");
-define("URI_CARD", "/card");
-define("URI_SERIES", "/series");
-define("URI_WINNER", "/winner");
-define("URI_LOG", "/log");
-define("URI_API", "/api");
-define("URI_ADMIN", "/admin");
-define("URI_USERCARD", "/usercard");
-define("URI_EVENTMEMBERSCARD", "/eventmemberscard");
+define("URI_HOME", "/home"); // home
+define("URI_EVENT", "/veranstaltung"); // event
+define("URI_USER", "/benutzer"); // user
+define("URI_PLAY", "/spiel"); // play
+define("URI_CARD", "/karte"); // card
+define("URI_SERIES", "/serie"); // series
+define("URI_WINNER", "/gewinner"); // winner
+define("URI_LOG", "/verlauf"); // log
+define("URI_API", "/api"); // api
+define("URI_ADMIN", "/administrator"); // admin
+define("URI_USERCARD", "/benutzerkarten"); // usercard
+define("URI_EVENTMEMBERSCARD", "/eventkarten"); // eventmemberscard
 
 define("DB_SERVER", "127.0.0.1");
 define("DB_USER", "lotto");
