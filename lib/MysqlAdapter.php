@@ -158,7 +158,7 @@ final class MysqlAdapter {
     public function saveUser(User $user) {
 	$id = $user->getUse_id();
 	if (empty($id)) {
-//Check if user already exists
+	    //Check if user already exists
 	    $q = "SELECT use_id FROM user WHERE use_email = '{$user->getUse_email()}' AND use_del is not true";
 
 	    /* @var $res mysqli_result */
@@ -210,6 +210,7 @@ final class MysqlAdapter {
                 use_phone = '{$this->con->real_escape_string($user->getUse_phone())}',
                 use_mobile = '{$this->con->real_escape_string($user->getUse_mobile())}',
                 use_administrator = {$this->con->real_escape_string($user->getUse_administrator())},
+                use_email = '{$this->con->real_escape_string($user->getUse_email())}',
                 use_mod_id = '{$_SESSION['user']['id']}',
                 use_mod_dat = now()
                 WHERE use_id = " . $user->getUse_id() . " AND use_del is not true";
