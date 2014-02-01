@@ -13,7 +13,7 @@ class UserView extends View {
         <div class="content-box">
     <h1>Spieler</h1>
     <div class="list">
-	<form name="events">
+	<form name="events" method="post">
 	    <table>
 		<thead>
 		    <tr>
@@ -41,18 +41,18 @@ OUT;
             $this->user = $user;
             echo '
                 <tr>
-                    <td><input type="checkbox"></td>
-                    <td><a href="/benutzer/' . $this->user->getUse_id() . "-".$this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname().'">' . $this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname() . '</a></td>
-                    <td><a href="/benutzer/' . $this->user->getUse_id() . "-".$this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname().'">' . $this->user->getUse_address() . '</a></td>
-                    <td><a href="/benutzer/' . $this->user->getUse_id() . "-".$this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname().'">' . $this->user->getUse_zip() . ' ' . $this->user->getUse_city() . '</a></td>
-                    <td><a href="/benutzer/' . $this->user->getUse_id() . "-".$this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname().'">' .$this->user->getUse_birth() . '</a></td>
-                    <td><a href="/benutzer/' . $this->user->getUse_id() . "-".$this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname().'">' . ($this->user->getUse_administrator() ? '<img alt="Ja" src="/images/icons/tick.png">' : '') . '</a></td>
+                    <td><input type="checkbox" name="use_id[]" value="'.$this->user->getUse_id().'"></td>
+                    <td><a href="'.URI_USER.'/' . $this->user->getUse_id() . "-".$this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname().'">' . $this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname() . '</a></td>
+                    <td><a href="'.URI_USER.'/' . $this->user->getUse_id() . "-".$this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname().'">' . $this->user->getUse_address() . '</a></td>
+                    <td><a href="'.URI_USER.'/' . $this->user->getUse_id() . "-".$this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname().'">' . $this->user->getUse_zip() . ' ' . $this->user->getUse_city() . '</a></td>
+                    <td><a href="'.URI_USER.'/' . $this->user->getUse_id() . "-".$this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname().'">' .$this->user->getUse_birth() . '</a></td>
+                    <td><a href="'.URI_USER.'/' . $this->user->getUse_id() . "-".$this->user->getUse_lastname() . ' ' . $this->user->getUse_firstname().'">' . ($this->user->getUse_administrator() ? '<img alt="Ja" src="/images/icons/tick.png">' : '') . '</a></td>
                 </tr>';
         }
         echo <<<OUT
                                     </tbody>
 	    </table>
-	    <select name="events-action">
+	    <select name="action" name="events-action">
 		<option>[Aktion]</option>"
 		<option value="delete">Löschen</option>
 	    </select>

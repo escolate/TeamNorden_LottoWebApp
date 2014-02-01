@@ -64,7 +64,7 @@ class UserInitView extends View {
                 <input type="text" id="phone" placeholder="Telefon" name="phone" value="{$this->user->getUse_phone()}"/>
                 <input type="text" id="mobile" placeholder="Mobiltelefon" name="mobile" value="{$this->user->getUse_mobile()}"/>
             </fieldset>
-                <button type="submit">speichern</button> <button>abbrechen</button>
+                <button type="submit" name="action" value="save">speichern</button> <button>abbrechen</button>
         </form>
     </div>
 </div>
