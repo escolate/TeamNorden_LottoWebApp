@@ -80,6 +80,7 @@ class EventShowView extends View {
 		<td>Erstellt:</td>
 		<td>{$this->vars['eventCre']->getUse_firstname()} {$this->vars['eventCre']->getUse_firstname()}</td>
 		</tr>
+                <tr>
 		<td>Zuletzt geändert:</td>
 		<td>{$this->vars['eventMod']->getUse_firstname()} {$this->vars['eventMod']->getUse_firstname()}</td>
 		</tr>
@@ -127,10 +128,9 @@ HTML;
     </div>
 </div>
 
+
 HTML;
 	if ($this->emcs) {
-
-
 	    echo '<div class="content-box">';
 
 	    $sTitleCounter = $this->seriesCounter;
@@ -151,7 +151,7 @@ HTML;
 	    <input type="hidden" value="{$newestSerId}" name="seriesId">
 	    <input type="hidden" value="{$this->vars['event']->getEvt_id()}" name="eve_id">
 	    <input type="text" placeholder="Zahl" autocomplete="off" name="number" autofocus>
-	    <button name="submit" name="submit" value="saveNumber"> Ziehen! </button>
+	    <button name="submit" value="saveNumber"> Ziehen! </button>
 	</fieldset>
     </form>
     
@@ -169,7 +169,7 @@ HTML;
 		<tfoot>
 		    <tr>
 			<td><input type="checkbox"></td>
-			<td  id="events">Alle auswählen</td>
+			<td id="events">Alle auswählen</td>
 			<td></td>
 		    </tr>
 		</tfoot>
@@ -197,7 +197,7 @@ HTML;
 		</tbody>
 	    </table>
 	    <select name="submit">
-		<option>[Aktion]</option>"
+		<option>[Aktion]</option>
 		<option value="deleteNumber">Löschen</option>
 	    </select>
 	    <button> Ausführen </button>
@@ -242,7 +242,7 @@ HTML;
 		</tbody>
 	    </table>
 	    <select name="submit">
-		<option>[Aktion]</option>"
+		<option>[Aktion]</option>
 		<option value="editSeries">Bearbeiten</option>
 		<option value="deleteSeries">Löschen</option>
 	    </select>
@@ -253,11 +253,6 @@ HTML;
 HTML;
 	}
 
-	echo <<<HTML
-		
-
-HTML;
     }
 
 }
-

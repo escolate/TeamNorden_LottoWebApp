@@ -15,40 +15,49 @@ class UserController extends Controller {
     private $notify;
 
     protected function create() {
-        $admin = (isset($_POST['admin']) && $_POST['admin'] == 'on') ? '1' : '0';
+        switch ($_POST['action']) {
+            case 'save':
+                $admin = (isset($_POST['admin']) && $_POST['admin'] == 'on') ? '1' : '0';
 
-        $user = new User();
-        $user->setUse_id(trim($_POST['userid']));
-        $user->setUse_email(trim($_POST['email']));
-        $user->setUse_administrator($admin);
-        $user->setUse_firstname(trim($_POST['firstname']));
-        $user->setUse_lastname(trim($_POST['lastname']));
-        $user->setUse_address(trim($_POST['street']));
-        $user->setUse_zip(trim($_POST['zip']));
-        $user->setUse_city(trim($_POST['place']));
-        $user->setUse_phone(trim($_POST['phone']));
-        $user->setUse_mobile(trim($_POST['mobile']));
-        $user->setUse_status($_POST['status']);
+                $user = new User();
+                $user->setUse_id(trim($_POST['userid']));
+                $user->setUse_email(trim($_POST['email']));
+                $user->setUse_administrator($admin);
+                $user->setUse_firstname(trim($_POST['firstname']));
+                $user->setUse_lastname(trim($_POST['lastname']));
+                $user->setUse_address(trim($_POST['street']));
+                $user->setUse_zip(trim($_POST['zip']));
+                $user->setUse_city(trim($_POST['place']));
+                $user->setUse_phone(trim($_POST['phone']));
+                $user->setUse_mobile(trim($_POST['mobile']));
+                $user->setUse_status($_POST['status']);
 
-        //Set password if values match
-        if ($_POST['password1'] == $_POST['password2']) {
-            $user->setUse_password($_POST['password1']);
+                //Set password if values match
+                if ($_POST['password1'] == $_POST['password2']) {
+                    $user->setUse_password($_POST['password1']);
+                }
+
+                //Set birthdate if set
+                if (is_numeric($_POST['day']) && is_numeric($_POST['month']) && is_numeric($_POST['year'])) {
+                    $user->setUse_birth(trim($_POST['day']) . "." . trim($_POST['month']) . "." . trim($_POST['year']));
+                }
+
+                if (MysqlAdapter::getInstance()->saveUser($user)) {
+                    header("Location: " . URI_USER . "/" . $user->getUse_id(), TRUE, 303);
+                    exit();
+                }
+                break;
+            case 'delete':
+                foreach ($_POST['use_id'] as $id) {
+                    if (is_numeric($id)) {
+                        MysqlAdapter::getInstance()->deleteUser($id);
+                    }
+                }
+                break;
         }
 
-        //Set birthdate if set
-        if (is_numeric($_POST['day']) && is_numeric($_POST['month']) && is_numeric($_POST['year'])) {
-            $user->setUse_birth(trim($_POST['day']) . "." . trim($_POST['month']) . "." . trim($_POST['year']));
-        }
-
-        $adapter = MysqlAdapter::getInstance();
-        if ($adapter->saveUser($user)) {
-            header("Location: /benutzer/" . $user->getUse_id(), TRUE, 303);
-            exit();
-        }
-
-        $this->resourceId = $user->getUse_id();
-        $this->notify = "Der Benutzer existiert bereits!";
-        $this->show();
+        header("Location: " . URI_USER, 303);
+        exit();
     }
 
     protected function index() {
@@ -72,7 +81,7 @@ class UserController extends Controller {
         $view = new UserShowView();
         $user = MysqlAdapter::getInstance()->getUser_($this->resourceId);
         $view->assign('user', $user);
-        $view->assign('wins',MysqlAdapter::getInstance()->getUserWins($user->getUse_id()));
+        $view->assign('wins', MysqlAdapter::getInstance()->getUserWins($user->getUse_id()));
         $view->assign('cards', MysqlAdapter::getInstance()->getUserCards($user->getUse_id()));
         $view->assign('notify', $this->notify);
         $view->display();

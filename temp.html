@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="icon" type="image/png" href="/images/icons/sport_8ball.png">
+        <title>Musikverein Lotto</title>
+        <script src="/js/vendor/jquery-1.10.2.min.js"></script>
+        <script src="/js/jquery.tablesorter.min.js"></script>
+        <script src="/js/application.js"></script>
+    </head>
+    <body lang="de">
+        <div id="header">
+            <noscript>
+            <div id="noscript" class="red">
+                Um die Applikation verwenden zu können müssen sie Javascript aktivieren!
+                <img alt="X" src="/images/icons/cancel_sw.png">
+            </div>
+            </noscript>
+            <a href="/"><img src="/images/logos/logo.png" id="logo"></a>
+            <div id="breadcrumb"><a href="/" >Start</a> &gt;<a href="/veranstaltung/" >Veranstaltung</a> &gt;12</div>
+            <div id="account" title="Bearbeite dein Account."><a href="/benutzer/2-TobiasScheurer">Tobias Scheurer</a> | <form action="/login.php" method="post"> <input type="hidden" name="action" value="logout"><a id="logoutlink" href="#" title="Hier beendest du die Lotto Web App.">Logout</a></form></div> 
+        </div>
+        <div id="content">
+            <div id="debugg"></div>
+            <div class="win">
+                <form method="post" action="/gewinner">
+                    <input type="hidden" name="action" value="add">
+                    <input type="hidden" name="ser_id" value="48">
+                    <input type="hidden" name="row_id" value="993">
+                    <input type="hidden" name="use_id" value="3">
+                    <input type="hidden" name="win_id" value="1">
+                    <div>Gewonnen: <b>Zakaria Agoulif</b>, Karte: <b>27</b></div>
+                    <div><input type="submit" value="überprüfen"></div>
+                </form>
+            </div>
+            <div class="content-box">
+                <h1>Veranstaltung</h1>
+                <div class="button-box">
+                    <a href="/veranstaltung/edit/12" class="button grey">Bearbeiten</a>
+                </div>
+                <div class="event-card">
+                    <table class="show-table">
+                        <tbody>
+                            <tr>
+                                <td>Name:</td>
+                                <td>qw ert</td>
+                            </tr>
+                            <tr>
+                                <td>Strasse:</td>
+                                <td>saef</td>
+                            </tr>
+                            <tr>
+                                <td>Ort:</td>
+                                <td>afsd</td>
+                            </tr>
+                            <tr>
+                                <td>PLZ:</td>
+                                <td>asdfa</td>
+                            </tr>
+                            <tr>
+                                <td>Veranstaltungsdatum:</td>
+                                <td>03.03.2015</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="event-card">
+                    <table class="show-table">
+                        <tbody>
+                            <tr>
+                                <td>Erstellt:</td>
+                                <td>Tobias Tobias</td>
+                            </tr>
+                            <tr>
+                                <td>Zuletzt geändert:</td>
+                                <td>Tobias Tobias</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h1>Spieler</h1>
+                <div class="button-box">
+                    <a href="/eventkarten/" class="button yellow">Jetzt zuweisen</a>
+                </div>
+                <div class="list">
+                    <form action="/veranstaltung/add/12" method="POST">	    <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th> Spielkarte </th>
+                                </tr>
+                            </thead>
+                            <tbody><tr><td><a href="/benutzerkarten/3">Zakaria Agoulif </a></td><td><a href="/benutzerkarten/3">28</a></td></tr><tr><td><a href="/benutzerkarten/3">Zakaria Agoulif </a></td><td><a href="/benutzerkarten/3">27</a></td></tr><tr><td><a href="/benutzerkarten/3">Zakaria Agoulif </a></td><td><a href="/benutzerkarten/3">26</a></td></tr><tr><td><a href="/benutzerkarten/9">Tobi Tester </a></td><td><a href="/benutzerkarten/9">12</a></td></tr><tr><td><a href="/benutzerkarten/9">Tobi Tester </a></td><td><a href="/benutzerkarten/9">9</a></td></tr></tbody>
+                        </table>	</form>
+                </div>
+            </div>
+
+            <div class="content-box"><h1>Serie 11</h1>   
+                <form style="text-align: center;" action="/veranstaltung/12" method="POST">
+                    <button name="submit" value="closeSeries" class="button red"> Serie 11 abschliessen </button>
+                </form>
+
+                <form action="/veranstaltung/12" method="POST">
+                    <fieldset id="save-number">
+                        <legend>Zahl ziehen!</legend>
+                        <input type="hidden" value="48" name="seriesId">
+                        <input type="hidden" value="12" name="eve_id">
+                        <input type="text" placeholder="Zahl" autocomplete="off" name="number" autofocus>
+                        <button name="submit" value="saveNumber"> Ziehen! </button>
+                    </fieldset>
+                </form>
+
+                <div class="list">
+                    <form action="/veranstaltung/12" method="POST">
+                        <input type="hidden" value="48" name="seriesId">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Ziehung</th>
+                                    <th>Gezogene Zahl</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td id="events">Alle auswählen</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                            <tbody><tr><td><input type="checkbox" name="numberIds[]" value="46"></td><td>Ziehung 32</td><td>38</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="43"></td><td>Ziehung 31</td><td>30</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="36"></td><td>Ziehung 30</td><td>98</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="34"></td><td>Ziehung 29</td><td>37</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="33"></td><td>Ziehung 28</td><td>75</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="32"></td><td>Ziehung 27</td><td>40</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="31"></td><td>Ziehung 26</td><td>39</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="30"></td><td>Ziehung 25</td><td>24</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="29"></td><td>Ziehung 24</td><td>3</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="28"></td><td>Ziehung 23</td><td>87</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="27"></td><td>Ziehung 22</td><td>70</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="26"></td><td>Ziehung 21</td><td>68</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="25"></td><td>Ziehung 20</td><td>48</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="24"></td><td>Ziehung 19</td><td>21</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="23"></td><td>Ziehung 18</td><td>1</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="22"></td><td>Ziehung 17</td><td>75</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="21"></td><td>Ziehung 16</td><td>40</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="20"></td><td>Ziehung 15</td><td>39</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="18"></td><td>Ziehung 14</td><td>3</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="17"></td><td>Ziehung 13</td><td>64</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="16"></td><td>Ziehung 12</td><td>30</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="15"></td><td>Ziehung 11</td><td>50</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="14"></td><td>Ziehung 10</td><td>24</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="13"></td><td>Ziehung 9</td><td>2</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="12"></td><td>Ziehung 8</td><td>58</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="11"></td><td>Ziehung 7</td><td>88</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="10"></td><td>Ziehung 6</td><td>79</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="9"></td><td>Ziehung 5</td><td>89</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="8"></td><td>Ziehung 4</td><td>62</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="7"></td><td>Ziehung 3</td><td>49</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="6"></td><td>Ziehung 2</td><td>31</td></tr><tr><td><input type="checkbox" name="numberIds[]" value="5"></td><td>Ziehung 1</td><td>19</td></tr>
+                            </tbody>
+                        </table>
+                        <select name="submit">
+                            <option>[Aktion]</option>
+                            <option value="deleteNumber">Löschen</option>
+                        </select>
+                        <button> Ausführen </button>
+                    </form>
+                </div>
+            </div>
+            <div class="content-box">
+                <h1>Gespielte Serien</h1>
+                <div class="list">
+                    <form action="/veranstaltung/12" method="POST">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Seriename</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Alle auswählen</td>
+                                </tr>
+                            </tfoot>
+                            <tbody><tr><td><input type="checkbox" name="seriesIds[]" value="47"></td><td><input type="hidden" name="seriesNames[]" value="10">Serie 10</td></tr><tr><td><input type="checkbox" name="seriesIds[]" value="46"></td><td><input type="hidden" name="seriesNames[]" value="9">Serie 9</td></tr><tr><td><input type="checkbox" name="seriesIds[]" value="45"></td><td><input type="hidden" name="seriesNames[]" value="8">Serie 8</td></tr><tr><td><input type="checkbox" name="seriesIds[]" value="44"></td><td><input type="hidden" name="seriesNames[]" value="7">Serie 7</td></tr><tr><td><input type="checkbox" name="seriesIds[]" value="43"></td><td><input type="hidden" name="seriesNames[]" value="6">Serie 6</td></tr><tr><td><input type="checkbox" name="seriesIds[]" value="42"></td><td><input type="hidden" name="seriesNames[]" value="5">Serie 5</td></tr><tr><td><input type="checkbox" name="seriesIds[]" value="41"></td><td><input type="hidden" name="seriesNames[]" value="4">Serie 4</td></tr><tr><td><input type="checkbox" name="seriesIds[]" value="40"></td><td><input type="hidden" name="seriesNames[]" value="3">Serie 3</td></tr><tr><td><input type="checkbox" name="seriesIds[]" value="39"></td><td><input type="hidden" name="seriesNames[]" value="2">Serie 2</td></tr><tr><td><input type="checkbox" name="seriesIds[]" value="38"></td><td><input type="hidden" name="seriesNames[]" value="1">Serie 1</td></tr>		</tbody>
+                        </table>
+                        <select name="submit">
+                            <option>[Aktion]</option>
+                            <option value="editSeries">Bearbeiten</option>
+                            <option value="deleteSeries">Löschen</option>
+                        </select>
+                        <button>Ausführen</button>
+                    </form>
+                </div>
+            </div>        
+        </div>
+
+    </body>
+</html>

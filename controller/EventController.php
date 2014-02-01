@@ -85,7 +85,7 @@ class EventController extends Controller {
                 break;
             case "deleteNumber": // delete number from series
                 $seriesId = $_POST['seriesId'];
-                $numberIds = $_POST['numberIds'];
+                $numberIds = $_POST['numberIds'];                
                 if (count($numberIds)) {
                     foreach ($numberIds as $numberId) {
                         MysqlAdapter::getInstance()->deleteNumber($numberId, $seriesId);

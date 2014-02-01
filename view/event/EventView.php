@@ -4,6 +4,7 @@ class EventView extends View {
 
     public function display() {
 	echo <<<HTML
+        
 <div class="content-box">
     <h1>Veranstaltungen</h1>
     <div class="button-box">
