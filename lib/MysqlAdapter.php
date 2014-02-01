@@ -989,7 +989,7 @@ final class MysqlAdapter {
         $numbers = "";
         $i = 0;
 
-        $query = "SELECT num_num FROM numbers WHERE ser_id = " . $serieid;
+        $query = "SELECT num_num FROM numbers WHERE ser_id = " . $serieid ." AND num_del = false";
         $result = $this->con->query($query);
 
         if ($result->num_rows >= 5) {
