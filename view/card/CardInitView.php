@@ -32,7 +32,7 @@ class CardInitView extends View {
     <h1>Karte Nr. {$this->card->getCar_serialnumber()}</h1>
 
     <div class="event-card">
-        <form action="/karte" method="post">
+        <form action="" method="post">
         <input type="hidden" name="id" value="{$this->card->getCar_id()}">
         Karten-Nr. <input id="csnf" required name="serialnumber" type="number" value="{$this->card->getCar_serialnumber()}">
         <div class="card">
@@ -51,32 +51,6 @@ OUT;
         }
 
         echo "<tr>";
-//        $i = 0;
-//        $ten = 10;
-//        $fieldcount = 0;
-//        $items = 0;
-//        foreach ($this->card->getRowList() as $val) {
-//            while($val >= $ten) {
-//                echo "<td></td>";
-//                $ten = $ten + 10;
-//                $fieldcount++;
-//            }
-//            
-//            echo "<td>".$val."</td>";
-//            $items++;
-//            $ten = $ten + 10;
-//            $fieldcount++;
-//            if($i++ > 3 && $items < 15) {
-//                echo "</tr><tr>";
-//                $i = 0;
-//                $ten = 10;
-//            }
-//        }
-//        while($fieldcount++ < 27) {
-//                echo "<td></td>";
-//                $fieldcount++;
-//            }
-//        echo "</tr>";
 
         echo <<<OUT
         </table>

@@ -9,7 +9,7 @@ class CardController extends Controller {
                 $card->setCar_del(1);
                 MysqlAdapter::getInstance()->saveCards($card);
             }
-            header("Location: /card/", 301);
+            header("Location: ".URI_CARD."/", 301);
             exit();
         } else {
             if(isset($_POST['id']) && $_POST['id'] > 0) {
@@ -19,8 +19,11 @@ class CardController extends Controller {
                 $card = new Cards();
                 $card->setCar_id($_POST['id']);
                 $card->setRow1(new Rows());
+		$card->getRow1()->setRow_nr(1);
                 $card->setRow2(new Rows());
+		$card->getRow2()->setRow_nr(2);
                 $card->setRow3(new Rows());
+		$card->getRow3()->setRow_nr(3);
             }
             $card->setCar_serialnumber($_POST['serialnumber']);
             
@@ -33,7 +36,7 @@ class CardController extends Controller {
             }
             $id = MysqlAdapter::getInstance()->saveCards($card);
 
-            header("Location: /card/" . $id, 301);
+            header("Location: ".URI_CARD."/" . $id, 301);
             exit();
         }
     }
@@ -63,11 +66,11 @@ class CardController extends Controller {
         $card = MysqlAdapter::getInstance()->getCards($this->resourceId);
         $view->assign('card', $card);
 
-        $user = MysqlAdapter::getInstance()->getUser_($card->getCar_cre_id());
-        $view->assign('create', $user->getUse_firstname() . ' ' . $user->getUse_lastname());
+        $cuser = MysqlAdapter::getInstance()->getUser_($card->getCar_cre_id());
+        $view->assign('create', $cuser->getUse_firstname() . ' ' . $cuser->getUse_lastname());
 
-        $user = MysqlAdapter::getInstance()->getUser_($card->getCar_mod_id());
-        $view->assign('mod', $user->getUse_firstname() . ' ' . $user->getUse_lastname());
+        $muser = MysqlAdapter::getInstance()->getUser_($card->getCar_mod_id());
+        $view->assign('mod', $muser->getUse_firstname() . ' ' . $muser->getUse_lastname());
 
         $view->display();
     }

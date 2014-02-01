@@ -117,15 +117,26 @@ OUT;
 	    <tbody>
 HTML;
 
-	foreach ($this->vars['cardList'] as $object) {
-	    echo '<tr>';
-	    echo "<td><a href=\"/karte/{$object->getCar_id()}-Cardnr_{$object->getCar_serialnumber()}\">{$object->getCar_serialnumber()}</a></td>";
-	    echo "<td><a href=\"/karte/{$object->getCar_id()}-Cardnr_{$object->getCar_serialnumber()}\">{$object->getCar_row1_nr1()}, {$object->getCar_row1_nr2()}, {$object->getCar_row1_nr3()}, {$object->getCar_row1_nr4()}, {$object->getCar_row1_nr5()}</a></td>";
-	    echo "<td><a href=\"/karte/{$object->getCar_id()}-Cardnr_{$object->getCar_serialnumber()}\">{$object->getCar_row2_nr1()}, {$object->getCar_row2_nr2()}, {$object->getCar_row2_nr3()}, {$object->getCar_row2_nr4()}, {$object->getCar_row2_nr5()}</a></td>";
-	    echo "<td><a href=\"/karte/{$object->getCar_id()}-Cardnr_{$object->getCar_serialnumber()}\">{$object->getCar_row3_nr1()}, {$object->getCar_row3_nr2()}, {$object->getCar_row3_nr3()}, {$object->getCar_row3_nr4()}, {$object->getCar_row3_nr5()}</a></td>";
-	    echo "<td><a href=\"/karte/{$object->getCar_id()}-Cardnr_{$object->getCar_serialnumber()}\">{$this->getDate($object->getCar_cre_dat())}</a></td>";
-	    echo '</tr>';
-	}
+        /* @var $card \Cards */
+        foreach ($this->vars['cardList'] as $card) {
+            echo "<tr>\r\n";
+            echo '
+                        <td><a href="/karte/' . $card->getCar_id() . '">' . $card->getCar_serialnumber() . '</a></td>';
+            $row = 1;
+            for ($line = 1; $line < 4; $line++) {
+                echo '<td><a href="/karte/' . $card->getCar_id() . '">';
+                for ($row = 1; $row < 6; $row++) {
+                    if ($row > 1) {
+                        echo ',';
+                    }
+		    echo $card->{'getRow'.$line}()->{'getRow_nr'.$row}();
+                }
+                echo "</a></td>";
+            }
+
+            echo '<td><a href="/karte/' . $card->getCar_id() . '">' . $card->getCar_cre_dat() . '</a></td>';
+            echo "</tr>\r\n";
+        }
 
 	echo <<<HTML
 	    </tbody>

@@ -19,7 +19,7 @@ define("DB_USER", "lotto");
 define("DB_PW", "lotto");
 define("DB_DB", "lotto");
 
-define("MAIL_TITLE","Musikverein Lotto");
+define("MAIL_TITLE","MG *Hannigalp* Lotto");
 define("MAIL_ORGANIZATION","Musikverein Hannigalp");
 define("MAIL_ADDRESS","SomeStreet");
 define("MAIL_CITY","3925 Gr&auml;chen");

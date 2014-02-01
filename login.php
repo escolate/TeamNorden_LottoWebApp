@@ -1,10 +1,10 @@
 <?php
 session_start();
+include_once $_SERVER['DOCUMENT_ROOT'] . '/config/config.php';
 $notification = "";
 
 //Check login
 if (!empty($_POST['email']) && !empty($_POST['password'])) {
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/config/config.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/lib/MysqlAdapter.php';
 
     $user = MysqlAdapter::getInstance()->authenticateUser($_POST['email'], $_POST['password']);
@@ -55,11 +55,11 @@ if ($action == 'sent') {
         <meta charset="UTF-8">
         <link rel="stylesheet" type="text/css" href="css/normalize.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
-        <title>Musikverein Lotto</title>
+        <title><?php echo MAIL_TITLE; ?></title>
     </head>
     <body lang="de">
         <div id="login">
-            <h1>Musikverein Lotto</h1>
+            <h1><?php echo MAIL_TITLE; ?></h1>
             <?php
             $recoverlink = '<a href="/login.php?action=recover">Passwort vergessen?</a>';
             $passwordfield = '<input type="password" id="loginform-password" name="password" placeholder="Passwort">';

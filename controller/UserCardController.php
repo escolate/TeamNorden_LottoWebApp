@@ -57,14 +57,14 @@ class UserCardController extends Controller {
         $events = MysqlAdapter::getInstance()->getEventList(0, true);
         $view->assign('eventlist', $events);
 
-        if (!isset($_GET['event'])) {
+        if (!isset($_GET['event']) AND count($events)) {
             $_GET['event'] = $events[0]->getEvt_id();
         }
 
         $series = MysqlAdapter::getInstance()->getEventSeries($_GET['event']);
         $view->assign('series', $series);
 
-        if (!isset($_GET['series'])) {
+        if (!isset($_GET['series']) AND count($series)) {
             $_GET['series'] = $series[0]->getSer_id();
         }
         $view->assign('cards', MysqlAdapter::getInstance()->getEventCards($_GET['series']));

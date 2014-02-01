@@ -115,7 +115,7 @@ class EventController extends Controller {
                 if (count($seriesIds) == 1) {
                     $eventId = $this->resourceId;
                     $seriesNames = $_POST['seriesNames'];
-                    header("Location: /series/?seriesId={$seriesIds[0]}&eventId=$eventId&seriesName=$seriesNames[0]", TRUE, 303);
+                    header("Location: ".URI_SERIES."/?seriesId={$seriesIds[0]}&eventId=$eventId&seriesName=$seriesNames[0]", TRUE, 303);
                 } else {
                     header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
                 }

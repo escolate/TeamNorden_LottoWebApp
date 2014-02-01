@@ -8,7 +8,7 @@ class WinnerView extends View {
 <div class="content-box">
     <h1>Gewinner</h1>
     <div class="list">
-	<form name="events">
+	<form name="events" action="" method="post">
 	    <table>
 		<thead>
 		    <tr>
@@ -32,7 +32,7 @@ HTML;
         /* @var $winner \Winner */
         foreach ($this->vars['list'] as $winner) {
             echo '<tr>';
-            echo '<td><input type="checkbox"></td>';
+            echo '<td><input type="checkbox" name="win_id[]" value="'.$winner->getWin_id().'"></td>';
             echo "<td><a href=\"/gewinner/{$winner->getWin_id()}\">{$winner->getUser()->getUse_firstname()} {$winner->getUser()->getUse_lastname()}</a></td>";
             echo "<td><a href=\"/gewinner/{$winner->getWin_id()}\">{$winner->getWin_cre_dat()}</a></td>";
             echo "<td><a href=\"/gewinner/{$winner->getWin_id()}\">" . (!is_null($winner->getWin_notificated()) ? $this->getDate($winner->getWin_notificated()) : "Ausstehend") . "</a></td>";
@@ -42,9 +42,9 @@ HTML;
         echo <<<HTML
 		</tbody>
 	    </table>
-	    <select name="events-action">
+	    <select name="action">
 		<option>[Aktion]</option>"
-		<option value="delete">Löschen</option>
+		<option value="cancel">Löschen</option>
 	    </select>
 	    <input type="submit" value="Ausführen">
 	</form>

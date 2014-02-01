@@ -41,12 +41,11 @@ class CardView extends View {
 		</tfoot>
 		<tbody>
 OUT;
-        /* @var $card \Card */
+        /* @var $card \Cards */
         foreach ($this->list as $card) {
             echo "<tr>\r\n";
             echo '<td><input type="checkbox" name="carid[]" value="' . $card->getCar_id() . '"></td>
                         <td><a href="/karte/' . $card->getCar_id() . '">' . $card->getCar_serialnumber() . '</a></td>';
-//                    $line = 1;
             $row = 1;
             for ($line = 1; $line < 4; $line++) {
                 echo '<td><a href="/karte/' . $card->getCar_id() . '">';
@@ -54,7 +53,7 @@ OUT;
                     if ($row > 1) {
                         echo ',';
                     }
-                    echo $card->{'getCar_row' . $line . '_nr' . $row}();
+		    echo $card->{'getRow'.$line}()->{'getRow_nr'.$row}();
                 }
                 echo "</a></td>";
             }
