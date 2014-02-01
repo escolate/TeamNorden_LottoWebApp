@@ -17,15 +17,16 @@ class UserCardShowView extends View {
      * @var User
      */
     private $user;
-    
+    private $uri_usercard;
     public function display() {
+	$this->uri_usercard = URI_USERCARD;
         $this->user = $this->vars['user'];
         
         echo <<<OUT
         <div class="content-box">
     <h1>Eventkarten</h1>
     <div class="button-box">
-        <a href="/benutzerkarten/edit/{$this->user->getUse_id()}" class="button grey">Hinzufügen</a>
+        <a href="{$this->uri_usercard}/edit/{$this->user->getUse_id()}-{$this->user->getUse_firstname()} {$this->user->getUse_lastname()}" class="button grey">Hinzufügen</a>
     </div>
     <div class="event-card">
         <p><b>User:</b> {$this->user->getUse_firstname()} {$this->user->getUse_lastname()}</p>

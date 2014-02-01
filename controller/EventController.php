@@ -72,24 +72,6 @@ class EventController extends Controller {
                 }
                 header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
                 break;
-            case "addUserToEvent": // add user to event
-                $userIds = $_POST['userIds'];
-                if (count($userIds)) {
-                    foreach ($userIds as $userId) {
-                        MysqlAdapter::getInstance()->addEventmember($userId, $this->resourceId);
-                    }
-                }
-                header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
-                break;
-            case "removeUserFromEvent": // remove user from event
-                $userIds = $_POST['userIds'];
-                if (count($userIds)) {
-                    foreach ($userIds as $userId) {
-                        MysqlAdapter::getInstance()->removeUser($userId, $this->resourceId);
-                    }
-                }
-                header("Location: {$_SERVER['HTTP_REFERER']}", TRUE, 303);
-                break;
             case "saveNumber"; // save number for a series
                 $number = trim($_POST['number']);
                 $eve_id = $_POST['eve_id'];
@@ -211,9 +193,7 @@ class EventController extends Controller {
         $view->assign('numberList', $numberList);
         //Also give the newest series id to the view
         $view->assign('newestSeries', $newestSeries);
-
         $view->assign('emcs', MysqlAdapter::getInstance()->getPlayingUsers($newestSeries->getSer_id()));
-
         $winner = MysqlAdapter::getInstance()->findWinner($newestSeries->getSer_id());
         if (count($winner)) {
             $winarr = array();
@@ -228,7 +208,6 @@ class EventController extends Controller {
             }
             $view->assign('winner', $winarr);
         }
-
         // Display the event
         $view->display();
     }

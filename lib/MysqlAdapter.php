@@ -60,9 +60,10 @@ final class MysqlAdapter {
 	    $query .= " LIMIT " . $limit;
 	}
 	$result = $this->con->query($query);
-	if ($result->num_rows) {
+	$card = new Card();
+	$arr = array();
+	if ($result) {
 	    while ($row = $result->fetch_assoc()) {
-		$card = new Card();
 		$card->setCar_cre_dat($row['car_cre_dat']);
 		$card->setCar_cre_id($row['car_cre_id']);
 		$card->setCar_del($row['car_del']);
@@ -87,9 +88,8 @@ final class MysqlAdapter {
 		$card->setCar_serialnumber($row['car_serialnumber']);
 		$arr[] = $card;
 	    }
-	    return $arr;
 	}
-	return NULL;
+	return $arr;
     }
 
     /**
@@ -102,7 +102,7 @@ final class MysqlAdapter {
 	$ide = $this->con->real_escape_string($id);
 	$query = "SELECT * FROM user WHERE use_id = '{$ide}'";
 	$result = $this->con->query($query);
-	if ($result->num_rows) {
+	if ($result) {
 	    $row = $result->fetch_assoc();
 	    $user->setUse_id($row['use_id']);
 	    $user->setUse_lastname($row['use_lastname']);
@@ -170,21 +170,6 @@ final class MysqlAdapter {
 	    return FALSE;
 	}
 	return mysqli_insert_id($this->con);
-    }
-
-    // Adds a user to an event
-    public function addEventmember($user_id, $event_id) {
-	$query = "
-	    INSERT INTO 
-		eventmembers
-	    VALUES 
-		('$event_id', '$user_id');
-	";
-	if (!$this->con->query($query)) {
-	    $this->error($query);
-	    return FALSE;
-	}
-	return TRUE;
     }
 
     // Removes a user to an event
@@ -305,7 +290,7 @@ final class MysqlAdapter {
 	$query = "UPDATE user SET use_del = true WHERE id = " . $id;
 	/* @var $result mysqli_result */
 	$result = $this->con->query($query);
-	if ($result->num_rows) {
+	if ($result) {
 	    return TRUE;
 	}
 	return FALSE;
@@ -385,7 +370,7 @@ final class MysqlAdapter {
 	    win_id = $id;
 	";
 	$result = $this->con->query($query);
-	if ($result->num_rows) {
+	if ($result) {
 	    $row = $result->fetch_assoc();
 
 	    $winner = new Winner();
@@ -495,7 +480,7 @@ final class MysqlAdapter {
 	}
 
 	$result = $this->con->query($query);
-	if ($result->num_rows) {
+	if ($result) {
 	    while ($row = $result->fetch_assoc()) {
 		$event = new Event();
 		$event->setEvt_id($row['evt_id']);
@@ -514,10 +499,6 @@ final class MysqlAdapter {
 	    }
 	}
 	return $eventList;
-    }
-
-    public function getAvailableCards($eventid) {
-	$query = "";
     }
 
     public function getEventmemberList($id, $limit = "0,18446744073709551615") {
@@ -567,7 +548,7 @@ final class MysqlAdapter {
 	    ;";
 	$result = $this->con->query($query);
 	$list = array();
-	if ($result->num_rows) {
+	if ($result) {
 	    while ($row = $result->fetch_assoc()) {
 		$series = new Series();
 		$series->setSer_id($row['ser_id']);
@@ -603,9 +584,9 @@ final class MysqlAdapter {
 		1	    
 	    ;";
 	$result = $this->con->query($query);
-	if ($result->num_rows) {
+	$series = new Series();
+	if ($result) {
 	    while ($row = $result->fetch_assoc()) {
-		$series = new Series();
 		$series->setSer_id($row['ser_id']);
 		$series->setSer_cre_dat($row['ser_cre_dat']);
 		$series->setSer_cre_id($row['ser_cre_id']);
@@ -614,9 +595,8 @@ final class MysqlAdapter {
 		$series->setSer_mod_dat($row['ser_mod_dat']);
 		$series->setSer_mod_id($row['ser_mod_id']);
 	    }
-	    return $series;
 	}
-	return NULL;
+	return $series;
     }
 
     public function getNumberList($id, $limit = "0,18446744073709551615") {
@@ -643,7 +623,7 @@ final class MysqlAdapter {
 ";
 	$result = $this->con->query($query);
 	$list = array();
-	if ($result->num_rows) {
+	if ($result) {
 	    while ($row = $result->fetch_assoc()) {
 		$number = new Number();
 		$number->setNum_cre_dat($row['num_cre_dat']);
@@ -672,7 +652,7 @@ final class MysqlAdapter {
 	$query = "SELECT use_id FROM user WHERE use_email = '{$emaile}' AND use_password = password(concat(use_salt,'{$pwe}')) AND use_del is not true AND use_administrator is true";
 	$result = $this->con->query($query);
 
-	if ($result->num_rows) {
+	if ($result) {
 	    $row = mysqli_fetch_assoc($result);
 	    $user = $this->getUser_($row['use_id']);
 	    $result->free();
@@ -694,7 +674,7 @@ final class MysqlAdapter {
 	$query = "SELECT * FROM messages WHERE mes_type = {$type} AND mes_status = 1";
 	$result = $this->con->query($query);
 
-	if ($result->num_rows) {
+	if ($result) {
 	    $row = mysqli_fetch_assoc($result);
 	    $message = new Message();
 	    $message->setId($row['mes_id']);
@@ -720,7 +700,7 @@ final class MysqlAdapter {
 	$result = $this->con->query($query);
 
 
-	if ($result->num_rows) {
+	if ($result) {
 	    $row = mysqli_fetch_assoc($result);
 	    return $row['plz_ort'];
 	}
@@ -744,14 +724,16 @@ final class MysqlAdapter {
         WHERE use_id = {$userid} AND date(evt_datetime) >= date(now()) ORDER BY evt_datetime";
 	$result = $this->con->query($query);
 
+	if ($result) {
+	    while ($row = mysqli_fetch_assoc($result)) {
+		$emc = new Eventmembercard();
+		$emc->setCard($this->getCards($row['car_id']));
+		$emc->saveSeries($this->getSeries($row['ser_id']));
 
-	while ($row = mysqli_fetch_assoc($result)) {
-	    $emc = new Eventmembercard();
-	    $emc->setCard($this->getCards($row['car_id']));
-	    $emc->saveSeries($this->getSeries($row['ser_id']));
-
-	    $arr[] = $emc;
+		$arr[] = $emc;
+	    }
 	}
+
 
 
 	return $arr;
@@ -1078,7 +1060,7 @@ final class MysqlAdapter {
 	$query = "SELECT * FROM log WHERE log_id = " . $id;
 	$result = $this->con->query($query);
 
-	if ($result->num_rows) {
+	if ($result) {
 	    $row = mysqli_fetch_assoc($result);
 	    $log = new Log();
 	    $log->setLog_id($row['log_id']);
@@ -1112,7 +1094,7 @@ final class MysqlAdapter {
 	$query = "SELECT * FROM log {$order} " . $lim;
 	$result = $this->con->query($query);
 
-	if ($result->num_rows) {
+	if ($result) {
 	    while ($row = mysqli_fetch_assoc($result)) {
 		$log = new Log();
 		$log->setLog_id($row['log_id']);
@@ -1135,7 +1117,7 @@ final class MysqlAdapter {
     public function getStatusList() {
 	$arr = array();
 	$result = $this->con->query("SELECT DISTINCT use_status FROM user WHERE use_del is not true AND use_status != ''");
-	if ($result->num_rows) {
+	if ($result) {
 	    while ($row = $result->fetch_assoc()) {
 		$arr[] = $row['use_status'];
 	    }
@@ -1149,7 +1131,7 @@ final class MysqlAdapter {
 	$query = "SELECT a.car_id,b.use_id FROM card a LEFT JOIN eventmemberscard b ON a.car_id = b.car_id WHERE ser_id is null OR ser_id = " . $seriesid . " ORDER BY car_serialnumber";
 	$result = $this->con->query($query);
 
-	if ($result->num_rows) {
+	if ($result) {
 	    $series = $this->getSeries($seriesid);
 	    while ($row = $result->fetch_assoc()) {
 		$emc = new Eventmembercard();
@@ -1173,7 +1155,7 @@ final class MysqlAdapter {
 	$arr = array();
 	$query = "SELECT * FROM series WHERE eve_id = {$eventid} ORDER BY ser_id DESC";
 	$result = $this->con->query($query);
-	if ($result->num_rows) {
+	if ($result) {
 	    while ($row = $result->fetch_assoc()) {
 		$series = new Series();
 		$series->setEvent($this->getEvent($row['eve_id']));
