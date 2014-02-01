@@ -14,8 +14,9 @@ class EmailNotification {
 
     const WIN = 1;
     const PWR = 2;
+
     private $email;
-    
+
     /**
      *
      * @var Message
@@ -40,7 +41,7 @@ class EmailNotification {
     public function getMessage() {
         return $this->body;
     }
-    
+
     public function validate() {
         return preg_match('/^[a-zA-Z0-9\._-]+@[a-zA-Z0-9\.-]+\.[a-zA-Z]+$/', $this->email);
     }
@@ -51,15 +52,15 @@ class EmailNotification {
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     </head>
     <body style="margin: 0;font-family: \'Segoe UI\',sans-serif;">
-        <h1 style="background-color: #4679BD;padding:5px; margin: 0px;color: white;">'.MAIL_TITLE.'</h1>
+        <h1 style="background-color: #4679BD;padding:5px; margin: 0px;color: white;">' . MAIL_TITLE . '</h1>
         <div style="padding: 10px;">
-            '.$this->message->getBody().'
+            ' . $this->message->getBody() . '
             <br><br>
             <p>Freundlich Gr&uuml;sse<br>
             <br>
-            <b>'.MAIL_ORGANIZATION.'</b><br>
-            '.MAIL_ADDRESS.'<br>
-            '.MAIL_CITY.'</p>
+            <b>' . MAIL_ORGANIZATION . '</b><br>
+            ' . MAIL_ADDRESS . '<br>
+            ' . MAIL_CITY . '</p>
         </div>
     </body>
 </html>';
@@ -71,10 +72,10 @@ class EmailNotification {
      * @return boolean
      */
     public function send() {
-        if(!$this->isComposed) {
+        if (!$this->isComposed) {
             $this->compose();
         }
-        
+
         if (!empty($this->email) && !empty($this->body) && $this->validate()) {
             //replace params
             foreach ($this->param as $key => $val) {
@@ -82,8 +83,10 @@ class EmailNotification {
             }
 
             //Set SMTP Headers
-            $header = 'Content-type: text/html; charset=utf-8' . "\n"
-                    . 'X-Mailer: PHP ' . phpversion();
+            $header = 'Content-Type: text/html; charset=UTF-8' . "\r\n"
+                    . 'Content-transfer-encoding: 8BIT' . "\r\n"
+                    . 'From: noreply@' . MAIL_DOMAIN . "\r\n"
+                    . 'X-Mailer: PHP ' . phpversion() . "\r\n";
 
             //Send Message
             return mail($this->email, $this->message->getSubject(), $this->body, $header);

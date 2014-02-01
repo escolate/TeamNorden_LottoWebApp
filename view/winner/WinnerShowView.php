@@ -150,12 +150,12 @@ HTML;
 	</tr>
      </tbody>	
     </table>
-            <input type="hidden" name="action" value="save">
             <input type="hidden" name="win_id" value="{$this->winner->getWin_id()}">
-            <input type="submit" value="Bestätigen (E-Mail!)">
-            <input type="hidden" name="action" value="cancel">
+            <button name="action" value="save" type="submit">Bestätigen (E-Mail!)</button>
+        </form>
+        <form method="post" action="">
             <input type="hidden" name="win_id" value="{$this->winner->getWin_id()}">
-            <input type="submit" value="Stornieren">
+            <button name="action" value="cancel" type="submit">Stornieren</button>
         </form>
     </div>
 </div>
