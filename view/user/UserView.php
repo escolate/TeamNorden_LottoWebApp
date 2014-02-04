@@ -9,9 +9,13 @@ class UserView extends View {
     private $user;
 
     public function display() {
+        $uri = URI_USER;
         echo <<<OUT
         <div class="content-box">
-    <h1>Spieler</h1>
+    <h1>Spieler</h1>        
+    <div class="button-box">
+	<a href="{$uri}/new" class="button green">Erstellen</a>
+    </div>
     <div class="list">
 	<form name="events" method="post">
 	    <table>

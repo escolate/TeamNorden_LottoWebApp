@@ -7,6 +7,7 @@ if (!isset($_SESSION['user']['id'])) {
 }
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/config/config.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/config/uri_config.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/controller/Controller.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/view/View.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/lib/MysqlAdapter.php';
@@ -18,7 +19,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/lib/MysqlAdapter.php';
         <link rel="stylesheet" type="text/css" href="/css/normalize.css">
         <link rel="stylesheet" type="text/css" href="/css/style.css">
         <link rel="icon" type="image/png" href="/images/icons/sport_8ball.png">
-        <title>Musikverein Lotto</title>
+        <title><?php echo APP_TITLE; ?></title>
         <script src="/js/vendor/jquery-1.10.2.min.js"></script>
         <script src="/js/jquery.tablesorter.min.js"></script>
         <script src="/js/application.js"></script>

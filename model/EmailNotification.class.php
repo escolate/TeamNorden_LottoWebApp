@@ -52,15 +52,15 @@ class EmailNotification {
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     </head>
     <body style="margin: 0;font-family: \'Segoe UI\',sans-serif;">
-        <h1 style="background-color: #4679BD;padding:5px; margin: 0px;color: white;">' . MAIL_TITLE . '</h1>
+        <h1 style="background-color: #4679BD;padding:5px; margin: 0px;color: white;">' . APP_TITLE . '</h1>
         <div style="padding: 10px;">
             ' . $this->message->getBody() . '
             <br><br>
             <p>Freundlich Gr&uuml;sse<br>
             <br>
-            <b>' . MAIL_ORGANIZATION . '</b><br>
-            ' . MAIL_ADDRESS . '<br>
-            ' . MAIL_CITY . '</p>
+            <b>' . ORG_NAME . '</b><br>
+            ' . ORG_ADDRESS . '<br>
+            ' . ORG_CITY . '</p>
         </div>
     </body>
 </html>';
@@ -83,13 +83,16 @@ class EmailNotification {
             }
 
             //Set SMTP Headers
-            $header = 'Content-Type: text/html; charset=UTF-8' . "\r\n"
-                    . 'Content-transfer-encoding: 8BIT' . "\r\n"
-                    . 'From: noreply@' . MAIL_DOMAIN . "\r\n"
-                    . 'X-Mailer: PHP ' . phpversion() . "\r\n";
-
+             $header = 'Content-Type: text/html; charset=UTF-8' . PHP_EOL
+                    . 'Content-transfer-encoding: 8BIT' . PHP_EOL
+                    . 'From: <noreply@' . APP_DOMAIN . '>' . PHP_EOL
+                    . 'Sender: <noreply@' . APP_DOMAIN.'>' . PHP_EOL
+                    . 'Reply-To: <noreply@' . APP_DOMAIN.'>'. PHP_EOL
+                    . 'X-Mailer: PHP ' . phpversion() . PHP_EOL;
+             
             //Send Message
-            return mail($this->email, $this->message->getSubject(), $this->body, $header);
+            return mail($this->email, $this->message->getSubject(), $this->body, $header, '-fnoreply@'.APP_DOMAIN);
+
         }
         return false;
     }

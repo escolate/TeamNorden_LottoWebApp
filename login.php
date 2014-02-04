@@ -55,11 +55,11 @@ if ($action == 'sent') {
         <meta charset="UTF-8">
         <link rel="stylesheet" type="text/css" href="css/normalize.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
-        <title><?php echo MAIL_TITLE; ?></title>
+        <title><?php echo APP_TITLE; ?></title>
     </head>
     <body lang="de">
         <div id="login">
-            <h1><?php echo MAIL_TITLE; ?></h1>
+            <h1><?php echo APP_TITLE; ?></h1>
             <?php
             $recoverlink = '<a href="/login.php?action=recover">Passwort vergessen?</a>';
             $passwordfield = '<input type="password" id="loginform-password" name="password" placeholder="Passwort">';

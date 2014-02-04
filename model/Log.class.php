@@ -74,14 +74,17 @@ class Log {
     public function send() {
         //Send email
         if ($this->getLog_level() <= LOG_NOTIFICATIONLEVEL) {
-            $message = "
-                Timestamp: ".date("d.m.Y H:i:s")."
-                Level: {$this->getLevelString()}
-                IP-Address: {$this->getLog_ip()}
-                Message: {$this->getLog_action()}
-                ";
-            $headers .= 'Content-type: text/plain; charset=utf-8' . "\r\n";
-            mail(LOG_MAILADDR, "LottoApplication Error", $message, $headers);
+            $message = "Timestamp: " . date("d.m.Y H:i:s") . PHP_EOL;
+            $message .= "Level: {$this->getLevelString()}" . PHP_EOL;
+            $message .= "IP-Address: {$this->getLog_ip()}" . PHP_EOL;
+            $message .= "Message: {$this->getLog_action()}" . PHP_EOL;
+
+            $headers .= 'Content-type: text/plain; charset=utf-8' . PHP_EOL
+                    . 'From: <noreply@' . APP_DOMAIN . '>' . PHP_EOL
+                    . 'Sender: <noreply@' . APP_DOMAIN . '>' . PHP_EOL
+                    . 'Reply-To: <noreply@' . APP_DOMAIN . '>' . PHP_EOL
+                    . 'X-Mailer: PHP ' . phpversion() . PHP_EOL;
+            mail(LOG_MAILADDR, "LottoApplication Error", $message, $headers, '-fnoreply@' . APP_DOMAIN);
         }
     }
 
